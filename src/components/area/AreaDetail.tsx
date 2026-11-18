@@ -104,8 +104,8 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
       {img(b, "top-[12vw] right-0 aspect-[4/5] w-[40vw] md:w-[20vw]", 0.3, "20vw")}
       {img(c, "top-[64vw] left-0 aspect-[3/2] w-[60vw] md:top-[46vw] md:w-[30vw]", 0.2, "30vw")}
       {img(d, "top-[100vw] left-1/2 aspect-[4/5] w-[40vw] md:top-[62vw] md:w-[20vw]", 0.05, "20vw")}
-      <div className="absolute inset-x-5 top-[40vw] bottom-[30vw] md:inset-x-auto md:top-[22vw] md:bottom-[44vw] md:left-[28vw] md:w-[46vw]">
-        <div className="sticky top-[24svh]">
+      <div className="absolute inset-x-5 top-[40vw] md:inset-x-auto md:top-[30vw] md:left-[28vw] md:w-[46vw]">
+        <div>
           <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-ink">{gallery.heading}</h2>
           <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-ink md:ml-[22vw] md:max-w-[21rem]">{gallery.text}</p>
         </div>
