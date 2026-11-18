@@ -52,7 +52,7 @@ export const areaPages = {
       ],
       note: "Health-related wording will be reviewed before publishing.",
     },
-    cta: { label: "Book a consultation", href: "/contact?area=wellbeing" },
+    cta: { label: "Book a consultation", href: "#enquiry" },
     approval: "treatment list, practitioners and partner hotels",
   },
   consulting: {
@@ -80,7 +80,7 @@ export const areaPages = {
         rows: c.duration.split(" · ").map((d, i) => [d, "", i === 0 ? c.pricingBasis : ""]),
       })),
     },
-    cta: { label: "Discuss your business needs", href: "/contact?area=consulting" },
+    cta: { label: "Discuss your business needs", href: "#enquiry" },
     approval: "service descriptions and commercial basis (from Sandra’s documents)",
   },
   workforce: {
@@ -125,7 +125,7 @@ export const areaPages = {
       ],
       note: "No placement or permit outcome is guaranteed.",
     },
-    cta: { label: "Discuss your staffing needs", href: "/contact?area=workforce" },
+    cta: { label: "Submit your staffing requirements", href: "#enquiry" },
     approval: "recruitment partners and open roles",
   },
   education: {
@@ -168,7 +168,7 @@ export const areaPages = {
       ],
       note: "VIVUM does not guarantee admission, visas or residence permits.",
     },
-    cta: { label: "Enquire about study programmes", href: "/contact?area=education" },
+    cta: { label: "Enquire about study programmes", href: "#enquiry" },
     approval: "authorised institutions and programme list",
   },
 } satisfies Record<string, AreaPage>;

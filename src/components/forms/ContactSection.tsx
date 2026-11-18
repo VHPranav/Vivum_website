@@ -44,7 +44,7 @@ export function ContactSection({
       <div className={`container-page grid gap-12 lg:grid-cols-12 lg:gap-16 ${marquee ? "pt-16 md:pt-24" : ""}`}>
         <div className="lg:col-span-4">
           <p className="label flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
+            <span className="h-1.5 w-1.5 rounded-full bg-navy" aria-hidden />
             {head.label}
           </p>
           <SplitLines as={as} id={titleId} className={`${as === "h1" ? "display-l" : "display-m"} mt-5 text-navy`}>

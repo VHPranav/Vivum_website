@@ -28,11 +28,11 @@ export const home = {
     body: "We combine hands-on experience with an international network of partners. Every engagement starts with understanding what you need, and continues with practical support until the work is done.",
     link: { label: "More about VIVUM", href: "/about" },
     items: [
+      { k: "1", v: "Point of contact for every enquiry" },
+      { k: "2", v: "Paths: employers and candidates" },
+      { k: "3", v: "Enquiry steps: area, details and message" },
       { k: "4", v: "Areas of activity" },
       { k: "5", v: "Consulting service areas" },
-      { k: "2", v: "Paths: employers and candidates" },
-      { k: "2", v: "Languages: English and Montenegrin" },
-      { k: "1", v: "Point of contact for every enquiry" },
     ],
   },
   services: {

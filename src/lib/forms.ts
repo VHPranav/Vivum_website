@@ -118,4 +118,4 @@ export function routeFor(kind: FormKind, values: Record<string, string>): RouteI
 export type FormState =
   | { status: "idle" }
   | { status: "error"; errors: Record<string, string>; values: Record<string, string> }
-  | { status: "success"; route: RouteId; summary: { label: string; value: string }[] };
+  | { status: "success"; route: RouteId; summary: { label: string; value: string }[]; preview: boolean; reference?: string };

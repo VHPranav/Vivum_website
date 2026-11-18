@@ -3,14 +3,15 @@
 import { getContent } from "@/content";
 import { isLocale } from "@/i18n/config";
 import { formFields, formKinds, routeFor, type FormKind, type FormState } from "./forms";
+import { reviewMode } from "./site";
+import { deliverEnquiry } from "./enquiry-delivery";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /**
  * Server-side validation for every enquiry form.
- * Delivery is intentionally NOT wired yet: recipient mailboxes are unconfirmed (brief §11).
- * Once VIVUM confirms them, send to contactRoutes[route].email via the chosen provider here,
- * store the minimal lead record, and return an error state if delivery fails.
+ * Stores accepted enquiries before sending notifications. Unconfigured review builds explicitly
+ * preview the request; launch builds return an error instead of claiming it was received.
  */
 export async function submitEnquiry(_prev: FormState, formData: FormData): Promise<FormState> {
   const kind = String(formData.get("_kind")) as FormKind;
@@ -34,7 +35,7 @@ export async function submitEnquiry(_prev: FormState, formData: FormData): Promi
     if (!raw) continue;
     if (raw.length > field.max) errors[field.name] = `${field.label}: please keep it under ${field.max} characters.`;
     if (field.type === "email" && !EMAIL.test(raw)) errors[field.name] = "Please enter a valid email address.";
-    if (field.type === "number" && !/^\d{1,5}$/.test(raw)) errors[field.name] = `${field.label}: please enter a number.`;
+    if (field.type === "number" && !/^[1-9]\d{0,4}$/.test(raw)) errors[field.name] = `${field.label}: please enter a whole number between 1 and 99,999.`;
     if (field.options && !field.options.some((o) => o.value === raw)) errors[field.name] = `${field.label}: please choose an option.`;
   }
 
@@ -54,5 +55,10 @@ export async function submitEnquiry(_prev: FormState, formData: FormData): Promi
     .filter((f) => values[f.name])
     .map((f) => ({ label: f.label, value: f.options?.find((o) => o.value === values[f.name])?.label ?? values[f.name] }));
 
-  return { status: "success", route, summary };
+  try {
+    const result = await deliverEnquiry({ area: route, locale: lang, email: values.email, summary }, reviewMode);
+    return { status: "success", route, summary, preview: result.status === "preview", reference: result.status === "received" ? result.reference : undefined };
+  } catch {
+    return { status: "error", errors: { _form: "We could not receive your enquiry. Your details have not been submitted. Please try again or use a confirmed contact option." }, values };
+  }
 }

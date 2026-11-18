@@ -45,6 +45,14 @@ body {
   background: var(--color-paper);
 }
 
+/* Service pages use one white surface and the same navy for typography and accents. */
+.service-page {
+  --color-paper: #fff;
+  --color-ink: var(--color-navy);
+  --color-muted: var(--color-navy);
+  --color-line: color-mix(in srgb, var(--color-navy) 15%, white);
+}
+
 ::selection {
   background: var(--color-navy);
   color: #fff;

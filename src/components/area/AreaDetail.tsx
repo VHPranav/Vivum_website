@@ -19,12 +19,13 @@ const ease = [0.22, 1, 0.36, 1] as const;
  * Area page after the Tresmares Capital solution pages:
  * symbol hero + facts row → scattered gallery with sticky text → grey table → other areas.
  */
-export function AreaDetail({ page, others, locale, otherLabel }: { page: AreaPage; others: Other[]; locale: Locale; otherLabel: string }) {
+export function AreaDetail({ page, others, locale, otherLabel, children }: { page: AreaPage; others: Other[]; locale: Locale; otherLabel: string; children?: React.ReactNode }) {
   return (
     <>
       <AreaHero page={page} image={page.gallery.images[0]} />
       <Gallery gallery={page.gallery} />
       <Table table={page.table} cta={page.cta} locale={locale} approval={page.approval} />
+      {children}
       <OtherAreas others={others} locale={locale} label={otherLabel} />
     </>
   );
@@ -35,8 +36,8 @@ function Facts({ facts, className = "" }: { facts: AreaPage["facts"]; className?
     <dl className={`grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3 lg:grid-cols-6 ${className}`}>
       {facts.map((f) => (
         <div key={f.k} data-fact>
-          <dt className="text-[0.675rem] font-bold tracking-[0.02em] text-ink uppercase">{f.k}</dt>
-          <dd className="mt-1 text-[0.675rem] font-medium text-ink/70">{f.v}</dd>
+          <dt className="text-[0.675rem] font-bold tracking-[0.02em] text-navy uppercase">{f.k}</dt>
+          <dd className="mt-1 text-[0.675rem] font-medium text-navy/70">{f.v}</dd>
         </div>
       ))}
     </dl>
@@ -54,15 +55,15 @@ function AreaHero({ page, image }: { page: AreaPage; image: string }) {
     { scope: root },
   );
   return (
-    <section ref={root} aria-labelledby="area-title" className="relative min-h-[100svh] overflow-hidden bg-paper pt-[4.5rem]">
+    <section ref={root} aria-labelledby="area-title" className="relative min-h-[100svh] overflow-hidden bg-white pt-[4.5rem]">
       <div aria-hidden className="absolute inset-0">
         <Image src={image} alt="" fill preload sizes="100vw" quality={90} className="object-cover" />
         <Clouds progressRef={progress} className="absolute inset-0 [&[data-fallback]]:hidden" />
       </div>
       <div className="relative flex min-h-[calc(100svh-4.5rem)] flex-col justify-end px-5 pb-[8svh] md:px-6">
         {/* soft cloud bank behind the copy so it reads over any photo */}
-        <div aria-hidden className="pointer-events-none absolute bottom-[-10%] left-[-15%] h-[85%] w-[80%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(251,250,246,0.97),rgba(251,250,246,0.85)_50%,rgba(251,250,246,0)_100%)] blur-2xl" />
-        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-paper/95 to-paper/0" />
+        <div aria-hidden className="pointer-events-none absolute bottom-[-10%] left-[-15%] h-[85%] w-[80%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(255,255,255,0.97),rgba(255,255,255,0.85)_50%,rgba(255,255,255,0)_100%)] blur-2xl" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-white/95 to-white/0" />
         <h1 id="area-title" className="relative max-w-full text-[clamp(2.25rem,1rem+5vw,6.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-navy md:max-w-[60vw] md:leading-[0.95]">
           <SplitLines as="span" on="load" delay={0.1} className="block">
             {page.title[0]}
@@ -71,10 +72,11 @@ function AreaHero({ page, image }: { page: AreaPage; image: string }) {
             {page.title[1]}
           </SplitLines>
         </h1>
-        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="relative mt-[6svh] max-w-[17rem] text-[1.125rem] leading-[1.25] font-medium text-ink">
+        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="relative mt-[6svh] max-w-[17rem] text-[1.125rem] leading-[1.25] font-medium text-navy">
           {page.lede}
         </SplitLines>
         <Facts facts={page.facts} className="relative mt-[5svh]" />
+        <Link href="#enquiry" className="relative mt-6 inline-flex min-h-12 items-center self-start bg-navy px-6 py-3 text-sm font-medium text-white">{page.cta.label}</Link>
       </div>
     </section>
   );
@@ -98,7 +100,7 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
   );
   const [a, b, c, d] = gallery.images;
   const img = (src: string, cls: string, speed: number, sizes: string) => (
-    <div className={`overflow-hidden bg-mist ${cls}`}>
+    <div className={`overflow-hidden bg-white ${cls}`}>
       <div data-speed={speed} className="relative h-[112%] -translate-y-[6%]">
         <Image src={src} alt="" fill loading="eager" sizes={sizes} quality={90} className="object-cover grayscale" />
       </div>
@@ -113,8 +115,8 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
       </div>
       {/* row 2: heading + text, clear of the photos */}
       <div className="px-5 py-[12vw] md:ml-[27vw] md:w-[50vw] md:px-0 md:py-[8vw]">
-        <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-ink">{gallery.heading}</h2>
-        <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-ink md:ml-[20vw] md:max-w-[22rem]">{gallery.text}</p>
+        <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-navy">{gallery.heading}</h2>
+        <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-navy md:ml-[20vw] md:max-w-[22rem]">{gallery.text}</p>
       </div>
       {/* row 3: two photos */}
       <div className="flex items-start justify-between gap-5 pr-5 md:pr-[6vw]">
@@ -127,29 +129,29 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
 
 function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta: AreaPage["cta"]; locale: Locale; approval: string }) {
   return (
-    <section aria-label={table.columns[0]} className="bg-[#f2f2f2] px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
+    <section aria-label={table.columns[0]} className="bg-white px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
       <div className="grid gap-10 md:grid-cols-2">
-        <SplitLines as="p" className="max-w-[30rem] text-[1.25rem] leading-[1.3] font-medium text-ink md:text-[1.6rem]">
+        <SplitLines as="p" className="max-w-[30rem] text-[1.25rem] leading-[1.3] font-medium text-navy md:text-[1.6rem]">
           {table.intro}
         </SplitLines>
-        <h2 className="text-[clamp(3rem,1rem+7vw,8.5rem)] leading-[0.92] font-medium tracking-[-0.035em] text-ink">
+        <h2 className="min-w-0 text-[clamp(2rem,9vw,3rem)] leading-[1.02] font-medium tracking-[-0.035em] text-navy md:text-[clamp(2rem,4.5vw,6.5rem)]">
           <SplitLines as="span" className="block">{table.heading[0]}</SplitLines>
           <SplitLines as="span" className="block">{table.heading[1]}</SplitLines>
         </h2>
       </div>
       <div className="mt-[6vw]">
-        <div className="hidden grid-cols-12 border-b border-ink/15 pb-3 text-[0.675rem] text-ink/50 md:grid">
+        <div className="hidden grid-cols-12 border-b border-navy/15 pb-3 text-[0.675rem] text-navy/50 md:grid">
           <span className="col-span-5">{table.columns[0]}</span>
           <span className="col-span-3">{table.columns[1]}</span>
           <span className="col-span-2">{table.columns[2]}</span>
           <span className="col-span-2 text-right">{table.columns[3]}</span>
         </div>
         {table.groups.map((g) => (
-          <div key={g.name} className="grid grid-cols-1 gap-4 border-b border-ink/15 py-8 md:grid-cols-12 md:py-10">
-            <h3 className="text-[1.75rem] leading-[1.05] font-medium tracking-[-0.015em] text-ink md:col-span-5 md:max-w-[14ch] md:text-[clamp(1.5rem,0.6rem+1.6vw,2.25rem)]">{g.name}</h3>
+          <div key={g.name} className="grid grid-cols-1 gap-4 border-b border-navy/15 py-8 md:grid-cols-12 md:py-10">
+            <h3 className="text-[1.75rem] leading-[1.05] font-medium tracking-[-0.015em] text-navy md:col-span-5 md:max-w-[14ch] md:text-[clamp(1.5rem,0.6rem+1.6vw,2.25rem)]">{g.name}</h3>
             <ul className="space-y-3 md:col-span-7">
               {g.rows.map((r, i) => (
-                <li key={i} className="grid grid-cols-7 gap-4 text-[0.75rem] leading-snug text-ink">
+                <li key={i} className="grid grid-cols-7 gap-4 text-[0.75rem] leading-snug text-navy">
                   <span className="col-span-4 md:col-span-3">{r[0]}</span>
                   <span className="hidden md:col-span-2 md:block">{r[1]}</span>
                   <span className="col-span-3 text-right md:col-span-2">{r[2]}</span>
@@ -160,12 +162,12 @@ function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta
         ))}
       </div>
       <div className="mt-10 flex flex-wrap items-center justify-between gap-6">
-        {table.note ? <p className="max-w-md text-[0.75rem] text-ink/60">{table.note}</p> : <span />}
-        <Link href={localePath(locale, cta.href)} className="inline-flex min-h-12 items-center bg-navy px-7 text-[0.825rem] font-medium text-white transition-colors hover:bg-navy-ink">
+        {table.note ? <p className="max-w-md text-[0.75rem] text-navy/60">{table.note}</p> : <span />}
+        <Link href={cta.href.startsWith("#") ? cta.href : localePath(locale, cta.href)} className="inline-flex min-h-12 items-center bg-navy px-7 text-[0.825rem] font-medium text-white transition-colors hover:bg-navy/90">
           {cta.label}
         </Link>
       </div>
-      <ApprovalFlag className="mt-6">{approval}</ApprovalFlag>
+      <ApprovalFlag tone="navy" className="mt-6">{approval}</ApprovalFlag>
     </section>
   );
 }
@@ -175,14 +177,14 @@ function OtherAreas({ others, locale, label }: { others: Other[]; locale: Locale
   const [open, setOpen] = useState(0);
   return (
     <section aria-labelledby="other-areas" className="bg-white px-5 py-[8vw] md:px-[2.4vw]">
-      <p id="other-areas" className="border-b border-ink/15 pb-3 text-[0.675rem] text-ink/50">
+      <p id="other-areas" className="border-b border-navy/15 pb-3 text-[0.675rem] text-navy/50">
         {label}
       </p>
       <ul>
         {others.map((o, i) => {
           const isOpen = open === i;
           return (
-            <li key={o.id} onMouseEnter={() => setOpen(i)} className="relative border-b border-ink/15">
+            <li key={o.id} onMouseEnter={() => setOpen(i)} className="relative border-b border-navy/15">
               <div className="relative overflow-hidden">
                 <AnimatePresence initial={false}>
                   {isOpen && (
@@ -194,13 +196,13 @@ function OtherAreas({ others, locale, label }: { others: Other[]; locale: Locale
                       transition={{ duration: 0.8, ease }}
                       className="pointer-events-none absolute inset-y-[8%] left-[30%] hidden w-[34%] md:block"
                     >
-                      <AreaSymbol id={o.id} mono className="h-full w-full text-ink/[0.05]" />
+                      <AreaSymbol id={o.id} mono className="h-full w-full text-navy/[0.05]" />
                     </motion.div>
                   )}
                 </AnimatePresence>
                 <div className="relative grid grid-cols-1 gap-6 md:grid-cols-12">
                   <button type="button" aria-expanded={isOpen} onClick={() => setOpen(i)} className="py-8 text-left md:col-span-8">
-                    <span className="block text-[clamp(2rem,1rem+3vw,3.75rem)] leading-[0.98] font-medium tracking-[-0.02em] text-ink">
+                    <span className="block text-[clamp(2rem,1rem+3vw,3.75rem)] leading-[0.98] font-medium tracking-[-0.02em] text-navy">
                       {o.title[0]}
                       <br />
                       {o.title[1]}
@@ -210,14 +212,14 @@ function OtherAreas({ others, locale, label }: { others: Other[]; locale: Locale
                     <AnimatePresence initial={false}>
                       {isOpen && (
                         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease, delay: 0.1 }} className="hidden max-w-[17rem] md:block">
-                          <p className="text-[0.8rem] leading-snug text-ink/80">{o.lede}</p>
+                          <p className="text-[0.8rem] leading-snug text-navy/80">{o.lede}</p>
                           <Link href={localePath(locale, o.href)} className="link-u mt-4 inline-block text-[0.8rem] font-medium text-navy">
                             Explore
                           </Link>
                         </motion.div>
                       )}
                     </AnimatePresence>
-                    <span aria-hidden className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center border border-ink/20 text-[0.8rem] text-ink">
+                    <span aria-hidden className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center border border-navy/20 text-[0.8rem] text-navy">
                       {isOpen ? "−" : "+"}
                     </span>
                   </div>

@@ -14,6 +14,7 @@ import {
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { StepForm } from "@/components/forms/StepForm";
+import { formFields, formKinds, type FormKind, type Field } from "@/lib/forms";
 
 export async function generateMetadata({
   params,
@@ -168,6 +169,7 @@ export default async function ContactPage({
               routes={contactRoutes}
               reviewMode={reviewMode}
               defaultArea={area}
+              fieldsByArea={Object.fromEntries(formKinds.map((kind) => [kind, formFields(kind, c)])) as Record<FormKind, Field[]>}
             />
           </div>
         </div>

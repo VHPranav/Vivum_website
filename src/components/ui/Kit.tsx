@@ -81,11 +81,11 @@ export function SectionHead({
 }
 
 /** "Client approval required" marker — visible only in the review build. */
-export function ApprovalFlag({ children, className = "" }: { children?: React.ReactNode; className?: string }) {
+export function ApprovalFlag({ children, className = "", tone = "gold" }: { children?: React.ReactNode; className?: string; tone?: "gold" | "navy" }) {
   if (!reviewMode) return null;
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border border-gold/60 bg-[#f7efd6] px-2.5 py-1 text-[0.6875rem] leading-tight font-medium text-[#6b5413] ${className}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.6875rem] leading-tight font-medium ${tone === "navy" ? "border-navy/15 bg-white text-navy/70" : "border-gold/60 bg-[#f7efd6] text-[#6b5413]"} ${className}`}
     >
       <svg viewBox="0 0 12 12" className="h-3 w-3 shrink-0" aria-hidden fill="none" stroke="currentColor" strokeWidth={1.3}>
         <circle cx="6" cy="6" r="5" />

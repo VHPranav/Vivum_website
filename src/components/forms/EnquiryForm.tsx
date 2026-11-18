@@ -24,7 +24,7 @@ type Props = {
 const initial: FormState = { status: "idle" };
 
 const inputBase =
-  "w-full rounded-xl border bg-white px-4 py-3 text-[0.9375rem] text-ink placeholder:text-muted/60 transition-colors focus:border-navy focus:outline-none focus:ring-2 focus:ring-azure/25";
+  "w-full min-w-0 border-0 border-b border-ink/20 bg-transparent px-0 pt-3 pb-3 text-lg leading-snug tracking-[-0.02em] text-navy placeholder:text-ink/25 transition-colors focus:border-navy focus:outline-none md:text-xl";
 
 export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, reviewMode, defaultService }: Props) {
   const [state, action, pending] = useActionState(submitEnquiry, initial);
@@ -44,18 +44,19 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
   if (state.status === "success") {
     const r = routes[state.route];
     return (
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="rounded-[1.75rem] border border-line bg-white p-6 md:p-10" role="status" aria-live="polite">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mist text-green-deep" aria-hidden>
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="py-4" role="status" aria-live="polite">
+        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-navy" aria-hidden>
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6}>
             <path d="m5 12.5 4.5 4.5L19 7.5" />
           </svg>
         </span>
-        <h3 className="mt-5 font-serif text-2xl font-light text-navy md:text-3xl">{copy.successTitle}</h3>
-        <p className="mt-3 text-muted">{copy.successBody}</p>
+        <h3 className="mt-5 font-serif text-2xl font-light text-navy md:text-3xl">{state.preview ? "Preview complete — enquiry not sent." : copy.successTitle}</h3>
+        <p className="mt-3 text-muted">{state.preview ? "Your form has been checked. Delivery is not connected in this review build; no enquiry has been sent or stored." : copy.successBody}</p>
         <p className="mt-4 text-sm text-ink">
           {copy.routedTo}: <strong className="font-medium">{r.team}</strong>
         </p>
-        <dl className="mt-6 divide-y divide-line border-y border-line text-sm">
+        {state.reference && <p className="mt-4 text-sm text-muted">Reference: {state.reference}</p>}
+        <dl className="mt-6 text-sm">
           {state.summary.map((s) => (
             <div key={s.label} className="grid gap-1 py-3 sm:grid-cols-3">
               <dt className="text-muted">{s.label}</dt>
@@ -63,7 +64,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
             </div>
           ))}
         </dl>
-        {reviewMode && <p className="mt-5 rounded-xl bg-[#f7efd6] px-4 py-3 text-xs leading-relaxed text-[#6b5413]">{copy.previewNote}</p>}
+        {state.preview && <p className="mt-5 rounded-xl bg-white px-4 py-3 text-xs leading-relaxed text-navy/70">{copy.previewNote}</p>}
       </motion.div>
     );
   }
@@ -81,7 +82,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
         startTransition(() => action(data));
       }}
       noValidate
-      className="relative rounded-[1.75rem] border border-line bg-white p-5 sm:p-8 md:p-10">
+      className="relative">
       <input type="hidden" name="_kind" value={kind} />
       <input type="hidden" name="_lang" value={locale} />
       <input type="hidden" name="_t" ref={startedAt} defaultValue="0" />
@@ -95,35 +96,35 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
 
       <AnimatePresence>
         {state.status === "error" && (
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert" className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert" className="mb-6 text-sm text-red-700">
             {errors._form ?? copy.errorSummary}
           </motion.p>
         )}
       </AnimatePresence>
 
-      <div className="grid gap-x-5 gap-y-6 md:grid-cols-2">
+      <div className="grid gap-x-10 gap-y-9 md:grid-cols-2">
         {fields.map((f) => {
           const err = errors[f.name];
-          const border = err ? "border-red-400" : "border-line";
+          const fieldTone = err ? "text-red-700" : "";
           const label = (
             <>
               {f.label}
-              {f.required ? <span className="text-red-700" aria-hidden> *</span> : <span className="font-normal text-muted"> ({copy.optional})</span>}
+              {f.required ? <span className="text-navy" aria-hidden> *</span> : <span className="font-normal text-muted"> ({copy.optional})</span>}
             </>
           );
           return (
             <div key={f.name} className={f.wide ? "md:col-span-2" : ""}>
               {f.type === "choice" ? (
                 <fieldset aria-describedby={describe(f)}>
-                  <legend className="mb-3 text-sm font-medium text-ink">{label}</legend>
-                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  <legend className="mb-3 text-[0.65rem] font-medium tracking-[0.08em] text-ink/45 uppercase">{label}</legend>
+                  <div className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
                     {f.options!.map((o) => {
                       const checked = (service || values[f.name]) === o.value;
                       return (
                         <label
                           key={o.value}
-                          className={`flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-azure/40 ${
-                            checked ? "border-navy bg-sky/60" : `${border} bg-white hover:border-navy/40`
+                          className={`flex cursor-pointer items-start gap-3 py-3 transition-colors has-[:focus-visible]:bg-white ${
+                            checked ? "text-navy" : "text-muted hover:text-navy"
                           }`}
                         >
                           <input
@@ -136,7 +137,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                             required={f.required}
                           />
                           <span>
-                            <span className="block text-sm text-ink">{o.label}</span>
+                            <span className="block text-base leading-snug">{o.label}</span>
                             {o.hint && <span className="block text-xs text-muted">{o.hint}</span>}
                           </span>
                         </label>
@@ -146,20 +147,21 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                 </fieldset>
               ) : (
                 <>
-                  <label htmlFor={`${kind}-${f.name}`} className="mb-2 block text-sm font-medium text-ink">
+                  <label htmlFor={`${kind}-${f.name}`} className="mb-1 block text-[0.65rem] font-medium tracking-[0.08em] text-ink/45 uppercase">
                     {label}
                   </label>
                   {f.type === "textarea" ? (
                     <textarea
                       id={`${kind}-${f.name}`}
                       name={f.name}
-                      rows={5}
+                      placeholder="Tell us a little about what you need…"
+                      rows={4}
                       maxLength={f.max}
                       required={f.required}
                       defaultValue={values[f.name]}
                       aria-invalid={!!err}
                       aria-describedby={describe(f)}
-                      className={`${inputBase} ${border} resize-y`}
+                      className={`${inputBase} ${fieldTone} resize-y`}
                     />
                   ) : f.type === "select" ? (
                     <select
@@ -169,7 +171,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                       defaultValue={values[f.name] ?? ""}
                       aria-invalid={!!err}
                       aria-describedby={describe(f)}
-                      className={`${inputBase} ${border} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 fill=%22none%22 stroke=%22%230d3b7a%22 stroke-width=%221.4%22/></svg>')] bg-[length:12px_8px] bg-[right_1rem_center] bg-no-repeat pr-10`}
+                      className={`${inputBase} ${fieldTone} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 fill=%22none%22 stroke=%22%230d3b7a%22 stroke-width=%221.4%22/></svg>')] bg-[length:12px_8px] bg-[right_1rem_center] bg-no-repeat pr-10`}
                     >
                       <option value="" disabled>
                         Select…
@@ -189,10 +191,11 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                       maxLength={f.max}
                       required={f.required}
                       autoComplete={f.autoComplete}
+                      placeholder={f.type === "email" ? "you@example.com" : f.label}
                       defaultValue={values[f.name]}
                       aria-invalid={!!err}
                       aria-describedby={describe(f)}
-                      className={`${inputBase} ${border}`}
+                      className={`${inputBase} ${fieldTone}`}
                     />
                   )}
                 </>
@@ -230,15 +233,15 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
         )}
       </div>
 
-      <div className="mt-8 flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs text-muted" aria-live="polite">
           {copy.routedTo}: <span className="font-medium text-ink">{route.team}</span>
-          {reviewMode && !route.verified && <span className="block text-[#6b5413]">Proposed inbox {route.email}, not yet confirmed</span>}
+          {reviewMode && !route.verified && <span className="block text-navy/70">Proposed inbox {route.email}, not yet confirmed</span>}
         </p>
         <button
           type="submit"
           disabled={pending}
-          className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-navy px-7 py-3 text-[0.8125rem] font-medium tracking-wide text-white transition-colors hover:bg-navy-deep disabled:opacity-60"
+          className="group inline-flex min-h-12 items-center justify-center gap-5 rounded-full bg-navy px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-navy/90 disabled:opacity-60"
         >
           {pending ? copy.sending : submitLabel}
           <Arrow />

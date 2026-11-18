@@ -8,6 +8,7 @@ import { FactsGrid, NetworkWheel, PeopleRow } from "@/components/home/Tresmares"
 import { AreaShowcase } from "@/components/home/AreaShowcase";
 import { BenefitsScroller } from "@/components/home/Scroll";
 import { Partners } from "@/components/home/Partners";
+import { ContactSection } from "@/components/forms/ContactSection";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
   const { lang } = await params;
@@ -16,10 +17,7 @@ export async function generateMetadata({ params }: PageProps<"/[lang]">): Promis
   return { title: { absolute: home.meta.title }, description: home.meta.description, alternates: { canonical: localePath(lang, "/") } };
 }
 
-// Follows the Tresmares Capital homepage section for section:
-// cloud hero → About statement → figures → services statement → pinned four-area showcase →
-// network wheel → people → closing footer. VIVUM additions from the client brief: Why work
-// with us and Partners & experience. The routed enquiry form lives on /contact.
+// Keep one services showcase and a routed enquiry form at the close.
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
@@ -36,6 +34,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <NetworkWheel network={h.network} />
       <PeopleRow people={h.people} />
       <Partners partners={h.partners} />
+      <ContactSection c={c} locale={lang} head={{ label: "Contact VIVUM", title: "What’s your next step?", lede: "Choose an area and tell us what you need." }} />
     </>
   );
 }

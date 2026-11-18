@@ -4,7 +4,7 @@ import Link from "next/link";
 import { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { submitEnquiry } from "@/lib/enquiry";
-import type { FormState } from "@/lib/forms";
+import type { Field as FormField, FormKind, FormState } from "@/lib/forms";
 import type { RouteId } from "@/lib/site";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
@@ -15,10 +15,10 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const initial: FormState = { status: "idle" };
 
 const line =
-  "w-full border-0 border-b border-ink/25 bg-transparent px-0 pt-2 pb-3 text-[1.35rem] font-medium tracking-[-0.01em] text-ink placeholder:text-ink/25 transition-colors focus:border-navy focus:outline-none md:text-[1.6rem]";
+  "w-full min-w-0 border-0 border-b border-ink/20 bg-transparent px-0 pt-3 pb-3 text-[1.25rem] leading-snug font-normal tracking-[-0.02em] text-navy placeholder:text-ink/25 transition-colors focus:border-navy focus:outline-none md:text-[1.5rem]";
 
 /**
- * Three-step enquiry in the site's own language (big type, hairlines, no boxes):
+ * Three-step enquiry in the site's own language (open spacing, quiet labels, no boxes):
  * 01 choose the area → 02 your details → 03 your message. Every field stays mounted so the
  * server action receives the full form; each step is checked before moving on.
  */
@@ -29,6 +29,7 @@ export function StepForm({
   routes,
   reviewMode,
   defaultArea,
+  fieldsByArea,
 }: {
   locale: Locale;
   areas: Area[];
@@ -36,6 +37,7 @@ export function StepForm({
   routes: Record<RouteId, { team: string; email: string; verified: boolean }>;
   reviewMode: boolean;
   defaultArea?: string;
+  fieldsByArea: Record<FormKind, FormField[]>;
 }) {
   const [state, action, pending] = useActionState(submitEnquiry, initial);
   const form = useRef<HTMLFormElement>(null);
@@ -52,6 +54,10 @@ export function StepForm({
   const errors = { ...serverErrors, ...local };
   const routeId = (["wellbeing", "education", "workforce", "consulting"].includes(area) ? area : "general") as RouteId;
   const route = routes[routeId];
+  const kind = routeId as FormKind;
+  const fields = fieldsByArea[kind];
+  const detailFields = fields.filter((f) => f.type !== "textarea" && f.name !== "service");
+  const messageField = fields.find((f) => f.type === "textarea")!;
   const steps = ["Area", "Your details", "Your message"];
 
   // Jump back to the step holding a server-side error.
@@ -59,8 +65,8 @@ export function StepForm({
     if (state.status !== "error") return;
     const e = state.errors;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reacting to the server's answer
-    setStep(e.service ? 0 : e.name || e.email || e.phone || e.country ? 1 : 2);
-  }, [state]);
+    setStep(e.service ? 0 : fieldsByArea[kind].some((f) => f.type !== "textarea" && e[f.name]) ? 1 : 2);
+  }, [state, fieldsByArea, kind]);
 
   const check = (names: string[]) => {
     const f = form.current!;
@@ -75,7 +81,7 @@ export function StepForm({
   };
 
   const go = (to: number) => {
-    if (to > step && !check(step === 0 ? ["service"] : ["name", "email"])) return;
+    if (to > step && !check(step === 0 ? ["service"] : detailFields.map((f) => f.name))) return;
     setLocal({});
     setStep(to);
   };
@@ -85,17 +91,18 @@ export function StepForm({
     return (
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease }} role="status" aria-live="polite">
         <p className="text-[0.75rem] text-ink/50">{copy.routedTo}: {r.team}</p>
-        <h3 className="mt-4 text-[clamp(2.25rem,1rem+3vw,4rem)] leading-[0.95] font-medium tracking-[-0.03em] text-navy">{copy.successTitle}</h3>
-        <p className="mt-6 max-w-md text-[1.05rem] leading-snug text-ink/80">{copy.successBody}</p>
-        <dl className="mt-10 max-w-xl border-t border-ink/15">
+        <h3 className="mt-4 text-[clamp(2.25rem,1rem+3vw,4rem)] leading-[0.95] font-medium tracking-[-0.03em] text-navy">{state.preview ? "Preview complete — enquiry not sent." : copy.successTitle}</h3>
+        <p className="mt-6 max-w-md text-[1.05rem] leading-snug text-ink/80">{state.preview ? "Your form has been checked. Delivery is not connected in this review build; no enquiry has been sent or stored." : copy.successBody}</p>
+        {state.reference && <p className="mt-4 text-sm text-muted">Reference: {state.reference}</p>}
+        <dl className="mt-10 max-w-xl">
           {state.summary.map((s) => (
-            <div key={s.label} className="grid gap-1 border-b border-ink/15 py-3 sm:grid-cols-3">
+            <div key={s.label} className="grid gap-1 py-3 sm:grid-cols-3">
               <dt className="text-[0.7rem] font-bold tracking-[0.02em] text-ink uppercase">{s.label}</dt>
               <dd className="text-[0.85rem] break-words text-ink/80 sm:col-span-2">{s.value}</dd>
             </div>
           ))}
         </dl>
-        {reviewMode && <p className="mt-6 max-w-xl bg-[#f7efd6] px-4 py-3 text-xs leading-relaxed text-[#6b5413]">{copy.previewNote}</p>}
+        {state.preview && <p className="mt-6 max-w-xl bg-[#f7efd6] px-4 py-3 text-xs leading-relaxed text-[#6b5413]">{copy.previewNote}</p>}
       </motion.div>
     );
   }
@@ -113,14 +120,14 @@ export function StepForm({
       action={action}
       onSubmit={(e) => {
         e.preventDefault();
-        if (!check(["message", "consent"])) return;
+        if (!check([messageField.name, "consent"])) return;
         const data = new FormData(e.currentTarget);
         startTransition(() => action(data));
       }}
       noValidate
       className="relative"
     >
-      <input type="hidden" name="_kind" value="general" />
+      <input type="hidden" name="_kind" value={kind} />
       <input type="hidden" name="_lang" value={locale} />
       <input type="hidden" name="_t" ref={startedAt} defaultValue="0" />
       <input type="hidden" name="service" value={area} />
@@ -136,11 +143,9 @@ export function StepForm({
         {steps.map((s, i) => (
           <li key={s}>
             <button type="button" onClick={() => i < step && go(i)} disabled={i > step} aria-current={i === step ? "step" : undefined} className="block w-full text-left disabled:cursor-default">
-              <span className="relative block h-px bg-ink/15">
-                <motion.span className="absolute inset-y-0 left-0 bg-navy" initial={false} animate={{ width: i <= step ? "100%" : "0%" }} transition={{ duration: 0.7, ease }} />
-              </span>
-              <span className={`mt-3 block text-[0.7rem] transition-colors ${i === step ? "text-navy" : "text-ink/45"}`}>
-                0{i + 1} <span className="hidden sm:inline">· {s}</span>
+              <span className={`flex items-center gap-2.5 text-xs transition-colors ${i === step ? "text-navy" : i < step ? "text-green-deep" : "text-ink/30"}`}>
+                <span className="text-[0.65rem] tabular-nums">{i < step ? "✓" : `0${i + 1}`}</span>
+                <span className={i === step ? "font-semibold" : "font-normal"}>{s}</span>
               </span>
             </button>
           </li>
@@ -153,17 +158,17 @@ export function StepForm({
         </p>
       )}
 
-      <div className="relative mt-[3.5rem] min-h-[22rem]">
+      <div className="relative mt-10 min-h-[22rem] md:mt-14">
         {/* 01 Area */}
         <Step show={step === 0}>
           <fieldset aria-describedby={errors.service ? "service-error" : undefined}>
             <legend className="text-[0.75rem] text-ink/50">What would you like to talk about?</legend>
-            <ul className="mt-4 border-t border-ink/15">
+            <ul className="mt-5 space-y-1">
               {[...areas, { id: "general", name: "General enquiry", description: "Anything else, or not sure yet." }].map((a, i) => {
                 const on = area === a.id;
                 return (
                   <li key={a.id}>
-                    <label className={`group flex cursor-pointer items-center gap-5 border-b border-ink/15 py-5 transition-colors has-[:focus-visible]:bg-mist/60 ${on ? "text-navy" : "text-ink"}`}>
+                    <label className={`group flex cursor-pointer items-center gap-4 py-5 transition-colors has-[:focus-visible]:bg-paper ${on ? "text-navy" : "text-ink"}`}>
                       <input
                         type="radio"
                         name="_area"
@@ -172,18 +177,17 @@ export function StepForm({
                         onChange={() => {
                           setArea(a.id);
                           setLocal({});
-                          window.setTimeout(() => setStep(1), 260);
                         }}
                         className="sr-only"
                       />
-                      <span className="w-7 shrink-0 text-[0.75rem] text-ink/40">0{i + 1}</span>
+                      <span className="w-5 shrink-0 self-start pt-1 text-[0.65rem] text-ink/35">0{i + 1}</span>
                       <span className="flex-1">
-                        <span className="block text-[clamp(1.35rem,0.9rem+1.2vw,2.1rem)] leading-tight font-medium tracking-[-0.02em] transition-transform duration-500 ease-[var(--ease-calm)] group-hover:translate-x-2">
+                        <span className="block text-[clamp(1.2rem,0.85rem+1vw,1.75rem)] leading-tight font-medium tracking-[-0.02em] transition-transform duration-500 ease-[var(--ease-calm)] group-hover:translate-x-2">
                           {a.name}
                         </span>
-                        <span className="mt-1 block text-[0.8rem] text-ink/55">{a.description}</span>
+                        <span className="mt-2 block max-w-[40ch] text-sm leading-relaxed text-ink/50">{a.description}</span>
                       </span>
-                      <span aria-hidden className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors ${on ? "border-navy bg-navy text-white" : "border-ink/20 text-ink group-hover:border-navy group-hover:text-navy"}`}>
+                      <span aria-hidden className={`flex h-9 w-9 shrink-0 items-center justify-center transition-all ${on ? "text-green-deep" : "text-ink/30 group-hover:translate-x-1 group-hover:text-navy"}`}>
                         <Arrow className="h-2 w-3.5" />
                       </span>
                     </label>
@@ -193,34 +197,41 @@ export function StepForm({
             </ul>
             {err("service")}
           </fieldset>
+          <div className="mt-8 flex justify-end">
+            <button type="button" onClick={() => go(1)} className="group inline-flex min-h-12 items-center gap-5 rounded-full bg-navy px-7 text-sm font-medium text-white transition-colors hover:bg-navy-ink">
+              Continue <Arrow className="transition-transform group-hover:translate-x-1" />
+            </button>
+          </div>
         </Step>
 
         {/* 02 Details */}
         <Step show={step === 1}>
+          <h3 className="mb-3 text-2xl font-normal tracking-[-0.025em] text-navy md:text-3xl">A little about you.</h3>
           <p className="text-[0.75rem] text-ink/50">
             {copy.routedTo}: <span className="text-navy">{route.team}</span>
           </p>
-          <div className="mt-6 grid gap-x-8 gap-y-10 md:grid-cols-2">
-            <Field label={copy.name} name="name" error={err("name")}>
-              <input id="f-name" name="name" required maxLength={120} autoComplete="name" placeholder="Your name" className={line} aria-invalid={!!errors.name} />
-            </Field>
-            <Field label={copy.email} name="email" error={err("email")}>
-              <input id="f-email" name="email" type="email" required maxLength={200} autoComplete="email" placeholder="you@example.com" className={line} aria-invalid={!!errors.email} />
-            </Field>
-            <Field label={`${copy.phone} (${copy.optional})`} name="phone" error={err("phone")}>
-              <input id="f-phone" name="phone" type="tel" maxLength={40} autoComplete="tel" placeholder="+382 …" className={line} />
-            </Field>
-            <Field label={`${copy.country} (${copy.optional})`} name="country" error={err("country")}>
-              <input id="f-country" name="country" maxLength={80} autoComplete="country-name" placeholder="Montenegro" className={line} />
-            </Field>
+          <div className="mt-8 grid gap-x-10 gap-y-9 md:grid-cols-2">
+            {detailFields.map((f) => (
+              <Field key={f.name} label={`${f.label}${f.required ? " *" : ` (${copy.optional})`}`} name={f.name} error={err(f.name)}>
+                {f.type === "select" ? (
+                  <select id={`f-${f.name}`} name={f.name} required={f.required} defaultValue="" className={`${line} min-w-0 text-base md:text-lg`} aria-invalid={!!errors[f.name]}>
+                    <option value="" disabled>Select…</option>
+                    {f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                ) : (
+                  <input id={`f-${f.name}`} name={f.name} type={f.type === "number" ? "text" : f.type} inputMode={f.type === "number" ? "numeric" : undefined} pattern={f.type === "number" ? "[1-9][0-9]{0,4}" : undefined} required={f.required} maxLength={f.max} autoComplete={f.autoComplete} placeholder={f.name === "name" ? "Your full name" : f.name === "email" ? "you@example.com" : f.name === "phone" ? "+382 …" : f.label} className={line} aria-invalid={!!errors[f.name]} aria-describedby={f.hint ? `f-${f.name}-hint` : undefined} />
+                )}
+                {f.hint && <p id={`f-${f.name}-hint`} className="mt-1 text-xs leading-relaxed text-muted">{f.hint}</p>}
+              </Field>
+            ))}
           </div>
           <Nav onBack={() => go(0)} onNext={() => go(2)} />
         </Step>
 
         {/* 03 Message */}
         <Step show={step === 2}>
-          <Field label={copy.message} name="message" error={err("message")}>
-            <textarea id="f-message" name="message" required maxLength={2000} rows={4} placeholder="Tell us a little about what you need…" className={`${line} resize-none`} aria-invalid={!!errors.message} />
+          <Field label={`${messageField.label}${messageField.required ? " *" : ` (${copy.optional})`}`} name={messageField.name} error={err(messageField.name)}>
+            <textarea key={messageField.name} id={`f-${messageField.name}`} name={messageField.name} required={messageField.required} maxLength={messageField.max} rows={4} placeholder={messageField.hint ?? "Tell us a little about what you need…"} className={`${line} resize-y`} aria-invalid={!!errors[messageField.name]} />
           </Field>
           <label className="mt-8 flex max-w-xl items-start gap-3 text-[0.8rem] leading-relaxed text-ink/60">
             <input type="checkbox" name="consent" value="yes" required className="mt-1 h-4 w-4 shrink-0 accent-navy" aria-invalid={!!errors.consent} />
@@ -233,13 +244,13 @@ export function StepForm({
             </span>
           </label>
           {err("consent")}
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-6 border-t border-ink/15 pt-6">
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-6">
             <button type="button" onClick={() => go(1)} className="link-u text-[0.85rem] text-ink">
               Back
             </button>
             <div className="flex items-center gap-6">
-              {reviewMode && !route.verified && <span className="hidden text-[0.7rem] text-[#6b5413] md:block">Proposed inbox {route.email}</span>}
-              <button type="submit" disabled={pending} className="group inline-flex min-h-14 items-center gap-4 bg-navy px-8 text-[0.9rem] font-medium text-white transition-colors hover:bg-navy-ink disabled:opacity-60">
+              {reviewMode && !route.verified && <span className="hidden max-w-40 text-[0.65rem] leading-relaxed text-ink/40 xl:block">Proposed inbox {route.email}</span>}
+              <button type="submit" disabled={pending} className="group inline-flex min-h-12 items-center gap-5 rounded-full bg-navy px-7 text-sm font-medium text-white transition-colors hover:bg-navy-ink disabled:opacity-60">
                 {pending ? copy.sending : "Send enquiry"}
                 <Arrow className="transition-transform duration-500 group-hover:translate-x-1" />
               </button>
@@ -270,7 +281,7 @@ function Step({ show, children }: { show: boolean; children: React.ReactNode }) 
 function Field({ label, name, error, children }: { label: string; name: string; error: React.ReactNode; children: React.ReactNode }) {
   return (
     <div>
-      <label htmlFor={`f-${name}`} className="block text-[0.75rem] text-ink/50">
+      <label htmlFor={`f-${name}`} className="block text-[0.65rem] font-medium tracking-[0.08em] text-ink/45 uppercase">
         {label}
       </label>
       {children}
@@ -281,11 +292,11 @@ function Field({ label, name, error, children }: { label: string; name: string; 
 
 function Nav({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   return (
-    <div className="mt-12 flex items-center justify-between border-t border-ink/15 pt-6">
+    <div className="mt-12 flex items-center justify-between">
       <button type="button" onClick={onBack} className="link-u text-[0.85rem] text-ink">
         Back
       </button>
-      <button type="button" onClick={onNext} className="group inline-flex min-h-14 items-center gap-4 bg-navy px-8 text-[0.9rem] font-medium text-white transition-colors hover:bg-navy-ink">
+      <button type="button" onClick={onNext} className="group inline-flex min-h-12 items-center gap-5 rounded-full bg-navy px-7 text-sm font-medium text-white transition-colors hover:bg-navy-ink">
         Continue
         <Arrow className="transition-transform duration-500 group-hover:translate-x-1" />
       </button>
