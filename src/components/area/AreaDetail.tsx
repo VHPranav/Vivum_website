@@ -80,35 +80,46 @@ function AreaHero({ page, image }: { page: AreaPage; image: string }) {
   );
 }
 
-/** Four photos scattered over a tall section, each drifting at its own speed; the text stays put. */
+/**
+ * Four large photos scattered around the heading (Tresmares gallery). Laid out in rows with clear
+ * gaps so text never sits on a photo; each photo drifts only slightly on scroll.
+ */
 function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
   const root = useRef<HTMLElement>(null);
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
       root.current!.querySelectorAll<HTMLElement>("[data-speed]").forEach((el) => {
-        gsap.fromTo(el, { y: 0 }, { y: () => -Number(el.dataset.speed) * window.innerHeight, ease: "none", scrollTrigger: { trigger: root.current, start: "top bottom", end: "bottom top", scrub: true } });
+        const d = Number(el.dataset.speed);
+        gsap.fromTo(el, { yPercent: d }, { yPercent: -d, ease: "none", scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true } });
       });
     },
     { scope: root },
   );
   const [a, b, c, d] = gallery.images;
   const img = (src: string, cls: string, speed: number, sizes: string) => (
-    <div data-speed={speed} className={`absolute overflow-hidden bg-mist ${cls}`}>
-      <Image src={src} alt="" fill loading="eager" sizes={sizes} quality={90} className="object-cover grayscale" />
+    <div className={`overflow-hidden bg-mist ${cls}`}>
+      <div data-speed={speed} className="relative h-[112%] -translate-y-[6%]">
+        <Image src={src} alt="" fill loading="eager" sizes={sizes} quality={90} className="object-cover grayscale" />
+      </div>
     </div>
   );
   return (
-    <section ref={root} className="relative h-[150vw] bg-white md:h-[120vw] lg:h-[110vw]">
-      {img(a, "top-[2vw] left-5 aspect-square w-[34vw] md:left-6 md:w-[15vw]", 0.1, "15vw")}
-      {img(b, "top-[12vw] right-0 aspect-[4/5] w-[40vw] md:w-[20vw]", 0.3, "20vw")}
-      {img(c, "top-[64vw] left-0 aspect-[3/2] w-[60vw] md:top-[46vw] md:w-[30vw]", 0.2, "30vw")}
-      {img(d, "top-[100vw] left-1/2 aspect-[4/5] w-[40vw] md:top-[62vw] md:w-[20vw]", 0.05, "20vw")}
-      <div className="absolute inset-x-5 top-[40vw] md:inset-x-auto md:top-[30vw] md:left-[28vw] md:w-[46vw]">
-        <div>
-          <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-ink">{gallery.heading}</h2>
-          <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-ink md:ml-[22vw] md:max-w-[21rem]">{gallery.text}</p>
-        </div>
+    <section ref={root} className="bg-white py-[6vw]">
+      {/* row 1: two photos */}
+      <div className="flex items-start justify-between gap-5 px-5 md:pl-6 md:pr-0">
+        {img(a, "aspect-square w-[42vw] md:w-[30vw]", 5, "(min-width: 768px) 30vw, 42vw")}
+        {img(b, "mt-[18vw] aspect-[4/5] w-[44vw] md:mt-[8vw] md:w-[36vw]", 5, "(min-width: 768px) 36vw, 44vw")}
+      </div>
+      {/* row 2: heading + text, clear of the photos */}
+      <div className="px-5 py-[12vw] md:ml-[27vw] md:w-[50vw] md:px-0 md:py-[8vw]">
+        <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-ink">{gallery.heading}</h2>
+        <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-ink md:ml-[20vw] md:max-w-[22rem]">{gallery.text}</p>
+      </div>
+      {/* row 3: two photos */}
+      <div className="flex items-start justify-between gap-5 pr-5 md:pr-[6vw]">
+        {img(c, "aspect-[3/2] w-[62vw] md:w-[52vw]", 5, "(min-width: 768px) 52vw, 62vw")}
+        {img(d, "mt-[24vw] aspect-[4/5] w-[32vw] md:mt-[14vw] md:w-[32vw]", 5, "(min-width: 768px) 32vw, 32vw")}
       </div>
     </section>
   );
