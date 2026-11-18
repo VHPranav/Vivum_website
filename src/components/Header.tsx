@@ -191,7 +191,7 @@ export function Header({ locale, nav, ui, divisions }: Props) {
                         className="scale-105 object-cover opacity-0 transition-[opacity,transform] duration-700 ease-[var(--ease-calm)] group-hover:scale-100 group-hover:opacity-100"
                       />}
                       <span aria-hidden className="absolute inset-0 bg-black/35 opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-                      <span className="relative font-serif text-[2.75rem] leading-none font-medium text-navy/80 transition-colors duration-500 group-hover:text-white">{d.n}</span>
+                      <AreaSymbol id={d.id} />
                       <span className="relative mt-6 max-w-[16rem] text-[1.125rem] leading-snug font-medium text-ink transition-colors duration-500 group-hover:text-white">{d.name}</span>
                     </Link>
                   </motion.div>
@@ -269,7 +269,7 @@ function MobileItem({ i, href, label, active }: { i: number; href: string; label
 
 function LanguageSwitch({ locale, ui }: { locale: Locale; ui: Content["ui"] }) {
   return (
-    <div className="hidden items-center gap-3 border-l border-line px-9 text-[0.6rem] tracking-[-0.01em] uppercase sm:flex" aria-label="Language">
+    <div className="hidden items-center gap-3 border-l border-line px-9 text-[0.6rem] tracking-[-0.01em] uppercase xl:flex" aria-label="Language">
       <span aria-current="true" className="text-ink">
         {localeLabels[locale].short}
       </span>
@@ -280,5 +280,47 @@ function LanguageSwitch({ locale, ui }: { locale: Locale; ui: Content["ui"] }) {
         </span>
       ))}
     </div>
+  );
+}
+
+/** Bold geometric marks for the four areas (dropdown tiles), one accent each — gold on wellbeing. */
+function AreaSymbol({ id }: { id: string }) {
+  const cls = "relative h-[3.75rem] w-[3.75rem] text-navy transition-colors duration-500 group-hover:text-white";
+  const shapes: Record<string, React.ReactNode> = {
+    // rising sun over water: half-disc above two stacked bars
+    wellbeing: (
+      <>
+        <path d="M8 30a22 22 0 0 1 44 0Z" className="fill-gold group-hover:fill-white" />
+        <rect x="8" y="36" width="44" height="7" />
+        <rect x="16" y="48" width="28" height="7" />
+      </>
+    ),
+    // growth steps
+    consulting: (
+      <>
+        <rect x="6" y="38" width="14" height="18" />
+        <rect x="23" y="24" width="14" height="32" />
+        <rect x="40" y="6" width="14" height="50" />
+      </>
+    ),
+    // two linked circles: people across borders
+    workforce: (
+      <>
+        <circle cx="22" cy="30" r="16" />
+        <circle cx="38" cy="30" r="16" fillOpacity={0.55} />
+      </>
+    ),
+    // open book / chevron stack
+    education: (
+      <>
+        <path d="M30 6 56 20 30 34 4 20Z" />
+        <path d="M12 30v12l18 10 18-10V30L30 40Z" />
+      </>
+    ),
+  };
+  return (
+    <svg viewBox="0 0 60 60" aria-hidden className={cls} fill="currentColor">
+      {shapes[id]}
+    </svg>
   );
 }
