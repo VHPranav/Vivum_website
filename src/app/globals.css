@@ -1,0 +1,144 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* VIVUM palette — taken from the brand identity sheet:
+   royal navy + olive-to-lime green, a thin gold accent, on white / warm off-white,
+   with a soft blue-green wave motif. */
+@theme {
+  --color-navy: #0d3b7a;
+  --color-navy-deep: #08285a;
+  --color-navy-ink: #0b1d3a;
+  --color-azure: #2f6fb3;
+  --color-green: #6a9a1f;
+  --color-green-deep: #4c7314;
+  --color-lime: #8bc34a;
+  --color-gold: #c9a23a;
+  --color-gold-soft: #e7d49a;
+
+  --color-paper: #fbfaf6;
+  --color-cream: #f4f1e8;
+  --color-mist: #edf4f1;
+  --color-sky: #e4eef6;
+  --color-line: #dde3ea;
+  --color-ink: #13233f;
+  --color-muted: #566277;
+
+  /* Headings: classic serif standing in for "Late Serif" (logo / headings).
+     Body and subheads: Poppins, as specified on the identity sheet. */
+  --font-serif: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  --font-sans: var(--font-poppins), "Poppins", system-ui, sans-serif;
+
+  --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  background: var(--color-paper);
+}
+
+::selection {
+  background: var(--color-navy);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-azure);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* Editorial display heading — light serif, tight leading, scales with the viewport. */
+@utility heading-display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  font-size: clamp(2.35rem, 1.6rem + 3.2vw, 4.75rem);
+  line-height: 1.04;
+}
+
+@utility heading-section {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  font-size: clamp(2rem, 1.45rem + 2.2vw, 3.5rem);
+  line-height: 1.08;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+}
+
+/* Thin gold rule used as an accent under eyebrows. */
+@utility gold-rule {
+  display: inline-block;
+  height: 1px;
+  width: 2.5rem;
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-soft));
+}
+
+/* Hero entrance — CSS so it plays on first paint; GSAP takes over after hydration. */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-rise {
+  animation: fade-rise 1.2s var(--ease-calm) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-rise {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Headline lines rise out of a mask on first paint. */
+@keyframes rise-line {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.rise-line {
+  animation: rise-line 1.3s var(--ease-calm) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise-line {
+    animation: none;
+  }
+}
