@@ -35,6 +35,7 @@ export function Footer({ locale, footer, divisions }: { locale: Locale; footer: 
               <Link href={L(d.href)} className="group block">
                 <Media
                   need={d.imageNeed}
+                  photo={d.photo}
                   tone={areaTone[d.id]}
                   sizes="(min-width: 1024px) 200px, (min-width: 640px) 22vw, 44vw"
                   labelClass="hidden"

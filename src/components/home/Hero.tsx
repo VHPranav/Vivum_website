@@ -6,7 +6,8 @@ import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
 import { FillText, SplitLines } from "@/components/motion/Text";
-import { Clouds, Ridges } from "./Clouds";
+import Image from "next/image";
+import { Clouds } from "./Clouds";
 
 /**
  * Opening + About, staged as on Tresmares: a landscape with WebGL clouds drifting in front and a
@@ -39,7 +40,8 @@ export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Conten
       {/* Pinned background: landscape (photo stand-in) + clouds */}
       <div aria-hidden className="sticky top-0 h-svh overflow-hidden bg-paper">
         <div data-ridges className="absolute inset-0 origin-[50%_80%]">
-          <Ridges />
+          {/* AI-generated in Google Flow (client approval required); full-bleed crop. */}
+          <Image src="/images/vivum-hero.webp" alt="" fill preload quality={75} sizes="100vw" className="object-cover object-[60%_center]" />
         </div>
         <Clouds progressRef={progress} className="peer absolute inset-0 [&[data-fallback]]:hidden" />
         {/* No WebGL: a soft static cloud bank instead. */}

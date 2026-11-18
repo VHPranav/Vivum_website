@@ -53,7 +53,7 @@ export function PathTabs({ locale, paths, divisions }: { locale: Locale; paths: 
                 className="absolute inset-0"
               >
                 {/* Portrait crop, ~40% of the page width on desktop. */}
-                <Media need={division.imageNeed} tone={areaTone[division.id as DivisionId]} sizes="(min-width: 1920px) 760px, 40vw" className="h-full w-full" />
+                <Media need={division.imageNeed} photo={division.photo} tone={areaTone[division.id as DivisionId]} sizes="(min-width: 1920px) 760px, 40vw" className="h-full w-full" />
               </motion.div>
             </AnimatePresence>
           </div>

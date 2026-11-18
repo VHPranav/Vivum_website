@@ -65,6 +65,10 @@ Status values: Missing · Draft · Submitted · Approved.
 | Privacy notice, terms and cookie policy text | Missing |
 | Analytics / consent choice | Missing |
 
+## AI-generated images in use (Google Flow, Nano Banana 2.1) — client approval required
+
+`public/images/vivum-hero.webp` (mountains above clouds), `vivum-wellbeing.webp`, `vivum-consulting.webp`, `vivum-workforce.webp`, `vivum-education.webp`, each 1376×768. They are illustrative, not photos of real VIVUM venues, clients, partner hotels or universities; replace with genuine photography where it would otherwise imply a real place or person. A higher-resolution export of the hero would sharpen it on large screens.
+
 ## Imagery needed (no stock implying real clinics, people or partner sites)
 
 | Hero landscape | full-bleed, 16:9 and portrait crops | A Montenegrin mountain or coastal landscape (the painted ridges are a stand-in; clouds are rendered live on top) |

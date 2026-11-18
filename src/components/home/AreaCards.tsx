@@ -30,6 +30,7 @@ export function AreaCards({ locale, divisions, label }: { locale: Locale; divisi
                 {/* Tile crop: 5:4 on phones, 3:4 from tablet; a quarter of the page width on desktop. */}
                 <Media
                   need={d.imageNeed}
+                  photo={d.photo}
                   tone={areaTone[d.id]}
                   sizes="(min-width: 1920px) 470px, (min-width: 1024px) 24vw, (min-width: 640px) 48vw, 94vw"
                   labelClass="top-16 left-5 hidden sm:block"

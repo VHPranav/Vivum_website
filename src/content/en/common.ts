@@ -21,11 +21,14 @@ export type Division = {
   /** Sub-paths shown in the services menu. */
   paths: { label: string; href: string }[];
   imageNeed: string;
+  /** Self-hosted image (AI-generated in Google Flow; client approval required). */
+  photo?: { src: string; alt: string };
 };
 
 export const divisions: Division[] = [
   {
     id: "wellbeing",
+    photo: { src: "/images/vivum-wellbeing.webp", alt: "Calm treatment room with Mediterranean light" },
     n: "01",
     name: "Wellbeing & Longevity",
     short: "Wellbeing",
@@ -43,6 +46,7 @@ export const divisions: Division[] = [
   },
   {
     id: "consulting",
+    photo: { src: "/images/vivum-consulting.webp", alt: "Team working session in a bright meeting room" },
     n: "02",
     name: "Business Consulting & Digital Solutions",
     short: "Consulting",
@@ -60,6 +64,7 @@ export const divisions: Division[] = [
   },
   {
     id: "workforce",
+    photo: { src: "/images/vivum-workforce.webp", alt: "Hospitality team at work in a hotel kitchen by the sea" },
     n: "03",
     name: "International Workforce Solutions",
     short: "Workforce",
@@ -77,6 +82,7 @@ export const divisions: Division[] = [
   },
   {
     id: "education",
+    photo: { src: "/images/vivum-education.webp", alt: "Students crossing a sunny stone university courtyard" },
     n: "04",
     name: "Education & International Opportunities",
     short: "Education",

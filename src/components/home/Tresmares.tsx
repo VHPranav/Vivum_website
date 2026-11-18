@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import type { DivisionId } from "@/content/en/common";
+import { divisions } from "@/content/en/common";
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { Media } from "@/components/ui/Media";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
@@ -108,7 +109,7 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
                     }`}
                     style={{ width: "var(--card)", height: "calc(var(--card) * 1.2)" }}
                   >
-                    <Media need={`${it.name} photograph`} tone={areaTone[it.area as DivisionId]} sizes="180px" labelClass="hidden" className="h-full w-full" />
+                    <Media need={`${it.name} photograph`} photo={divisions.find((d) => d.id === it.area)?.photo} tone={areaTone[it.area as DivisionId]} sizes="180px" labelClass="hidden" className="h-full w-full" />
                     <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-ink/70 to-transparent p-3 text-[0.6875rem] leading-tight text-white md:text-xs">{it.name}</span>
                   </div>
                 </div>

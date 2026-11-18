@@ -90,7 +90,8 @@ export function AreaShowcase({ locale, divisions }: { locale: Locale; divisions:
             {divisions.map((d) => (
               <div key={d.id} data-image className="absolute inset-0">
                 {/* Full-bleed crop at viewport size. */}
-                <Media need={d.imageNeed} tone={areaTone[d.id]} sizes="100vw" labelClass="top-28 left-10" className="h-full w-full" />
+                <Media need={d.imageNeed}
+                  photo={d.photo} tone={areaTone[d.id]} sizes="100vw" labelClass="top-28 left-10" className="h-full w-full" />
               </div>
             ))}
             <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(11,29,58,0.15),rgba(11,29,58,0.7))]" />
@@ -163,7 +164,8 @@ export function AreaShowcase({ locale, divisions }: { locale: Locale; divisions:
           {divisions.map((d) => (
             <li key={d.id}>
               <Link href={localePath(locale, d.href)} className="group block">
-                <Media need={d.imageNeed} tone={areaTone[d.id]} sizes="(min-width: 768px) 46vw, 92vw" className="aspect-[4/3] rounded-[1.5rem]" />
+                <Media need={d.imageNeed}
+                  photo={d.photo} tone={areaTone[d.id]} sizes="(min-width: 768px) 46vw, 92vw" className="aspect-[4/3] rounded-[1.5rem]" />
                 <p className="mt-5 font-serif text-sm text-white/60">{d.n}</p>
                 <h3 className="mt-1 font-serif text-3xl leading-tight font-light">{d.name}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-white/75">{d.description}</p>
