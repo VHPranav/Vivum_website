@@ -32,8 +32,11 @@ export function SplitLines({ as: Tag = "div", children, className, id, on = "scr
         linesClass: "split-line",
         onSplit(self) {
           gsap.set(el, { visibility: "visible" });
+          // Masks are cut to the line box, which clips descenders (g, p, y) at tight leading.
+          // Give them room above and below without changing the layout.
+          gsap.set(self.masks, { paddingTop: "0.1em", paddingBottom: "0.25em", marginTop: "-0.1em", marginBottom: "-0.25em" });
           return gsap.from(self.lines, {
-            yPercent: 115,
+            yPercent: 140,
             duration: 1.25,
             ease: EXPO_OUT,
             stagger,
