@@ -19,7 +19,8 @@ Status values: Missing · Draft · Submitted · Approved.
 | --- | --- |
 | Navigation and area names follow Sandra's 12 Nov email, not the 7 Nov master brief (which used Home / Wellbeing / Education / Workforce / Consulting / About / Contact and "Business Transformation & Executive Advisory") | Approval required |
 | Consulting grouped into Sandra's five areas (the master brief asked for six fixed categories) | Approval required |
-| Homepage "Meet our team" section removed (not in Sandra's list); team moves to About | Approval required |
+| Homepage follows Tresmares 1:1: the four area cards no longer sit directly under the opening (Sandra asked for them there); the areas appear in the pinned showcase after the About and figures sections | Approval required |
+| Homepage contact form moved to /contact; the footer is the homepage's closing call to action | Approval required |
 
 ## Homepage
 
@@ -65,6 +66,8 @@ Status values: Missing · Draft · Submitted · Approved.
 | Analytics / consent choice | Missing |
 
 ## Imagery needed (no stock implying real clinics, people or partner sites)
+
+| Hero landscape | full-bleed, 16:9 and portrait crops | A Montenegrin mountain or coastal landscape (the painted ridges are a stand-in; clouds are rendered live on top) |
 
 Every image slot is a soft gradient placeholder labelled with the photograph it needs. Images should be self-hosted in `/public/images`; each slot already sets crop-aware `sizes`.
 

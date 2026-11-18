@@ -18,7 +18,7 @@ Follows Sandra Kordić's direction of 12 Nov 2026 ("Vivum website — answer on 
 
 | URL | Page | Status in v1 | Main conversion |
 | --- | --- | --- | --- |
-| `/` | Home: opening, 4 area cards, About VIVUM, Our services (pinned showcase), Why work with us, How we work, Find your path, Partners & experience, Contact | **Built** | Area card click · routed enquiry |
+| `/` | Home, section for section after Tresmares: cloud hero (WebGL clouds over a landscape; they rise and dissolve into white on scroll) → About statement → figures grid → Our services statement → pinned four-area showcase → Why work with us → network wheel → people → Partners & experience → closing footer | **Built** | Area showcase click · Contact us (footer) |
 | `/consulting` | Business Consulting & Digital Solutions: client needs, five service areas, benefits, process, fees, Dr Sandra Kordić, FAQ, tailored form | **Built (sample landing page)** | Discuss your business needs |
 | `/wellbeing` | Wellbeing & Longevity landing page (treatments & programmes) | Structured stub + tailored form | Book a consultation |
 | `/wellbeing/ayush-london` | AYUSH London clinic: address, practitioners, treatments, **GBP** prices, booking, UK terms | Planned | Request appointment (until a calendar is integrated) |

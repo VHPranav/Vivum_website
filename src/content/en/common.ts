@@ -115,8 +115,8 @@ export const ui = {
 };
 
 export const footer = {
-  statement: "VIVUM Group connects expertise, people and opportunities across wellbeing, business consulting, international workforce and education.",
-  cta: "Let’s start a conversation",
+  statement: "Every next step starts with a conversation.",
+  cta: "Contact us",
   groups: [
     { title: "Our services", links: divisions.map((d) => ({ label: d.name, href: d.href })) },
     {

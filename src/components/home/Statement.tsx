@@ -25,11 +25,10 @@ export function Statement({
     <section id={id} aria-labelledby={`${id}-label`} className="scroll-mt-20 py-24 md:py-40">
       <div className="container-page">
         <div className="mx-auto max-w-5xl text-center">
-          <h2 id={`${id}-label`} className="label inline-flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
+          <h2 id={`${id}-label`} className="label">
             {label}
           </h2>
-          <FillText className="display-l mt-8 text-navy">{statement}</FillText>
+          <FillText className="mx-auto mt-6 max-w-[24ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">{statement}</FillText>
           {body && <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-muted md:text-lg">{body}</p>}
           {link && (
             <Link href={localePath(locale, link.href)} className="link-u mt-8 inline-block text-[0.875rem] font-medium text-navy">

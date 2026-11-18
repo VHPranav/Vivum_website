@@ -1,77 +1,88 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
+import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
-import { Button } from "@/components/ui/Kit";
-import { Waves } from "@/components/ui/Waves";
-import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
-import { SplitLines } from "@/components/motion/Text";
-import { LocalClock } from "@/components/motion/Bits";
+import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
+import { FillText, SplitLines } from "@/components/motion/Text";
+import { Clouds, Ridges } from "./Clouds";
 
 /**
- * Opening section. Layout follows Tresmares' full-text hero (giant headline top-left, short text
- * block bottom-right, "Scroll" cue bottom-left) with Prime Exits' masked line entrance and live
- * local clock. The soft blue-green light zooms and fades as you scroll, as Tresmares' clouds do.
+ * Opening + About, staged as on Tresmares: a landscape with WebGL clouds drifting in front and a
+ * giant headline. Scrolling raises the cloud bank until it fills the screen with white, and the
+ * About statement fills in letter by letter on that white.
+ * The background stays pinned (sticky) across both sections.
  */
-export function Hero({ hero, ui }: { hero: Content["home"]["hero"]; ui: Content["ui"] }) {
-  const root = useRef<HTMLElement>(null);
+export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Content["home"]["hero"]; about: Content["home"]["about"]; ui: Content["ui"] }) {
+  const wrap = useRef<HTMLDivElement>(null);
+  const progress = useRef(0);
 
   useGSAP(
     () => {
-      if (prefersReducedMotion()) return;
-      const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
-      gsap.to("[data-hero-bg]", { scale: 1.25, opacity: 0.35, ease: "none", scrollTrigger: st });
-      gsap.to("[data-hero-copy]", { yPercent: -14, ease: "none", scrollTrigger: st });
-      gsap.utils.toArray<HTMLElement>("[data-blob]").forEach((b, i) => {
-        gsap.to(b, { xPercent: i % 2 ? -12 : 14, yPercent: i % 2 ? 10 : -8, duration: 9 + i * 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      ScrollTrigger.create({
+        trigger: wrap.current,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => (progress.current = self.progress),
       });
+      if (prefersReducedMotion()) return;
+      gsap.to("[data-ridges]", { scale: 1.16, yPercent: -4, ease: "none", scrollTrigger: { trigger: wrap.current, start: "top top", end: "bottom bottom", scrub: true } });
+      gsap.to("[data-hero-copy]", { yPercent: -18, opacity: 0, ease: "none", scrollTrigger: { trigger: "[data-hero]", start: "top top", end: "bottom 15%", scrub: true } });
       gsap.fromTo("[data-cue]", { scaleY: 0, transformOrigin: "top" }, { scaleY: 1, duration: 1.2, ease: "expo.inOut", repeat: -1, repeatDelay: 0.6, yoyo: true });
     },
-    { scope: root },
+    { scope: wrap },
   );
 
   return (
-    <section ref={root} className="relative flex flex-col overflow-hidden bg-paper pt-24 md:pt-28 lg:min-h-svh">
-      <div data-hero-bg aria-hidden className="absolute inset-0 origin-[70%_40%]">
-        <div data-blob className="absolute -top-[20%] right-[-10%] h-[70vmax] w-[70vmax] rounded-full bg-[radial-gradient(closest-side,#d6e6f4,transparent)]" />
-        <div data-blob className="absolute top-[25%] -left-[20%] h-[55vmax] w-[55vmax] rounded-full bg-[radial-gradient(closest-side,#e3efd6,transparent)]" />
-        <div data-blob className="absolute right-[15%] bottom-[-25%] h-[45vmax] w-[45vmax] rounded-full bg-[radial-gradient(closest-side,rgba(47,111,179,0.16),transparent)]" />
-        <Waves className="absolute inset-x-0 bottom-0 h-44 w-[200%] md:h-64" />
+    <div ref={wrap} className="relative">
+      {/* Pinned background: landscape (photo stand-in) + clouds */}
+      <div aria-hidden className="sticky top-0 h-svh overflow-hidden bg-paper">
+        <div data-ridges className="absolute inset-0 origin-[50%_80%]">
+          <Ridges />
+        </div>
+        <Clouds progressRef={progress} className="peer absolute inset-0 [&[data-fallback]]:hidden" />
+        {/* No WebGL: a soft static cloud bank instead. */}
+        <div className="absolute inset-x-0 bottom-0 hidden h-1/2 bg-gradient-to-t from-paper via-paper/80 to-transparent peer-data-[fallback]:block" />
       </div>
 
-      <div data-hero-copy className="container-page relative flex flex-1 flex-col">
-        <p className="label fade-rise flex items-center gap-2" style={{ animationDelay: "0.2s" }}>
-          <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
-          {hero.label}
-        </p>
-
-        <SplitLines as="h1" on="load" delay={0.15} className="display-xl mt-6 max-w-[13ch] text-navy md:mt-10">
-          {hero.h1}
-        </SplitLines>
-
-        <div className="mt-8 grid items-end gap-8 pb-8 md:mt-14 md:gap-10 lg:flex-1 lg:grid-cols-12 lg:pb-10">
-          <div className="lg:col-span-4 lg:col-start-9">
-            <SplitLines as="p" on="load" delay={0.45} stagger={0.05} className="text-lg leading-relaxed text-ink/80 md:text-xl">
+      {/* Opening */}
+      <section data-hero aria-labelledby="hero-title" className="relative z-10 -mt-[100svh] h-svh">
+        <div data-hero-copy className="container-page relative h-full">
+          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="display-xl absolute top-[19svh] left-5 max-w-[12ch] text-navy md:left-10 lg:top-[22svh] lg:left-[8.3%]">
+            {hero.h1}
+          </SplitLines>
+          <div className="absolute right-5 bottom-[12svh] left-5 md:right-auto md:left-[50%] md:max-w-sm lg:left-[66.6%] lg:max-w-[20rem]">
+            <SplitLines as="p" on="load" delay={0.5} stagger={0.05} className="text-[1.25rem] leading-[1.2] tracking-[-0.01em] text-navy-ink md:text-[1.5rem]">
               {hero.lede}
             </SplitLines>
-            <div className="fade-rise mt-8 flex flex-wrap items-center gap-x-6 gap-y-4" style={{ animationDelay: "0.9s" }}>
-              <Button href={hero.primary.href}>{hero.primary.label}</Button>
-              <a href={hero.secondary.href} className="link-u text-[0.875rem] font-medium text-navy">
-                {hero.secondary.label}
-              </a>
-            </div>
+            <a href={hero.primary.href} className="link-u fade-rise mt-6 inline-block text-[0.875rem] font-medium text-navy-ink" style={{ animationDelay: "1s" }}>
+              {hero.primary.label}
+            </a>
           </div>
-          <div className="label flex items-end justify-between lg:col-span-12 lg:row-start-2">
-            <span className="flex items-center gap-3">
-              <span aria-hidden className="relative h-8 w-px overflow-hidden bg-navy/15">
-                <span data-cue className="absolute inset-0 bg-navy" />
-              </span>
-              {ui.scroll}
+          <span className="label absolute bottom-[12svh] left-5 hidden items-center gap-3 md:left-10 md:flex">
+            <span aria-hidden className="relative h-8 w-px overflow-hidden bg-navy/15">
+              <span data-cue className="absolute inset-0 bg-navy" />
             </span>
-            <LocalClock label={ui.localTime} />
-          </div>
+            {ui.scroll}
+          </span>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* About — centred statement over the white the clouds leave behind */}
+      <section id="about" aria-labelledby="about-label" className="relative z-10 flex min-h-[130svh] items-center justify-center pt-[30svh] pb-[20svh]">
+        <div className="container-page text-center">
+          <h2 id="about-label" className="label">
+            {about.label}
+          </h2>
+          <FillText className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">
+            {about.statement}
+          </FillText>
+          <Link href={localePath(locale, about.link.href)} className="link-u mt-10 inline-block text-[0.875rem] font-medium text-navy-ink">
+            {about.link.label}
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }

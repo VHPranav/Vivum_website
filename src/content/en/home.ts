@@ -12,9 +12,9 @@ export const home = {
   hero: {
     label: "VIVUM Group",
     h1: "Connecting expertise, people and opportunities.",
-    lede: "VIVUM brings four areas of expertise together under one name: wellbeing, business consulting, international workforce and education.",
-    primary: { label: "Explore our services", href: "#areas" },
-    secondary: { label: "Get in touch", href: "#contact" },
+    lede: "Wellbeing, business consulting, international workforce and education, under one name.",
+    primary: { label: "Our services", href: "#services" },
+    secondary: { label: "Get in touch", href: "/contact" },
   },
   areas: {
     label: "Four areas of activity",
@@ -22,12 +22,17 @@ export const home = {
   about: {
     label: "About VIVUM",
     statement: "An international group rooted in Montenegro, bringing specialist expertise, trusted partners and people together.",
+    link: { label: "More about VIVUM", href: "/about" },
+  },
+  facts: {
     body: "We combine hands-on experience with an international network of partners. Every engagement starts with understanding what you need, and continues with practical support until the work is done.",
     link: { label: "More about VIVUM", href: "/about" },
-    facts: [
-      { k: "4", v: "areas of activity under one name" },
-      { k: "1", v: "point of contact for every enquiry" },
-      { k: "EN · ME", v: "English and Montenegrin" },
+    items: [
+      { k: "4", v: "Areas of activity" },
+      { k: "5", v: "Consulting service areas" },
+      { k: "2", v: "Paths: employers and candidates" },
+      { k: "2", v: "Languages: English and Montenegrin" },
+      { k: "1", v: "Point of contact for every enquiry" },
     ],
   },
   services: {
@@ -65,6 +70,38 @@ export const home = {
       { who: "I’m looking for work", area: "workforce", body: "How international candidates are recruited through our partners.", cta: "Information for candidates", href: "/workforce#candidates" },
       { who: "I want to study", area: "education", body: "Programmes at authorised institutions and help with your application.", cta: "Enquire about study programmes", href: "/education#enquiry" },
     ],
+  },
+  network: {
+    label: "Our network",
+    title: "Connected across four areas.",
+    body: "From Montenegro, VIVUM connects clients with specialists, institutions and partners, each with a clear role.",
+    items: [
+      { name: "Ayurveda treatments", area: "wellbeing" },
+      { name: "Wellbeing programmes", area: "wellbeing" },
+      { name: "Partner hotels", area: "wellbeing" },
+      { name: "Strategy & performance", area: "consulting" },
+      { name: "Process improvement", area: "consulting" },
+      { name: "Change management", area: "consulting" },
+      { name: "AI readiness", area: "consulting" },
+      { name: "Digital solutions", area: "consulting" },
+      { name: "Employers", area: "workforce" },
+      { name: "Candidates", area: "workforce" },
+      { name: "Recruitment partners", area: "workforce" },
+      { name: "Study programmes", area: "education" },
+      { name: "Universities", area: "education" },
+      { name: "Application support", area: "education" },
+    ],
+  },
+  people: {
+    label: "Our people",
+    title: "The people behind each area.",
+    members: [
+      { name: "Dr Sandra Kordić", role: "Business Consulting & Digital Solutions" },
+      { name: "Name to be confirmed", role: "Wellbeing & Longevity" },
+      { name: "Name to be confirmed", role: "International Workforce Solutions" },
+      { name: "Name to be confirmed", role: "Education & International Opportunities" },
+    ],
+    approval: "names, roles and approved portraits",
   },
   partners: {
     label: "Partners & experience",
