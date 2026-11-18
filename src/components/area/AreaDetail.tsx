@@ -95,7 +95,7 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
   const [a, b, c, d] = gallery.images;
   const img = (src: string, cls: string, speed: number, sizes: string) => (
     <div data-speed={speed} className={`absolute overflow-hidden bg-mist ${cls}`}>
-      <Image src={src} alt="" fill sizes={sizes} quality={90} className="object-cover grayscale" />
+      <Image src={src} alt="" fill loading="eager" sizes={sizes} quality={90} className="object-cover grayscale" />
     </div>
   );
   return (
@@ -171,11 +171,11 @@ function OtherAreas({ others, locale, label }: { others: Other[]; locale: Locale
         {others.map((o, i) => {
           const isOpen = open === i;
           return (
-            <li key={o.id} className="relative overflow-hidden border-b border-ink/15">
+            <li key={o.id} onMouseEnter={() => setOpen(i)} className="relative overflow-hidden border-b border-ink/15">
               <button
                 type="button"
                 aria-expanded={isOpen}
-                onClick={() => setOpen(isOpen ? -1 : i)}
+                onClick={() => setOpen(i)}
                 className="flex w-full items-start justify-between gap-6 py-8 text-left"
               >
                 <span className="relative z-10 text-[clamp(2rem,1rem+3vw,3.75rem)] leading-[0.98] font-medium tracking-[-0.02em] text-ink">
