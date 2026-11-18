@@ -108,8 +108,8 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
     <section ref={root} className="bg-white py-[6vw]">
       {/* row 1: two photos */}
       <div className="flex items-start justify-between gap-5 px-5 md:pl-6 md:pr-0">
-        {img(a, "aspect-square w-[42vw] md:w-[30vw]", 5, "(min-width: 768px) 30vw, 42vw")}
-        {img(b, "mt-[18vw] aspect-[4/5] w-[44vw] md:mt-[8vw] md:w-[36vw]", 5, "(min-width: 768px) 36vw, 44vw")}
+        {img(a, "aspect-square w-[36vw] md:w-[22vw]", 5, "(min-width: 768px) 22vw, 36vw")}
+        {img(b, "mt-[14vw] aspect-[4/5] w-[38vw] md:mt-[6vw] md:w-[26vw]", 5, "(min-width: 768px) 26vw, 38vw")}
       </div>
       {/* row 2: heading + text, clear of the photos */}
       <div className="px-5 py-[12vw] md:ml-[27vw] md:w-[50vw] md:px-0 md:py-[8vw]">
@@ -118,8 +118,8 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
       </div>
       {/* row 3: two photos */}
       <div className="flex items-start justify-between gap-5 pr-5 md:pr-[6vw]">
-        {img(c, "aspect-[3/2] w-[62vw] md:w-[52vw]", 5, "(min-width: 768px) 52vw, 62vw")}
-        {img(d, "mt-[24vw] aspect-[4/5] w-[32vw] md:mt-[14vw] md:w-[32vw]", 5, "(min-width: 768px) 32vw, 32vw")}
+        {img(c, "aspect-[3/2] w-[54vw] md:w-[38vw]", 5, "(min-width: 768px) 38vw, 54vw")}
+        {img(d, "mt-[20vw] aspect-[4/5] w-[30vw] md:mt-[10vw] md:w-[24vw]", 5, "(min-width: 768px) 24vw, 30vw")}
       </div>
     </section>
   );
