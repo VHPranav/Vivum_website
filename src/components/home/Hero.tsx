@@ -15,7 +15,28 @@ import { Clouds } from "./Clouds";
  * About statement fills in letter by letter on that white.
  * The background stays pinned (sticky) across both sections.
  */
-export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Content["home"]["hero"]; about: Content["home"]["about"]; ui: Content["ui"] }) {
+type HeroCopy = { h1: React.ReactNode; lede: string; primary: { label: string; href: string } };
+type StatementCopy = { label: string; statement: string; link: { label: string; href: string } };
+
+export function Hero({
+  locale,
+  hero,
+  about,
+  ui,
+  image = "/images/vivum-hero.webp",
+  statementId = "about",
+  wash = false,
+}: {
+  locale: Locale;
+  hero: HeroCopy;
+  about: StatementCopy;
+  ui: Content["ui"];
+  /** Landscape behind the clouds (self-hosted). */
+  image?: string;
+  statementId?: string;
+  /** Soft page-white fade behind the headline, for landscapes with dark rock on the left. */
+  wash?: boolean;
+}) {
   const wrap = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
 
@@ -41,8 +62,9 @@ export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Conten
       <div aria-hidden className="sticky top-0 h-svh overflow-hidden bg-paper">
         <div data-ridges className="absolute inset-0 origin-[50%_80%]">
           {/* AI-generated in Google Flow (client approval required); full-bleed crop. */}
-          <Image src="/images/vivum-hero.webp" alt="" fill preload quality={90} sizes="100vw" className="object-cover object-[60%_center]" />
+          <Image src={image} alt="" fill preload quality={90} sizes="100vw" className="object-cover object-[60%_center]" />
         </div>
+        {wash && <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-paper/85 via-paper/55 to-transparent" />}
         <Clouds progressRef={progress} className="peer absolute inset-0 [&[data-fallback]]:hidden" />
         {/* No WebGL: a soft static cloud bank instead. */}
         <div className="absolute inset-x-0 bottom-0 hidden h-1/2 bg-gradient-to-t from-paper via-paper/80 to-transparent peer-data-[fallback]:block" />
@@ -72,9 +94,9 @@ export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Conten
       </section>
 
       {/* About — centred statement over the white the clouds leave behind */}
-      <section id="about" aria-labelledby="about-label" className="relative z-10 flex min-h-[130svh] items-center justify-center pt-[30svh] pb-[20svh]">
+      <section id={statementId} aria-labelledby={`${statementId}-label`} className="relative z-10 flex min-h-[130svh] items-center justify-center pt-[30svh] pb-[20svh]">
         <div className="container-page text-center">
-          <h2 id="about-label" className="label">
+          <h2 id={`${statementId}-label`} className="label">
             {about.label}
           </h2>
           <FillText className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">

@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { localePath, type Locale } from "@/i18n/config";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Content } from "@/content";
@@ -34,74 +36,111 @@ function usePinnedIndex(root: React.RefObject<HTMLElement | null>, count: number
 }
 
 /**
- * "Our journey so far" (Tresmares timeline): filled title, giant serif numerals spanning the page
- * with a grayscale image set in front, two dotted text columns and a row of tabs. The section is
- * pinned; scrolling (or clicking a tab) moves through the steps.
+ * "One group, four areas" (after Tresmares' timeline, redesigned): pinned while you scroll through
+ * the four areas. Left: animated numeral, area name, points and link. Right: the area's photo,
+ * cross-fading. Bottom: tabs whose progress lines fill as each area is scrolled through.
  */
-export function Journey({ journey }: { journey: A["journey"] }) {
+export function Journey({ journey, locale }: { journey: A["journey"]; locale: Locale }) {
   const root = useRef<HTMLElement>(null);
   const [i, setI] = useState(0);
-  usePinnedIndex(root, journey.steps.length, setI);
+  const n = journey.steps.length;
+  usePinnedIndex(root, n, setI);
   const step = journey.steps[i];
+
+  useGSAP(
+    () => {
+      const bars = gsap.utils.toArray<HTMLElement>("[data-bar]");
+      ScrollTrigger.create({
+        trigger: root.current,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          const p = self.progress * n;
+          bars.forEach((b, k) => gsap.set(b, { scaleX: Math.max(0, Math.min(1, p - k)) }));
+        },
+      });
+    },
+    { scope: root },
+  );
 
   const jump = (k: number) => {
     const el = root.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + (el.offsetHeight - window.innerHeight) * ((k + 0.5) / journey.steps.length), behavior: "smooth" });
+    window.scrollTo({ top: top + (el.offsetHeight - window.innerHeight) * ((k + 0.5) / n), behavior: "smooth" });
   };
 
   return (
-    <section ref={root} aria-labelledby="journey-title" className="relative bg-[#f5f5f3]" style={{ height: `${100 + journey.steps.length * 60}svh` }}>
-      <div className="sticky top-0 flex h-svh flex-col overflow-hidden pt-[14svh]">
-        <FillText as="h1" id="journey-title" className="mx-auto max-w-[14ch] text-center font-serif text-[clamp(2.6rem,1rem+4.4vw,6rem)] leading-[0.98] font-light tracking-[-0.03em] text-navy">
-          {journey.title}
-        </FillText>
-
-        <div className="relative mt-[4svh] flex flex-1 items-center justify-center">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.p
-              key={step.n}
-              aria-hidden
-              initial={{ opacity: 0, y: 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -60 }}
-              transition={{ duration: 0.7, ease }}
-              className="pointer-events-none absolute inset-x-0 text-center font-serif text-[clamp(10rem,4rem+26vw,30rem)] leading-[0.8] font-light tracking-[-0.06em] text-green-deep"
-            >
-              {step.n}
-            </motion.p>
-          </AnimatePresence>
-          {/* Grayscale image in front of the numerals, multiplied into them as on Tresmares. */}
-          <div className="relative aspect-[16/9] w-[min(46vw,40rem)] overflow-hidden mix-blend-multiply">
-            <Image src={journey.image} alt="" fill sizes="46vw" quality={90} className="object-cover grayscale" />
+    <section ref={root} id="journey" aria-labelledby="journey-title" className="relative scroll-mt-0 bg-paper" style={{ height: `${n * 90 + 40}svh` }}>
+      <div className="sticky top-0 flex h-svh flex-col overflow-hidden pt-[13svh] pb-[5svh]">
+        <div className="container-page flex items-end justify-between gap-6">
+          <div>
+            <p className="label">{journey.label}</p>
+            <h2 id="journey-title" className="mt-3 font-serif text-[clamp(2rem,1rem+2.4vw,3.4rem)] leading-[1.02] font-light tracking-[-0.025em] text-navy">
+              {journey.title}
+            </h2>
           </div>
+          <ApprovalFlag className="hidden lg:inline-flex">{journey.approval}</ApprovalFlag>
         </div>
 
-        <div className="container-page pb-[6svh]">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={step.n} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease }} className="mx-auto grid max-w-2xl gap-6 sm:grid-cols-2">
-              {step.points.map((p) => (
-                <p key={p} className="flex gap-2 text-sm leading-snug text-ink">
-                  <span aria-hidden className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-green" />
-                  {p}
-                </p>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-          <ul className="mx-auto mt-8 flex max-w-3xl justify-between gap-2" aria-label="Areas">
+        <div className="container-page mt-[4svh] grid min-h-0 flex-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-5">
+            <div className="relative h-[clamp(5rem,2rem+9vw,11rem)] overflow-hidden">
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.p
+                  key={step.n}
+                  initial={{ y: "100%" }}
+                  animate={{ y: "0%" }}
+                  exit={{ y: "-100%" }}
+                  transition={{ duration: 0.8, ease }}
+                  className="absolute inset-0 font-serif text-[clamp(5rem,2rem+9vw,11rem)] leading-none font-light tracking-[-0.05em] text-green-deep"
+                >
+                  {step.n}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div key={step.n} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.5, ease }}>
+                <h3 className="mt-4 font-serif text-[clamp(1.6rem,1rem+1.4vw,2.4rem)] leading-tight text-navy">{step.name}</h3>
+                <ul className="mt-6 space-y-3 border-t border-line pt-6">
+                  {step.points.map((p) => (
+                    <li key={p} className="flex gap-3 text-[0.9375rem] leading-relaxed text-ink">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-green" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+                <Link href={localePath(locale, step.href)} className="link-u mt-7 inline-block text-[0.875rem] font-medium text-navy">
+                  Explore {step.tab.toLowerCase()}
+                </Link>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <div className="relative hidden h-full max-h-[58svh] min-h-0 overflow-hidden rounded-[1.75rem] lg:col-span-7 lg:block">
             {journey.steps.map((s, k) => (
-              <li key={s.n}>
-                <button type="button" onClick={() => jump(k)} aria-current={k === i ? "true" : undefined} className={`font-serif text-base transition-colors duration-500 md:text-lg ${k === i ? "text-green-deep" : "text-ink/35 hover:text-ink/70"}`}>
-                  {s.tab}
-                </button>
-              </li>
+              <div key={s.image} aria-hidden className={`absolute inset-0 transition-[opacity,transform] duration-[1.2s] ease-[var(--ease-calm)] ${k === i ? "scale-100 opacity-100" : "scale-[1.06] opacity-0"}`}>
+                <Image src={s.image} alt="" fill sizes="(min-width: 1024px) 55vw, 100vw" quality={90} className="object-cover" />
+              </div>
             ))}
-          </ul>
-          <div className="mt-4 text-center">
-            <ApprovalFlag>{journey.approval}</ApprovalFlag>
           </div>
         </div>
+
+        <ul className="container-page mt-[4svh] grid grid-cols-4 gap-3 md:gap-6" aria-label="Areas">
+          {journey.steps.map((s, k) => (
+            <li key={s.n}>
+              <button type="button" onClick={() => jump(k)} aria-current={k === i ? "true" : undefined} className="group w-full text-left">
+                <span aria-hidden className="block h-px w-full overflow-hidden bg-line">
+                  <span data-bar className="block h-full w-full origin-left scale-x-0 bg-green-deep" />
+                </span>
+                <span className={`mt-3 flex items-baseline gap-2 text-[0.8125rem] transition-colors duration-500 md:text-sm ${k === i ? "text-navy" : "text-ink/45 group-hover:text-ink/75"}`}>
+                  <span className="font-serif text-xs text-gold">{s.n}</span>
+                  {s.tab}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -226,7 +265,13 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
     <section ref={root} aria-label="How we work" className="relative bg-black text-white" style={{ height: `${(n + 1) * 100}svh` }}>
       <div className="sticky top-0 h-svh overflow-hidden">
         {[...scroll.statements, scroll.pointsBg].map((s, k) => (
-          <BgVideo key={s.video} src={s.video} poster={s.src} active={k === i} />
+          s.video ? (
+            <BgVideo key={s.src} src={s.video} poster={s.src} active={k === i} />
+          ) : (
+            <div key={s.src} aria-hidden className={`absolute inset-0 transition-opacity duration-[1.2s] ${k === i ? "opacity-100" : "opacity-0"}`}>
+              <Image src={s.src} alt="" fill sizes="100vw" quality={90} className="object-cover" />
+            </div>
+          )
         ))}
         <div aria-hidden className={`absolute inset-0 transition-colors duration-700 ${showPoints ? "bg-black/35" : "bg-black/45"}`} />
 

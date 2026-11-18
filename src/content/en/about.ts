@@ -9,28 +9,52 @@ export const about = {
     title: "About VIVUM Group",
     description: "VIVUM Group is an international group rooted in Montenegro, connecting expertise, people and opportunities across four areas of activity.",
   },
+  // Same opening as the homepage (landscape + live clouds), with its own landscape and copy.
+  hero: {
+    h1: "Rooted in Montenegro. Open to the world.",
+    lede: "An international group bringing specialist expertise, trusted partners and people together.",
+    primary: { label: "Our four areas", href: "#journey" },
+  },
+  heroImage: "/images/about-hero.webp",
+  intro: {
+    label: "Who we are",
+    statement: "VIVUM Group is one company with four specialist teams, connecting clients with the right people, institutions and partners.",
+    link: { label: "Meet our people", href: "/#people-statement" },
+  },
   journey: {
+    label: "Our four areas",
     title: "One group, four areas",
-    image: "/images/vivum-hero.webp",
     steps: [
       {
         n: "01",
         tab: "Wellbeing",
+        name: "Wellbeing & Longevity",
+        image: "/images/vivum-wellbeing.webp",
+        href: "/wellbeing",
         points: ["Ayurveda treatments and wellbeing programmes in Montenegro.", "Delivered with partner hotels, with accommodation described separately."],
       },
       {
         n: "02",
         tab: "Consulting",
+        name: "Business Consulting & Digital Solutions",
+        image: "/images/vivum-consulting.webp",
+        href: "/consulting",
         points: ["Strategy, performance, processes and responsible AI for companies.", "Digital solutions delivered alongside technology partners."],
       },
       {
         n: "03",
         tab: "Workforce",
+        name: "International Workforce Solutions",
+        image: "/images/vivum-workforce.webp",
+        href: "/workforce",
         points: ["International talent for employers in Montenegro.", "Sourcing and selection coordinated with recruitment partners."],
       },
       {
         n: "04",
         tab: "Education",
+        name: "Education & International Opportunities",
+        image: "/images/vivum-education.webp",
+        href: "/education",
         points: ["Study programmes at authorised institutions.", "Support with requirements and application documents."],
       },
     ],
@@ -86,7 +110,7 @@ export const about = {
     statements: [
       { text: "VIVUM is one group with four specialist teams", src: "/media/about-01-poster.webp", video: "/media/about-01.mp4" },
       { text: "We connect clients with the right people, institutions and partners", src: "/media/about-02-poster.webp", video: "/media/about-02.mp4" },
-      { text: "Every engagement has a clear scope, owner and next step", src: "/media/about-03-poster.webp", video: "/media/about-03.mp4" },
+      { text: "Every engagement has a clear scope, owner and next step", src: "/images/vivum-consulting.webp", video: "" },
     ],
     // Background for the closing points step. Videos are AI-generated in Google Flow.
     pointsBg: { src: "/media/about-04-poster.webp", video: "/media/about-04.mp4" },
