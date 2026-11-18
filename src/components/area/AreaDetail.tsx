@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { AreaPage } from "@/content/en/areas";
 import { AreaSymbol } from "@/components/AreaSymbol";
+import { HeroMark } from "./HeroMark";
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
@@ -56,7 +57,7 @@ function AreaHero({ id, page }: { id: string; page: AreaPage }) {
   );
   return (
     <section ref={root} aria-labelledby="area-title" className="relative min-h-[100svh] overflow-hidden bg-white pt-[4.5rem]">
-      <AreaSymbol id={id} className="absolute top-[4.5rem] right-[-6vw] h-[min(46vw,70svh)] w-[min(46vw,70svh)] text-navy" />
+      <HeroMark id={id} className="absolute top-[calc(4.5rem+5svh)] right-5 h-[36svh] w-auto max-w-[62vw] text-navy md:right-6" />
       <div className="relative flex min-h-[calc(100svh-4.5rem)] flex-col justify-end px-5 pb-[8svh] md:px-6">
         <h1 id="area-title" className="max-w-[60vw] text-[clamp(2.75rem,1rem+5vw,6.5rem)] leading-[0.95] font-medium tracking-[-0.02em] text-navy">
           <SplitLines as="span" on="load" delay={0.1} className="block">
