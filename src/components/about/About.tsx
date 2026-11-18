@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Content } from "@/content";
 import { ApprovalFlag } from "@/components/ui/Kit";
@@ -221,17 +221,14 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
   const n = scroll.statements.length;
   usePinnedIndex(root, n + 1, (k) => setI(Math.min(k, n)));
   const showPoints = i >= n;
-  const bg = Math.min(i, n - 1);
 
   return (
-    <section ref={root} aria-label="How we work" className="relative bg-navy-ink text-white" style={{ height: `${(n + 1) * 100}svh` }}>
+    <section ref={root} aria-label="How we work" className="relative bg-black text-white" style={{ height: `${(n + 1) * 100}svh` }}>
       <div className="sticky top-0 h-svh overflow-hidden">
-        {scroll.statements.map((s, k) => (
-          <div key={s.src} aria-hidden className={`absolute inset-0 transition-opacity duration-[1.2s] ${k === bg ? "opacity-100" : "opacity-0"}`}>
-            <Image src={s.src} alt="" fill sizes="100vw" quality={90} className="object-cover" />
-          </div>
+        {[...scroll.statements, scroll.pointsBg].map((s, k) => (
+          <BgVideo key={s.video} src={s.video} poster={s.src} active={k === i} />
         ))}
-        <div aria-hidden className={`absolute inset-0 transition-colors duration-700 ${showPoints ? "bg-navy-ink/85" : "bg-navy-ink/55"}`} />
+        <div aria-hidden className={`absolute inset-0 transition-colors duration-700 ${showPoints ? "bg-black/35" : "bg-black/45"}`} />
 
         <div className="relative flex h-full items-center justify-center px-5 md:px-10">
           <AnimatePresence mode="wait">
@@ -247,13 +244,22 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
                 {scroll.statements[i].text}
               </motion.h2>
             ) : (
-              <motion.div key="points" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.7, ease }} className="max-w-2xl">
-                <p className="text-lg leading-snug text-white/85 md:text-xl">{scroll.intro}</p>
-                <ul className="mt-8 divide-y divide-white/15 border-y border-white/15">
+              <motion.div
+                key="points"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.7, ease }}
+                className="absolute inset-0 flex flex-col justify-between px-5 pt-[18svh] pb-[8svh] md:px-[10vw]"
+              >
+                <p className="mx-auto max-w-[34ch] text-center font-serif text-[clamp(1.8rem,1rem+2.6vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-white">
+                  {scroll.intro}
+                </p>
+                <ul className="grid gap-8 md:grid-cols-3 md:gap-[6vw]">
                   {scroll.points.map((p, k) => (
-                    <li key={p} className="flex gap-5 py-5 text-base text-white md:text-lg">
-                      <span className="font-serif text-lime">{String(k + 1).padStart(2, "0")}</span>
-                      {p}
+                    <li key={p} className="max-w-xs">
+                      <PointIcon i={k} />
+                      <p className="mt-6 text-base leading-snug text-white md:text-[1.0625rem]">{p}</p>
                     </li>
                   ))}
                 </ul>
@@ -263,5 +269,35 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Small solid geometric marks above each point, as on Tresmares. */
+function PointIcon({ i }: { i: number }) {
+  const shapes = [
+    <path key="a" d="M2 2h12l8 8v12H10L2 14Z" />,
+    <path key="b" d="M2 2h10c0 6 10 6 10 12v8H12c0-6-10-6-10-12Z" />,
+    <path key="c" d="M2 22a10 10 0 0 1 20 0h-6a4 4 0 0 0-8 0Z" />,
+  ];
+  return (
+    <svg viewBox="0 0 24 24" className="h-7 w-7 fill-white" aria-hidden>
+      {shapes[i % shapes.length]}
+    </svg>
+  );
+}
+
+/** Full-bleed background clip: plays only while its step is active (poster image until loaded). */
+function BgVideo({ src, poster, active }: { src: string; poster: string; active: boolean }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (active && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) v.play().catch(() => {});
+    else v.pause();
+  }, [active]);
+  return (
+    <div aria-hidden className={`absolute inset-0 transition-opacity duration-[1.2s] ${active ? "opacity-100" : "opacity-0"}`}>
+      <video ref={ref} src={src} poster={poster} muted loop playsInline preload="metadata" className="h-full w-full object-cover" />
+    </div>
   );
 }

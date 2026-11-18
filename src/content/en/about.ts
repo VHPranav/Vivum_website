@@ -84,11 +84,13 @@ export const about = {
   },
   scroll: {
     statements: [
-      { text: "VIVUM is one group with four specialist teams", src: "/images/about-bg-01.webp" },
-      { text: "We connect clients with the right people, institutions and partners", src: "/images/about-bg-02.webp" },
-      { text: "Every engagement has a clear scope, owner and next step", src: "/images/about-bg-03.webp" },
+      { text: "VIVUM is one group with four specialist teams", src: "/media/about-01-poster.webp", video: "/media/about-01.mp4" },
+      { text: "We connect clients with the right people, institutions and partners", src: "/media/about-02-poster.webp", video: "/media/about-02.mp4" },
+      { text: "Every engagement has a clear scope, owner and next step", src: "/media/about-03-poster.webp", video: "/media/about-03.mp4" },
     ],
-    intro: "Our way of working combines hands-on experience with an international network, so we can:",
+    // Background for the closing points step. Videos are AI-generated in Google Flow.
+    pointsBg: { src: "/media/about-04-poster.webp", video: "/media/about-04.mp4" },
+    intro: "Our way of working combines hands-on experience — specialists, partners, one point of contact — with an international network, enabling us to:",
     points: [
       "Understand each client’s situation before proposing anything.",
       "Bring in the right specialists and partners, with roles stated up front.",
