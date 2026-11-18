@@ -3,9 +3,10 @@ import * as common from "./en/common";
 import { home } from "./en/home";
 import { consulting } from "./en/consulting";
 import { about } from "./en/about";
+import { areaPages } from "./en/areas";
 import { pages, legalPages, contactPage } from "./en/pages";
 
-const en = { ...common, home, consulting, about, pages, legalPages, contactPage };
+const en = { ...common, home, consulting, about, areaPages, pages, legalPages, contactPage };
 
 export type Content = typeof en;
 

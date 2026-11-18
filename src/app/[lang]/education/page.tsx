@@ -1,19 +1,10 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { isLocale, localePath } from "@/i18n/config";
-import { getContent } from "@/content";
-import { StubPage } from "@/components/StubPage";
+import { AreaRoute, areaMetadata } from "@/components/area/renderArea";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]/education">): Promise<Metadata> {
-  const { lang } = await params;
-  if (!isLocale(lang)) return {};
-  const page = getContent(lang).pages.education;
-  return { title: page.label, description: page.lede, alternates: { canonical: localePath(lang, "/education") } };
+  return areaMetadata((await params).lang, "education");
 }
 
 export default async function Page({ params }: PageProps<"/[lang]/education">) {
-  const { lang } = await params;
-  if (!isLocale(lang)) notFound();
-  const c = getContent(lang);
-  return <StubPage c={c} locale={lang} page={c.pages.education} kind="education" cta={c.divisions.find((d) => d.id === "education")?.pageCta} />;
+  return <AreaRoute lang={(await params).lang} id="education" />;
 }
