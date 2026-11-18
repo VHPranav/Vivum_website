@@ -24,9 +24,9 @@
   --color-muted: #566277;
 
   /* Headings: classic serif standing in for "Late Serif" (logo / headings).
-     Body and subheads: Poppins, as specified on the identity sheet. */
+     Body and subheads: Plus Jakarta Sans (trial; the identity sheet specifies Poppins). */
   --font-serif: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-sans: var(--font-poppins), "Poppins", system-ui, sans-serif;
+  --font-sans: var(--font-sans-face), "Plus Jakarta Sans", system-ui, sans-serif;
 
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -40,7 +40,7 @@ html {
 
 body {
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   background: var(--color-paper);
 }
 

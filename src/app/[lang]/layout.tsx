@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Poppins, Source_Serif_4 } from "next/font/google";
+import { Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -17,11 +17,12 @@ const serif = Source_Serif_4({
   display: "swap",
 });
 
-// Body and subheads — Poppins, as on the identity sheet. latin-ext covers Montenegrin (č, ć, š, ž, đ).
-const poppins = Poppins({
+// Body and subheads — Plus Jakarta Sans (trial in place of the brand sheet's Poppins; client to confirm).
+// latin-ext covers Montenegrin (č, ć, š, ž, đ).
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "500", "600"],
-  variable: "--font-poppins",
+  variable: "--font-sans-face",
   display: "swap",
 });
 
@@ -49,7 +50,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const c = getContent(lang);
 
   return (
-    <html lang={localeLabels[lang].htmlLang} className={`${serif.variable} ${poppins.variable}`} suppressHydrationWarning>
+    <html lang={localeLabels[lang].htmlLang} className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         {/* Must run before first paint (next/script defers inline code): marks JS as available so
             split text stays hidden until it animates. React logs a harmless dev-only notice about it. */}
