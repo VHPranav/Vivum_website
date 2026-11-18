@@ -1,13 +1,18 @@
-/**
- * Logo slot. Typographic stand-in until the approved VIVUM logo files arrive.
- * To swap: put the files in /public/brand and render them here with next/image
- * (keep the same height so the header layout does not shift).
- */
+import Image from "next/image";
+
 export function Wordmark({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <span className={`flex flex-col leading-none ${tone === "light" ? "text-white" : "text-navy"}`}>
-      <span className="font-serif text-[1.375rem] font-normal tracking-[0.32em] md:text-[1.5rem]">VIVUM</span>
-      <span className={`mt-1 text-[0.5625rem] font-medium tracking-[0.5em] ${tone === "light" ? "text-white/70" : "text-green-deep"}`}>GROUP</span>
+    <span className={`inline-flex items-center gap-2.5 ${tone === "light" ? "text-white" : "text-navy"}`}>
+      <Image
+        src="/brand/vivum-mark.png"
+        alt=""
+        width={48}
+        height={48}
+        className="h-10 w-10 object-contain md:h-12 md:w-12"
+        priority
+      />
+      <span className="font-[Georgia,Times_New_Roman,serif] text-[1.375rem] leading-none font-normal tracking-[0.12em] md:text-[1.5rem]">VIVUM</span>
+      <span className="sr-only">Group</span>
     </span>
   );
 }

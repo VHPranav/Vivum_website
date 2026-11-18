@@ -5,6 +5,7 @@ import { contactRoutes, displayEmail, legalName, reviewMode, whatsappNumber } fr
 import { ApprovalFlag } from "./ui/Kit";
 import { FillText } from "./motion/Text";
 import { FooterCarousel, type CarouselItem } from "./FooterCarousel";
+import { Wordmark } from "./Wordmark";
 
 /**
  * Footer as on Tresmares: a pale, almost full-height closing panel — centred statement that fills
@@ -18,6 +19,9 @@ export function Footer({ locale, footer, carousel }: { locale: Locale; footer: C
     <footer className="bg-[#f1f0ec] text-ink">
       <div className="container-page pt-28 md:pt-40">
         <div className="text-center">
+          <Link href={L("/")} aria-label="VIVUM Group home" className="mb-10 inline-flex">
+            <Wordmark />
+          </Link>
           <FillText as="p" className="mx-auto max-w-[20ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
             {footer.statement}
           </FillText>

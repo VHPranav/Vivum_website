@@ -63,7 +63,7 @@ function AreaHero({ page, image }: { page: AreaPage; image: string }) {
         {/* soft cloud bank behind the copy so it reads over any photo */}
         <div aria-hidden className="pointer-events-none absolute bottom-[-10%] left-[-15%] h-[85%] w-[80%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(251,250,246,0.97),rgba(251,250,246,0.85)_50%,rgba(251,250,246,0)_100%)] blur-2xl" />
         <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-paper/95 to-paper/0" />
-        <h1 id="area-title" className="relative max-w-[60vw] text-[clamp(2.75rem,1rem+5vw,6.5rem)] leading-[0.95] font-medium tracking-[-0.02em] text-navy">
+        <h1 id="area-title" className="relative max-w-full text-[clamp(2.25rem,1rem+5vw,6.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-navy md:max-w-[60vw] md:leading-[0.95]">
           <SplitLines as="span" on="load" delay={0.1} className="block">
             {page.title[0]}
           </SplitLines>

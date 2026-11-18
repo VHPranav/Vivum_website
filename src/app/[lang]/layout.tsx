@@ -33,6 +33,10 @@ export function generateStaticParams() {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "VIVUM Group", template: "%s — VIVUM Group" },
+  icons: {
+    icon: [{ url: "/brand/favicon.png", type: "image/png", sizes: "64x64" }],
+    apple: [{ url: "/brand/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = { themeColor: "#fbfaf6" };

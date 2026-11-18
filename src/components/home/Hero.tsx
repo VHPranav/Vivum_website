@@ -57,7 +57,7 @@ export function Hero({
   );
 
   return (
-    <div ref={wrap} className="relative">
+    <div ref={wrap} className="relative overflow-x-clip">
       {/* Pinned background: landscape (photo stand-in) + clouds */}
       <div aria-hidden className="sticky top-0 h-svh overflow-hidden bg-paper">
         <div data-ridges className="absolute inset-0 origin-[50%_80%]">
@@ -71,12 +71,12 @@ export function Hero({
       </div>
 
       {/* Opening */}
-      <section data-hero aria-labelledby="hero-title" className="relative z-10 -mt-[100svh] h-svh">
-        <div data-hero-copy className="container-page relative h-full">
-          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="absolute top-[19svh] left-5 max-w-[13ch] font-serif text-[clamp(3rem,0.8rem+5.8vw,8rem)] leading-[0.96] font-medium tracking-[-0.02em] text-navy md:left-10 lg:top-[22svh] lg:left-[8.3%]">
+      <section data-hero aria-labelledby="hero-title" className="relative z-10 -mt-[100svh] min-h-[max(100svh,40rem)] md:h-svh md:min-h-0">
+        <div data-hero-copy className="container-page relative flex min-h-[inherit] flex-col justify-between gap-10 pt-[max(7rem,19svh)] pb-[8svh] md:block md:h-full md:min-h-0 md:py-0">
+          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="max-w-[13ch] font-serif text-[clamp(2.25rem,10vw,3rem)] leading-[1.02] font-medium tracking-[-0.02em] text-navy md:absolute md:top-[19svh] md:left-10 md:text-[clamp(3rem,0.8rem+5.8vw,8rem)] md:leading-[0.96] lg:top-[22svh] lg:left-[8.3%]">
             {hero.h1}
           </SplitLines>
-          <div className="isolate absolute right-5 bottom-[12svh] left-5 md:right-auto md:left-[50%] md:max-w-sm lg:left-[66.6%] lg:max-w-[20rem]">
+          <div className="isolate relative md:absolute md:bottom-[12svh] md:right-auto md:left-[50%] md:max-w-sm lg:left-[66.6%] lg:max-w-[20rem]">
             {/* soft cloud bank behind the lede so it always reads over the ridge */}
             <div aria-hidden className="pointer-events-none absolute -inset-x-[45%] -inset-y-[70%] -z-10 rounded-[50%] bg-[radial-gradient(closest-side,rgba(251,250,246,0.95),rgba(251,250,246,0.75)_45%,rgba(251,250,246,0)_100%)] blur-2xl" />
             <SplitLines as="p" on="load" delay={0.5} stagger={0.05} className="text-[1.25rem] leading-[1.25] font-medium tracking-[-0.01em] text-navy-ink md:text-[1.5rem]">

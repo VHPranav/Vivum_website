@@ -9,6 +9,7 @@ import type { Content } from "@/content";
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
 import { FillText } from "@/components/motion/Text";
+import { useLenis } from "@/components/SmoothScroll";
 
 type A = Content["about"];
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -42,6 +43,7 @@ function usePinnedIndex(root: React.RefObject<HTMLElement | null>, count: number
  */
 export function Journey({ journey, locale }: { journey: A["journey"]; locale: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const lenis = useLenis();
   const [i, setI] = useState(0);
   const n = journey.steps.length;
   usePinnedIndex(root, n, setI);
@@ -67,12 +69,33 @@ export function Journey({ journey, locale }: { journey: A["journey"]; locale: Lo
     const el = root.current;
     if (!el) return;
     const top = el.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top: top + (el.offsetHeight - window.innerHeight) * ((k + 0.5) / n), behavior: "smooth" });
+    const target = top + (el.offsetHeight - window.innerHeight) * ((k + 0.5) / n);
+    if (lenis) lenis.scrollTo(target);
+    else window.scrollTo({ top: target, behavior: prefersReducedMotion() ? "instant" : "smooth" });
   };
 
   return (
-    <section ref={root} id="journey" aria-labelledby="journey-title" className="relative scroll-mt-0 bg-paper" style={{ height: `${n * 90 + 40}svh` }}>
-      <div className="sticky top-0 flex h-svh flex-col overflow-hidden pt-[13svh] pb-[5svh]">
+    <section ref={root} id="journey" aria-label={journey.title} className="relative scroll-mt-20 bg-paper lg:h-[var(--journey-height)] lg:scroll-mt-0" style={{ "--journey-height": `${n * 90 + 40}svh` } as React.CSSProperties}>
+      <div className="container-page py-16 lg:hidden">
+        <p className="label">{journey.label}</p>
+        <h2 id="journey-mobile-title" className="mt-3 text-3xl leading-tight font-light text-navy">{journey.title}</h2>
+        <ol className="mt-10 space-y-12">
+          {journey.steps.map((s) => (
+            <li key={s.n}>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image src={s.image} alt="" fill sizes="(min-width: 768px) 90vw, 100vw" quality={90} className="object-cover" />
+              </div>
+              <p className="mt-5 text-sm text-green-deep">{s.n}</p>
+              <h3 className="mt-2 text-2xl leading-tight text-navy">{s.name}</h3>
+              <ul className="mt-4 space-y-3 text-base leading-relaxed text-ink">
+                {s.points.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+              <Link href={localePath(locale, s.href)} className="link-u mt-5 inline-block text-sm font-medium text-navy">Explore {s.tab.toLowerCase()}</Link>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div className="sticky top-0 hidden h-svh flex-col overflow-hidden pt-[13svh] pb-[5svh] lg:flex">
         <div className="container-page flex items-end justify-between gap-6">
           <div>
             <p className="label">{journey.label}</p>

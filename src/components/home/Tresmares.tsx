@@ -78,7 +78,20 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
         </h2>
       </div>
 
-      <div data-ring className="relative mx-auto h-[max(44vw,26rem)] w-screen overflow-hidden pt-[12.5vw]">
+      <div className="container-page mt-10 md:hidden">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-6">
+          {network.items.map((it) => (
+            <li key={it.name} className="min-w-0">
+              <div className="relative aspect-square overflow-hidden rounded-lg bg-mist">
+                <Image src={it.src} alt="" fill sizes="50vw" quality={90} className="object-cover" />
+              </div>
+              <p className="mt-3 text-sm leading-snug font-medium text-ink">{it.name}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="my-10 text-base leading-relaxed text-ink">{network.body}</p>
+      </div>
+      <div data-ring className="relative mx-auto hidden h-[max(44vw,26rem)] w-screen overflow-hidden pt-[12.5vw] md:block">
         <div data-circle className="relative mx-auto aspect-square w-[max(90vw,44rem)]">
           {network.items.map((it, i) => (
             <div
@@ -172,13 +185,13 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
               <li key={m.src} data-rise className="group relative w-[min(77.5vw,20rem)] shrink-0 overflow-hidden bg-[#ececec] select-none lg:w-[23vw]">
                 <div aria-hidden className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(222,222,222,0.85),rgba(243,243,243,0)_45%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 {/* Role and name: always shown on touch screens, revealed on hover on desktop. */}
-                <div className="relative z-[2] flex h-[min(30vw,8rem)] flex-col items-center justify-end p-[2.5vw] text-center transition-opacity duration-500 lg:h-[13.917vw] lg:opacity-0 lg:group-hover:opacity-100">
+                <div className="relative z-[2] flex min-h-32 flex-col items-center justify-center bg-paper px-4 py-5 text-center transition-opacity duration-500 lg:h-[13.917vw] lg:min-h-0 lg:justify-end lg:bg-transparent lg:p-[2.5vw] lg:opacity-0 lg:group-hover:opacity-100">
                   <p className="text-[0.8125rem] text-ink/70">{m.role}</p>
-                  <p className="mt-[0.625vw] translate-y-[10%] font-serif text-[1.4rem] leading-tight text-ink transition-transform duration-[1.2s] ease-[var(--ease-calm)] group-hover:translate-y-0">{m.name}</p>
+                  <p className="mt-2 font-serif text-[1.4rem] leading-tight text-ink transition-transform duration-[1.2s] ease-[var(--ease-calm)] lg:mt-[0.625vw] lg:translate-y-[10%] lg:group-hover:translate-y-0">{m.name}</p>
                 </div>
-                <div className="relative h-[min(90vw,24rem)] lg:h-[25vw]" />
-                {/* Mock studio portrait fills the card behind the caption. */}
-                <Image src={m.src} alt={`Portrait placeholder: ${m.role}`} fill sizes="(min-width: 1024px) 23vw, 78vw" quality={90} draggable={false} className="pointer-events-none -z-0 object-cover object-bottom" />
+                <div className="relative h-[min(90vw,24rem)] lg:static lg:h-[25vw]">
+                  <Image src={m.src} alt={`Portrait placeholder: ${m.role}`} fill sizes="(min-width: 1024px) 23vw, 78vw" quality={90} draggable={false} className="pointer-events-none object-cover object-bottom" />
+                </div>
               </li>
             ))}
           </motion.ul>
