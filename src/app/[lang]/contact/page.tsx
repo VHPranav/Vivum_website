@@ -11,10 +11,9 @@ import {
   whatsappNumber,
   type RouteId,
 } from "@/lib/site";
-import { formFields } from "@/lib/forms";
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
-import { EnquiryForm } from "@/components/forms/EnquiryForm";
+import { StepForm } from "@/components/forms/StepForm";
 
 export async function generateMetadata({
   params,
@@ -155,21 +154,20 @@ export default async function ContactPage({
                 Send us a message
               </SplitLines>
               <p className="mt-6 max-w-[22rem] text-[1.05rem] leading-[1.35] text-ink/80">
-                Choose the area you are interested in and your message reaches
-                the right team. We reply in English or Montenegrin.
+                Three short steps: choose an area, tell us who you are, then
+                what you need. Your message goes straight to the right team, and
+                we reply in English or Montenegrin.
               </p>
             </div>
           </div>
           <div className="lg:col-span-7">
-            <EnquiryForm
-              kind="general"
+            <StepForm
               locale={lang}
-              fields={formFields("general", c)}
+              areas={c.divisions.map((d) => ({ id: d.id, name: d.name, description: d.description }))}
               copy={c.formCopy}
-              submitLabel="Send enquiry"
               routes={contactRoutes}
               reviewMode={reviewMode}
-              defaultService={area}
+              defaultArea={area}
             />
           </div>
         </div>
