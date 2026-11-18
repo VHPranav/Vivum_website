@@ -12,7 +12,7 @@ import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
 
-type Other = { id: string; href: string; title: [string, string]; facts: AreaPage["facts"] };
+type Other = { id: string; href: string; title: [string, string]; lede: string; facts: AreaPage["facts"] };
 const ease = [0.22, 1, 0.36, 1] as const;
 
 /**
@@ -182,35 +182,59 @@ function OtherAreas({ others, locale, label }: { others: Other[]; locale: Locale
         {others.map((o, i) => {
           const isOpen = open === i;
           return (
-            <li key={o.id} onMouseEnter={() => setOpen(i)} className="relative overflow-hidden border-b border-ink/15">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                onClick={() => setOpen(i)}
-                className="flex w-full items-start justify-between gap-6 py-8 text-left"
-              >
-                <span className="relative z-10 text-[clamp(2rem,1rem+3vw,3.75rem)] leading-[0.98] font-medium tracking-[-0.02em] text-ink">
-                  {o.title[0]}
-                  <br />
-                  {o.title[1]}
-                </span>
-                <span aria-hidden className="relative z-10 mt-2 flex h-6 w-6 shrink-0 items-center justify-center border border-ink/20 text-[0.8rem] text-ink">
-                  {isOpen ? "−" : "+"}
-                </span>
-              </button>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} transition={{ duration: 0.7, ease }} className="overflow-hidden">
-                    <AreaSymbol id={o.id} mono className="pointer-events-none absolute top-0 left-[38%] h-full w-auto text-ink/[0.06]" />
-                    <div className="relative grid gap-8 pb-8 md:grid-cols-12 md:items-end">
-                      <Facts facts={o.facts.slice(0, 4)} className="md:col-span-10 lg:!grid-cols-4" />
-                      <Link href={localePath(locale, o.href)} className="link-u justify-self-start text-[0.825rem] font-medium text-navy md:col-span-2 md:justify-self-end">
-                        Explore
-                      </Link>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <li key={o.id} onMouseEnter={() => setOpen(i)} className="relative border-b border-ink/15">
+              <div className="relative overflow-hidden">
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      aria-hidden
+                      initial={{ opacity: 0, scale: 0.94 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.94 }}
+                      transition={{ duration: 0.8, ease }}
+                      className="pointer-events-none absolute inset-y-[8%] left-[30%] hidden w-[34%] md:block"
+                    >
+                      <AreaSymbol id={o.id} mono className="h-full w-full text-ink/[0.05]" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <div className="relative grid grid-cols-1 gap-6 md:grid-cols-12">
+                  <button type="button" aria-expanded={isOpen} onClick={() => setOpen(i)} className="py-8 text-left md:col-span-8">
+                    <span className="block text-[clamp(2rem,1rem+3vw,3.75rem)] leading-[0.98] font-medium tracking-[-0.02em] text-ink">
+                      {o.title[0]}
+                      <br />
+                      {o.title[1]}
+                    </span>
+                  </button>
+                  <div className="flex items-start justify-end gap-6 pt-8 md:col-span-4">
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.6, ease, delay: 0.1 }} className="hidden max-w-[17rem] md:block">
+                          <p className="text-[0.8rem] leading-snug text-ink/80">{o.lede}</p>
+                          <Link href={localePath(locale, o.href)} className="link-u mt-4 inline-block text-[0.8rem] font-medium text-navy">
+                            Explore
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <span aria-hidden className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center border border-ink/20 text-[0.8rem] text-ink">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </div>
+                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} transition={{ duration: 0.8, ease }} className="overflow-hidden">
+                      <div className="relative flex min-h-[14rem] flex-col justify-end gap-6 pb-8 md:min-h-[17rem]">
+                        <Facts facts={o.facts.slice(0, 4)} className="lg:!grid-cols-4" />
+                        <Link href={localePath(locale, o.href)} className="link-u self-start text-[0.8rem] font-medium text-navy md:hidden">
+                          Explore
+                        </Link>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </li>
           );
         })}

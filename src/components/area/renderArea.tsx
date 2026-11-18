@@ -17,6 +17,6 @@ export function AreaRoute({ lang, id }: { lang: string; id: DivisionId }) {
   const c = getContent(lang);
   const others = c.divisions
     .filter((d) => d.id !== id)
-    .map((d) => ({ id: d.id, href: d.href, title: c.areaPages[d.id].title, facts: c.areaPages[d.id].facts }));
+    .map((d) => ({ id: d.id, href: d.href, title: c.areaPages[d.id].title, lede: d.description, facts: c.areaPages[d.id].facts }));
   return <AreaDetail page={c.areaPages[id]} others={others} locale={lang} otherLabel="Other areas" />;
 }
