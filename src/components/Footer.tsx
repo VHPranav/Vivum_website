@@ -3,17 +3,15 @@ import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { contactRoutes, displayEmail, legalName, reviewMode, whatsappNumber } from "@/lib/site";
 import { ApprovalFlag } from "./ui/Kit";
-import { Media } from "./ui/Media";
 import { FillText } from "./motion/Text";
-import { Rise } from "./motion/Rise";
-import { areaTone } from "./home/AreaCards";
+import { FooterCarousel, type CarouselItem } from "./FooterCarousel";
 
 /**
  * Footer as on Tresmares: a pale, almost full-height closing panel — centred statement that fills
  * in as you scroll, a "Contact us" link, a row of square images (here: the four areas), small
  * square contact icons, and a thin bottom bar with legal links and the copyright line.
  */
-export function Footer({ locale, footer, divisions }: { locale: Locale; footer: Content["footer"]; divisions: Content["divisions"] }) {
+export function Footer({ locale, footer, carousel }: { locale: Locale; footer: Content["footer"]; carousel: CarouselItem[] }) {
   const L = (href: string) => localePath(locale, href);
   const email = displayEmail("general");
   return (
@@ -28,25 +26,14 @@ export function Footer({ locale, footer, divisions }: { locale: Locale; footer: 
           </Link>
         </div>
 
-        {/* Area tiles in place of Tresmares' office photographs. */}
-        <Rise as="ul" className="mx-auto mt-20 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 md:mt-28 md:gap-x-16">
-          {divisions.map((d) => (
-            <li key={d.id} data-rise>
-              <Link href={L(d.href)} className="group block">
-                <Media
-                  need={d.imageNeed}
-                  photo={d.photo}
-                  tone={areaTone[d.id]}
-                  sizes="(min-width: 1024px) 200px, (min-width: 640px) 22vw, 44vw"
-                  labelClass="hidden"
-                  className="aspect-square grayscale-[35%] transition-[filter] duration-700 group-hover:grayscale-0"
-                />
-                <span className="mt-3 block text-center text-[0.8125rem] text-ink/70 transition-colors group-hover:text-navy">{d.short}</span>
-              </Link>
-            </li>
-          ))}
-        </Rise>
+      </div>
 
+      {/* Full-width image carousel, as in the Tresmares footer. */}
+      <div className="mt-20 md:mt-28">
+        <FooterCarousel items={carousel.map((it) => ({ ...it, href: L(it.href) }))} />
+      </div>
+
+      <div className="container-page">
         <div className="mt-16 flex justify-center gap-4 md:mt-24">
           <Link href={L("/contact")} aria-label={`Email${email ? ` ${email}` : ""}`} className="flex h-10 w-10 items-center justify-center border border-ink/15 text-ink transition-colors hover:border-navy hover:text-navy">
             <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.2} aria-hidden>

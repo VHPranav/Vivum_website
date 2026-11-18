@@ -27,6 +27,9 @@ const poppins = Poppins({
 
 const introScript = `document.documentElement.classList.add("js");`;
 
+// Which area page each network photo links to (same order as home.network.items).
+const carouselArea = ["/wellbeing", "/wellbeing", "/wellbeing", "/consulting", "/consulting", "/consulting", "/consulting", "/consulting", "/workforce", "/workforce", "/education", "/education"];
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -56,7 +59,11 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
         <SmoothScroll>
           <Header locale={lang} nav={c.nav} ui={c.ui} divisions={c.divisions} />
           <main id="main">{children}</main>
-          <Footer locale={lang} footer={c.footer} divisions={c.divisions} />
+          <Footer
+            locale={lang}
+            footer={c.footer}
+            carousel={c.home.network.items.map((it, k) => ({ src: it.src, caption: it.name, href: carouselArea[k] ?? "/" }))}
+          />
         </SmoothScroll>
       </body>
     </html>
