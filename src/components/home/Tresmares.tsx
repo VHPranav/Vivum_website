@@ -20,7 +20,7 @@ export function FactsGrid({ locale, facts }: { locale: Locale; facts: Content["h
   const colB = facts.items.filter((_, i) => i % 2 === 1);
   const card = (f: { k: string; v: string }) => (
     <li key={f.v} data-rise className="-mt-px flex aspect-[4/5] flex-col justify-between border border-line bg-paper p-5 md:p-6">
-      <span className="font-serif text-[clamp(2.4rem,1.2rem+3vw,4.5rem)] leading-none font-light tracking-[-0.03em] text-green-deep">{f.k}</span>
+      <span className="font-serif text-[clamp(2.4rem,1.2rem+3vw,4.5rem)] leading-none font-light tracking-[-0.02em] text-green-deep">{f.k}</span>
       <span className="text-[0.8125rem] leading-snug text-ink md:text-sm">{f.v}</span>
     </li>
   );
@@ -71,7 +71,7 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
     <section ref={root} aria-labelledby="network-title" className="relative overflow-hidden bg-white pt-[20vw] pb-[10vw]">
       <div className="container-page text-center">
         <p className="label">{network.label}</p>
-        <h2 id="network-title" className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">
+        <h2 id="network-title" className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
           {network.title[0]}
           <span className="text-green-deep">{network.title[1]}</span>
           {network.title[2]}
@@ -151,7 +151,7 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
   return (
     <section aria-labelledby="people-statement" className="bg-[#f3f3f1] pt-[13.333vw] pb-[0.417vw]">
       <div className="container-page text-center">
-        <FillText as="h2" id="people-statement" className="mx-auto max-w-[24ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">
+        <FillText as="h2" id="people-statement" className="mx-auto max-w-[24ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
           {people.statement}
         </FillText>
         <span aria-hidden className="mx-auto mt-[4vw] block h-1.5 w-1.5 rounded-full bg-green" />

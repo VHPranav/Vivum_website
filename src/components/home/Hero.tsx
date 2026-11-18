@@ -73,7 +73,7 @@ export function Hero({
       {/* Opening */}
       <section data-hero aria-labelledby="hero-title" className="relative z-10 -mt-[100svh] h-svh">
         <div data-hero-copy className="container-page relative h-full">
-          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="absolute top-[19svh] left-5 max-w-[13ch] font-serif text-[clamp(2.6rem,0.8rem+4.6vw,6.4rem)] leading-[0.98] font-light tracking-[-0.035em] text-navy md:left-10 lg:top-[22svh] lg:left-[8.3%]">
+          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="absolute top-[19svh] left-5 max-w-[13ch] font-serif text-[clamp(2.6rem,0.8rem+4.6vw,6.4rem)] leading-[0.98] font-light tracking-[-0.02em] text-navy md:left-10 lg:top-[22svh] lg:left-[8.3%]">
             {hero.h1}
           </SplitLines>
           <div className="absolute right-5 bottom-[12svh] left-5 md:right-auto md:left-[50%] md:max-w-sm lg:left-[66.6%] lg:max-w-[20rem]">
@@ -99,7 +99,7 @@ export function Hero({
           <h2 id={`${statementId}-label`} className="label">
             {about.label}
           </h2>
-          <FillText className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">
+          <FillText className="mx-auto mt-6 max-w-[22ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
             {about.statement}
           </FillText>
           <Link href={localePath(locale, about.link.href)} className="link-u mt-10 inline-block text-[0.875rem] font-medium text-navy-ink">

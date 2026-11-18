@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -9,19 +9,12 @@ import { getContent } from "@/content";
 import { siteUrl } from "@/lib/site";
 import "../globals.css";
 
-// Headings — closest Google match to the identity sheet's "Late Serif": a classic, high-legibility serif.
-const serif = Source_Serif_4({
-  subsets: ["latin", "latin-ext"],
-  // Variable font: one file covers every weight used (300–500).
-  variable: "--font-source-serif",
-  display: "swap",
-});
 
 // Body and subheads — Plus Jakarta Sans (trial in place of the brand sheet's Poppins; client to confirm).
 // latin-ext covers Montenegrin (č, ć, š, ž, đ).
 const sans = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans-face",
   display: "swap",
 });
@@ -50,7 +43,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const c = getContent(lang);
 
   return (
-    <html lang={localeLabels[lang].htmlLang} className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
+    <html lang={localeLabels[lang].htmlLang} className={`${sans.variable}`} suppressHydrationWarning>
       <head>
         {/* Must run before first paint (next/script defers inline code): marks JS as available so
             split text stays hidden until it animates. React logs a harmless dev-only notice about it. */}

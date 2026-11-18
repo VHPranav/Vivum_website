@@ -22,7 +22,7 @@ Status values: Missing · Draft · Submitted · Approved.
 | Homepage follows Tresmares 1:1: the four area cards no longer sit directly under the opening (Sandra asked for them there); the areas appear in the pinned showcase after the About and figures sections | Approval required |
 | Homepage contact form moved to /contact; the footer is the homepage's closing call to action | Approval required |
 
-| Body font changed from the brand sheet's Poppins to Plus Jakarta Sans (PP Neue Montreal, as on Tresmares, needs a paid licence) | Approval required |
+| Typeface: Plus Jakarta Sans for headings and body (brand sheet specifies a serif for headings and Poppins for body; PP Neue Montreal, as on Tresmares, needs a paid licence) | Approval required |
 
 ## Homepage
 

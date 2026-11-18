@@ -23,9 +23,10 @@
   --color-ink: #13233f;
   --color-muted: #566277;
 
-  /* Headings: classic serif standing in for "Late Serif" (logo / headings).
-     Body and subheads: Plus Jakarta Sans (trial; the identity sheet specifies Poppins). */
-  --font-serif: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  /* One typeface throughout, as on Tresmares: Plus Jakarta Sans for headings and body
+     (trial; the identity sheet specifies a serif for headings and Poppins for body).
+     The --font-serif token is kept as the "display" role so headings can be switched in one place. */
+  --font-serif: var(--font-sans-face), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-sans: var(--font-sans-face), "Plus Jakarta Sans", system-ui, sans-serif;
 
   --ease-calm: cubic-bezier(0.22, 1, 0.36, 1);
@@ -97,21 +98,21 @@ body {
   font-weight: 300;
   font-size: clamp(3.1rem, 0.9rem + 7.6vw, 10rem);
   line-height: 0.94;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.015em;
 }
 @utility display-l {
   font-family: var(--font-serif);
   font-weight: 300;
   font-size: clamp(2.1rem, 1.05rem + 3.5vw, 4.6rem);
   line-height: 1.04;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.015em;
 }
 @utility display-m {
   font-family: var(--font-serif);
   font-weight: 300;
   font-size: clamp(1.85rem, 1.2rem + 2.1vw, 3.3rem);
   line-height: 1.06;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 /* Small section label, as on the references: quiet, sentence case, with a brand dot. */
 @utility label {

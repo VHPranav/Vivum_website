@@ -18,7 +18,7 @@ export function Footer({ locale, footer, carousel }: { locale: Locale; footer: C
     <footer className="bg-[#f1f0ec] text-ink">
       <div className="container-page pt-28 md:pt-40">
         <div className="text-center">
-          <FillText as="p" className="mx-auto max-w-[20ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy">
+          <FillText as="p" className="mx-auto max-w-[20ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
             {footer.statement}
           </FillText>
           <Link href={L("/contact")} className="link-u mt-8 inline-block text-[0.875rem] font-medium text-navy-ink">

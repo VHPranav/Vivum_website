@@ -76,7 +76,7 @@ export function Journey({ journey, locale }: { journey: A["journey"]; locale: Lo
         <div className="container-page flex items-end justify-between gap-6">
           <div>
             <p className="label">{journey.label}</p>
-            <h2 id="journey-title" className="mt-3 font-serif text-[clamp(2rem,1rem+2.4vw,3.4rem)] leading-[1.02] font-light tracking-[-0.025em] text-navy">
+            <h2 id="journey-title" className="mt-3 font-serif text-[clamp(2rem,1rem+2.4vw,3.4rem)] leading-[1.02] font-light tracking-[-0.02em] text-navy">
               {journey.title}
             </h2>
           </div>
@@ -93,7 +93,7 @@ export function Journey({ journey, locale }: { journey: A["journey"]; locale: Lo
                   animate={{ y: "0%" }}
                   exit={{ y: "-100%" }}
                   transition={{ duration: 0.8, ease }}
-                  className="absolute inset-0 font-serif text-[clamp(5rem,2rem+9vw,11rem)] leading-none font-light tracking-[-0.05em] text-green-deep"
+                  className="absolute inset-0 font-serif text-[clamp(5rem,2rem+9vw,11rem)] leading-none font-light tracking-[-0.02em] text-green-deep"
                 >
                   {step.n}
                 </motion.p>
@@ -222,7 +222,7 @@ export function Partner({ partner }: { partner: A["partner"] }) {
     <section ref={root} aria-labelledby="partner-title" className="bg-white pb-[10vw]">
       <div className="grid lg:grid-cols-2">
         <div className="px-5 pt-[16vw] md:px-10 lg:pl-[8.3vw]">
-          <h2 id="partner-title" className="max-w-[9ch] font-serif text-[clamp(3rem,1rem+5.5vw,7rem)] leading-[0.92] font-light tracking-[-0.04em] text-navy">
+          <h2 id="partner-title" className="max-w-[9ch] font-serif text-[clamp(3rem,1rem+5.5vw,7rem)] leading-[0.92] font-light tracking-[-0.02em] text-navy">
             {partner.title}
           </h2>
           <p className="mt-[3vw] max-w-sm text-lg leading-snug text-ink">{partner.lede}</p>
@@ -244,7 +244,7 @@ export function Partner({ partner }: { partner: A["partner"] }) {
         </div>
       </div>
       <div className="mt-[8vw] px-5 md:px-10 lg:grid lg:grid-cols-12">
-        <FillText className="font-serif text-[clamp(1.9rem,1rem+2.4vw,3.4rem)] leading-[1.05] font-light tracking-[-0.025em] text-navy lg:col-span-6 lg:col-start-7">{partner.statement}</FillText>
+        <FillText className="font-serif text-[clamp(1.9rem,1rem+2.4vw,3.4rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy lg:col-span-6 lg:col-start-7">{partner.statement}</FillText>
       </div>
     </section>
   );
@@ -284,7 +284,7 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.7, ease }}
-                className="max-w-[20ch] text-center font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em]"
+                className="max-w-[20ch] text-center font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em]"
               >
                 {scroll.statements[i].text}
               </motion.h2>
@@ -297,7 +297,7 @@ export function ScrollStatements({ scroll }: { scroll: A["scroll"] }) {
                 transition={{ duration: 0.7, ease }}
                 className="absolute inset-0 flex flex-col justify-between px-5 pt-[18svh] pb-[8svh] md:px-[10vw]"
               >
-                <p className="mx-auto max-w-[34ch] text-center font-serif text-[clamp(1.8rem,1rem+2.6vw,3.6rem)] leading-[1.05] font-light tracking-[-0.025em] text-white">
+                <p className="mx-auto max-w-[34ch] text-center font-serif text-[clamp(1.8rem,1rem+2.6vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-white">
                   {scroll.intro}
                 </p>
                 <ul className="grid gap-8 md:grid-cols-3 md:gap-[6vw]">
