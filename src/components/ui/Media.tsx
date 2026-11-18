@@ -39,7 +39,7 @@ export function Media({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {photo ? (
-        <Image src={photo.src} alt={photo.alt} fill sizes={sizes} quality={75} preload={preload} className="object-cover" />
+        <Image src={photo.src} alt={photo.alt} fill sizes={sizes} quality={90} preload={preload} className="object-cover" />
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${tones[tone]}`}>
           <svg viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden className="absolute inset-x-0 bottom-0 h-2/3 w-full">

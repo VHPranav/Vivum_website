@@ -67,7 +67,7 @@ Status values: Missing · Draft · Submitted · Approved.
 
 ## AI-generated images in use (Google Flow, Nano Banana 2.1) — client approval required
 
-`public/images/vivum-hero.webp` (mountains above clouds), `vivum-wellbeing.webp`, `vivum-consulting.webp`, `vivum-workforce.webp`, `vivum-education.webp`, each 1376×768. They are illustrative, not photos of real VIVUM venues, clients, partner hotels or universities; replace with genuine photography where it would otherwise imply a real place or person. A higher-resolution export of the hero would sharpen it on large screens.
+`public/images/vivum-hero.webp` (mountains above clouds), `vivum-wellbeing.webp`, `vivum-consulting.webp`, `vivum-workforce.webp`, `vivum-education.webp`, each 2446×1376 (Flow 2K upscale, cropped to remove the Gemini mark). They are illustrative, not photos of real VIVUM venues, clients, partner hotels or universities; replace with genuine photography where it would otherwise imply a real place or person.
 
 ## Imagery needed (no stock implying real clinics, people or partner sites)
 

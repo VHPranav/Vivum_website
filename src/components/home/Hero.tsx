@@ -41,7 +41,7 @@ export function Hero({ locale, hero, about, ui }: { locale: Locale; hero: Conten
       <div aria-hidden className="sticky top-0 h-svh overflow-hidden bg-paper">
         <div data-ridges className="absolute inset-0 origin-[50%_80%]">
           {/* AI-generated in Google Flow (client approval required); full-bleed crop. */}
-          <Image src="/images/vivum-hero.webp" alt="" fill preload quality={75} sizes="100vw" className="object-cover object-[60%_center]" />
+          <Image src="/images/vivum-hero.webp" alt="" fill preload quality={90} sizes="100vw" className="object-cover object-[60%_center]" />
         </div>
         <Clouds progressRef={progress} className="peer absolute inset-0 [&[data-fallback]]:hidden" />
         {/* No WebGL: a soft static cloud bank instead. */}

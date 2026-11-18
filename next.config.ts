@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     // All photography will be self-hosted in /public/images. Every quality used must be listed.
-    qualities: [75],
+    qualities: [75, 90],
     formats: ["image/avif", "image/webp"],
   },
   async redirects() {
