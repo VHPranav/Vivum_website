@@ -35,7 +35,7 @@ export function AreaShowcase({ locale, divisions }: { locale: Locale; divisions:
         gsap.set(images[0], { opacity: 1 });
         items.forEach((_, i) => {
           if (i === 0) return;
-          gsap.set(words[i], { yPercent: 100 });
+          gsap.set(words[i], { yPercent: 140 });
           gsap.set(fades[i], { opacity: 0 });
         });
 
@@ -52,10 +52,10 @@ export function AreaShowcase({ locale, divisions }: { locale: Locale; divisions:
           setActive(next);
           const d = reduced ? 0 : 0.6;
           gsap.killTweensOf([words[prev], words[next], fades[prev], fades[next], images[prev], images[next]]);
-          gsap.to(words[prev], { yPercent: dir > 0 ? -100 : 100, duration: d, ease: "power2.out", stagger: 0.015 });
+          gsap.to(words[prev], { yPercent: dir > 0 ? -140 : 140, duration: d, ease: "power2.out", stagger: 0.015 });
           gsap.to(fades[prev], { opacity: 0, duration: d * 0.6 });
           gsap.to(images[prev], { opacity: 0, duration: d, delay: d * 0.6, ease: "power2.out" });
-          gsap.fromTo(words[next], { yPercent: dir > 0 ? 100 : -100 }, { yPercent: 0, duration: d, ease: "power2.out", stagger: 0.015, delay: d * 0.25 });
+          gsap.fromTo(words[next], { yPercent: dir > 0 ? 140 : -140 }, { yPercent: 0, duration: d, ease: "power2.out", stagger: 0.015, delay: d * 0.25 });
           gsap.to(fades[next], { opacity: 1, duration: d, delay: d * 0.6 });
           gsap.to(images[next], { opacity: 1, duration: d, ease: "power2.out" });
         };
@@ -118,7 +118,7 @@ export function AreaShowcase({ locale, divisions }: { locale: Locale; divisions:
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-10">
                 <h3 className="display-xl max-w-[14ch] text-center">
                   {d.name.split(" ").map((w, k) => (
-                    <span key={k} className="inline-block overflow-hidden pb-[0.06em] align-bottom">
+                    <span key={k} className="-my-[0.22em] inline-block overflow-hidden py-[0.22em] align-bottom">
                       <span data-word className="inline-block">
                         {w}&nbsp;
                       </span>
