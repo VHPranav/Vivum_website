@@ -18,5 +18,5 @@ export function AreaRoute({ lang, id }: { lang: string; id: DivisionId }) {
   const others = c.divisions
     .filter((d) => d.id !== id)
     .map((d) => ({ id: d.id, href: d.href, title: c.areaPages[d.id].title, facts: c.areaPages[d.id].facts }));
-  return <AreaDetail id={id} page={c.areaPages[id]} others={others} locale={lang} otherLabel="Other areas" />;
+  return <AreaDetail page={c.areaPages[id]} others={others} locale={lang} otherLabel="Other areas" />;
 }

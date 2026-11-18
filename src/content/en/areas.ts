@@ -12,8 +12,8 @@ export type AreaPage = {
   title: [string, string];
   lede: string;
   facts: AreaFact[];
-  gallery: { text: string; images: string[] };
-  table: { intro: string; columns: string[]; groups: AreaTableGroup[]; note?: string };
+  gallery: { heading: string; text: string; images: string[] };
+  table: { heading: [string, string]; intro: string; columns: string[]; groups: AreaTableGroup[]; note?: string };
   cta: { label: string; href: string };
   approval: string;
 };
@@ -31,10 +31,12 @@ export const areaPages = {
       { k: "Languages", v: "English · Montenegrin" },
     ],
     gallery: {
+      heading: "Personal care rooted in Ayurveda tradition",
       text: "Every programme begins by listening: your goals, your health history and your time with us shape the treatments we recommend.",
       images: ["/images/vivum-wellbeing.webp", "/images/wheel-01.webp", "/images/wheel-02.webp", "/images/wheel-03.webp"],
     },
     table: {
+      heading: ["Treatments &", "Programmes"],
       intro: "Our offer centres on treatments and programmes. Where partner hotels are involved, accommodation is arranged with the hotel and described separately.",
       columns: ["Offer", "What it is", "Format", "Delivered with"],
       groups: [
@@ -65,10 +67,12 @@ export const areaPages = {
       { k: "Digital delivery", v: "With technology partners" },
     ],
     gallery: {
+      heading: "Clear direction and measurable results",
       text: "We start with how your company really works today, then agree outcome, duration and fee before any work begins.",
       images: ["/images/vivum-consulting.webp", "/images/wheel-04.webp", "/images/wheel-05.webp", "/images/wheel-07.webp"],
     },
     table: {
+      heading: ["Service", "Overview"],
       intro: "Five service areas, one consistent way of working. Each can be contracted on its own; most clients start with a short, well-defined engagement.",
       columns: ["Service area", "Typical duration", "", "Commercial basis"],
       groups: consulting.services.categories.map((c) => ({
@@ -91,10 +95,12 @@ export const areaPages = {
       { k: "Languages", v: "English · Montenegrin" },
     ],
     gallery: {
+      heading: "The right people for growing employers",
       text: "One partner to coordinate the process: from understanding your staffing needs to the people who start work with you.",
       images: ["/images/vivum-workforce.webp", "/images/wheel-09.webp", "/images/wheel-10.webp", "/images/wheel-06.webp"],
     },
     table: {
+      heading: ["How it", "works"],
       intro: "Main stages for employers, and what candidates can expect. Responsibilities follow the signed agreements and applicable law.",
       columns: ["Path", "Stage", "", "Step"],
       groups: [
@@ -134,10 +140,12 @@ export const areaPages = {
       { k: "Languages", v: "English · Montenegrin" },
     ],
     gallery: {
+      heading: "Your path to study, step by step",
       text: "From the first question to a complete application: clear guidance on programmes, requirements and documents.",
       images: ["/images/vivum-education.webp", "/images/wheel-11.webp", "/images/wheel-12.webp", "/images/wheel-08.webp"],
     },
     table: {
+      heading: ["Application", "Journey"],
       intro: "The application journey, step by step. Admission and academic decisions always remain with the university.",
       columns: ["Journey", "Step", "", "Led by"],
       groups: [

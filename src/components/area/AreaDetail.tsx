@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { AreaPage } from "@/content/en/areas";
 import { AreaSymbol } from "@/components/AreaSymbol";
-import { HeroMark } from "./HeroMark";
+import { Clouds } from "@/components/home/Clouds";
 import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
@@ -19,10 +19,10 @@ const ease = [0.22, 1, 0.36, 1] as const;
  * Area page after the Tresmares Capital solution pages:
  * symbol hero + facts row → scattered gallery with sticky text → grey table → other areas.
  */
-export function AreaDetail({ id, page, others, locale, otherLabel }: { id: string; page: AreaPage; others: Other[]; locale: Locale; otherLabel: string }) {
+export function AreaDetail({ page, others, locale, otherLabel }: { page: AreaPage; others: Other[]; locale: Locale; otherLabel: string }) {
   return (
     <>
-      <AreaHero id={id} page={page} />
+      <AreaHero page={page} image={page.gallery.images[0]} />
       <Gallery gallery={page.gallery} />
       <Table table={page.table} cta={page.cta} locale={locale} approval={page.approval} />
       <OtherAreas others={others} locale={locale} label={otherLabel} />
@@ -43,23 +43,27 @@ function Facts({ facts, className = "" }: { facts: AreaPage["facts"]; className?
   );
 }
 
-function AreaHero({ id, page }: { id: string; page: AreaPage }) {
+function AreaHero({ page, image }: { page: AreaPage; image: string }) {
   const root = useRef<HTMLElement>(null);
+  const progress = useRef(0);
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      const parts = root.current!.querySelectorAll("[data-symbol] > *");
-      gsap.from(parts, { xPercent: 60, opacity: 0, duration: 1.6, stagger: 0.12, ease: "expo.out", delay: 0.15 });
       gsap.from("[data-fact]", { y: 14, opacity: 0, duration: 0.9, stagger: 0.06, ease: "expo.out", delay: 0.7 });
-      gsap.to("[data-symbol]", { yPercent: 18, ease: "none", scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true } });
     },
     { scope: root },
   );
   return (
-    <section ref={root} aria-labelledby="area-title" className="relative min-h-[100svh] overflow-hidden bg-white pt-[4.5rem]">
-      <HeroMark id={id} className="absolute top-[calc(4.5rem+5svh)] right-5 h-[36svh] w-auto max-w-[62vw] text-navy md:right-6" />
+    <section ref={root} aria-labelledby="area-title" className="relative min-h-[100svh] overflow-hidden bg-paper pt-[4.5rem]">
+      <div aria-hidden className="absolute inset-0">
+        <Image src={image} alt="" fill preload sizes="100vw" quality={90} className="object-cover" />
+        <Clouds progressRef={progress} className="absolute inset-0 [&[data-fallback]]:hidden" />
+      </div>
       <div className="relative flex min-h-[calc(100svh-4.5rem)] flex-col justify-end px-5 pb-[8svh] md:px-6">
-        <h1 id="area-title" className="max-w-[60vw] text-[clamp(2.75rem,1rem+5vw,6.5rem)] leading-[0.95] font-medium tracking-[-0.02em] text-navy">
+        {/* soft cloud bank behind the copy so it reads over any photo */}
+        <div aria-hidden className="pointer-events-none absolute bottom-[-10%] left-[-15%] h-[85%] w-[80%] rounded-[50%] bg-[radial-gradient(closest-side,rgba(251,250,246,0.97),rgba(251,250,246,0.85)_50%,rgba(251,250,246,0)_100%)] blur-2xl" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[22%] bg-gradient-to-t from-paper/95 to-paper/0" />
+        <h1 id="area-title" className="relative max-w-[60vw] text-[clamp(2.75rem,1rem+5vw,6.5rem)] leading-[0.95] font-medium tracking-[-0.02em] text-navy">
           <SplitLines as="span" on="load" delay={0.1} className="block">
             {page.title[0]}
           </SplitLines>
@@ -67,10 +71,10 @@ function AreaHero({ id, page }: { id: string; page: AreaPage }) {
             {page.title[1]}
           </SplitLines>
         </h1>
-        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="mt-[6svh] max-w-[17rem] text-[1.125rem] leading-[1.25] font-medium text-ink">
+        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="relative mt-[6svh] max-w-[17rem] text-[1.125rem] leading-[1.25] font-medium text-ink">
           {page.lede}
         </SplitLines>
-        <Facts facts={page.facts} className="mt-[5svh]" />
+        <Facts facts={page.facts} className="relative mt-[5svh]" />
       </div>
     </section>
   );
@@ -100,8 +104,11 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
       {img(b, "top-[12vw] right-0 aspect-[4/5] w-[40vw] md:w-[20vw]", 0.3, "20vw")}
       {img(c, "top-[64vw] left-0 aspect-[3/2] w-[60vw] md:top-[46vw] md:w-[30vw]", 0.2, "30vw")}
       {img(d, "top-[100vw] left-1/2 aspect-[4/5] w-[40vw] md:top-[62vw] md:w-[20vw]", 0.05, "20vw")}
-      <div className="absolute inset-x-5 top-[40vw] bottom-[30vw] md:left-1/2 md:top-[25vw] md:right-auto md:bottom-[50vw] md:w-[20vw]">
-        <p className="sticky top-[40svh] text-[1.125rem] leading-[1.25] font-medium text-ink">{gallery.text}</p>
+      <div className="absolute inset-x-5 top-[40vw] bottom-[30vw] md:inset-x-auto md:top-[22vw] md:bottom-[44vw] md:left-[28vw] md:w-[46vw]">
+        <div className="sticky top-[24svh]">
+          <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-ink">{gallery.heading}</h2>
+          <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-ink md:ml-[22vw] md:max-w-[21rem]">{gallery.text}</p>
+        </div>
       </div>
     </section>
   );
@@ -110,9 +117,15 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
 function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta: AreaPage["cta"]; locale: Locale; approval: string }) {
   return (
     <section aria-label={table.columns[0]} className="bg-[#f2f2f2] px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
-      <SplitLines as="p" className="max-w-[22rem] text-[1.125rem] leading-[1.25] font-medium text-ink">
-        {table.intro}
-      </SplitLines>
+      <div className="grid gap-10 md:grid-cols-2">
+        <SplitLines as="p" className="max-w-[30rem] text-[1.25rem] leading-[1.3] font-medium text-ink md:text-[1.6rem]">
+          {table.intro}
+        </SplitLines>
+        <h2 className="text-[clamp(3rem,1rem+7vw,8.5rem)] leading-[0.92] font-medium tracking-[-0.035em] text-ink">
+          <SplitLines as="span" className="block">{table.heading[0]}</SplitLines>
+          <SplitLines as="span" className="block">{table.heading[1]}</SplitLines>
+        </h2>
+      </div>
       <div className="mt-[6vw]">
         <div className="hidden grid-cols-12 border-b border-ink/15 pb-3 text-[0.675rem] text-ink/50 md:grid">
           <span className="col-span-5">{table.columns[0]}</span>
@@ -141,7 +154,7 @@ function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta
           {cta.label}
         </Link>
       </div>
-      <ApprovalFlag className="mt-6">Client approval required: {approval}</ApprovalFlag>
+      <ApprovalFlag className="mt-6">{approval}</ApprovalFlag>
     </section>
   );
 }
