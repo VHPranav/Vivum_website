@@ -69,7 +69,7 @@ export function ProblemMatcher({ problems, categories }: { problems: K["who"]["p
         })}
       </ol>
       <div className="hidden lg:col-span-5 lg:block">
-        <div className="relative overflow-hidden rounded-3xl bg-navy p-7 text-white lg:sticky lg:top-28 md:p-10" aria-live="polite">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-navy p-7 text-white lg:sticky lg:top-28 md:p-10" aria-live="polite">
           <div aria-hidden className="absolute -right-20 -bottom-24 h-64 w-64 rounded-full bg-lime/20 blur-3xl" />
           <AnimatePresence mode="wait">
             <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.35, ease }} className="relative">
@@ -136,7 +136,7 @@ export function ServiceExplorer({ categories, ctaLabel }: { categories: K["servi
         })}
       </div>
 
-      <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${c.id}`} className="mt-6 overflow-hidden rounded-3xl border border-line bg-white">
+      <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${c.id}`} className="mt-6 overflow-hidden rounded-[1.75rem] border border-line bg-white">
         <AnimatePresence mode="wait">
           <motion.div key={c.id} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease }} className="grid lg:grid-cols-12">
             <div className="p-6 md:p-10 lg:col-span-7">
@@ -145,16 +145,16 @@ export function ServiceExplorer({ categories, ctaLabel }: { categories: K["servi
 
               <dl className="mt-8 grid gap-6 sm:grid-cols-2">
                 <div>
-                  <dt className="eyebrow text-green-deep">Who needs it</dt>
+                  <dt className="label !text-green-deep">Who needs it</dt>
                   <dd className="mt-2 text-sm leading-relaxed text-muted">{c.whoNeedsIt}</dd>
                 </div>
                 <div>
-                  <dt className="eyebrow text-green-deep">Problem addressed</dt>
+                  <dt className="label !text-green-deep">Problem addressed</dt>
                   <dd className="mt-2 text-sm leading-relaxed text-muted">{c.problem}</dd>
                 </div>
               </dl>
 
-              <h4 className="eyebrow mt-10 text-green-deep">Approach</h4>
+              <h4 className="label mt-10 !text-green-deep">Approach</h4>
               <ol className="mt-4 grid gap-3 sm:grid-cols-2">
                 {c.approach.map((a, k) => (
                   <li key={a} className="flex gap-3 rounded-2xl bg-paper px-4 py-3 text-sm text-ink">
@@ -164,7 +164,7 @@ export function ServiceExplorer({ categories, ctaLabel }: { categories: K["servi
                 ))}
               </ol>
 
-              <h4 className="eyebrow mt-10 text-green-deep">Deliverables</h4>
+              <h4 className="label mt-10 !text-green-deep">Deliverables</h4>
               <ul className="mt-4 space-y-2.5">
                 {c.deliverables.map((d) => (
                   <li key={d} className="flex gap-3 text-[0.9375rem] text-ink">
@@ -185,12 +185,12 @@ export function ServiceExplorer({ categories, ctaLabel }: { categories: K["servi
                   ["Fee basis", c.pricingBasis],
                 ].map(([k, v]) => (
                   <div key={k}>
-                    <dt className="eyebrow text-navy/60">{k}</dt>
+                    <dt className="label">{k}</dt>
                     <dd className="mt-2 text-[0.9375rem] leading-relaxed text-ink">{v}</dd>
                   </div>
                 ))}
               </dl>
-              <p className="eyebrow mt-8 text-navy/60">Services in this area</p>
+              <p className="label mt-8">Services in this area</p>
               <ul className="mt-3 flex flex-wrap gap-2">
                 {c.offers.map((o) => (
                   <li key={o} className="rounded-full border border-navy/15 bg-white px-3 py-1.5 text-xs text-ink">
@@ -198,7 +198,7 @@ export function ServiceExplorer({ categories, ctaLabel }: { categories: K["servi
                   </li>
                 ))}
               </ul>
-              <a href="#consultation" className="group mt-10 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-navy px-6 py-3 text-[0.8125rem] font-medium text-white hover:bg-navy-deep sm:w-auto">
+              <a href="#enquiry" className="group mt-10 inline-flex min-h-12 w-full items-center justify-center gap-3 rounded-full bg-navy px-6 py-3 text-[0.8125rem] font-medium text-white hover:bg-navy-deep sm:w-auto">
                 {ctaLabel}
                 <Arrow />
               </a>

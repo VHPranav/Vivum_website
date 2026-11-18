@@ -1,124 +1,128 @@
-// Pages that are structured but not yet fully built ("in preparation"). Each lists the sections
-// its full template will contain (master brief v2.0 §5–8) so the client can review structure now.
+// Area pages still "in preparation". Each shows its audience, structure and real enquiry form now,
+// so the URL can already be shared (Sandra, 12 Nov: each landing page must work on its own).
 
 export type StubPage = {
-  eyebrow: string;
+  label: string;
   title: string;
   lede: string;
-  sections: string[];
-  /** Optional cards shown on the stub, e.g. the three wellbeing pathways. */
-  cards?: { title: string; body: string; tag?: string }[];
-  cardsTitle?: string;
-  steps?: string[];
+  /** Audience paths (Sphere-style routing), e.g. For employers / For candidates. */
+  paths?: { id: string; title: string; body: string; points: string[] }[];
   stepsTitle?: string;
+  steps?: string[];
+  sections: string[];
   note?: string;
 };
 
-const universal = [
-  "Hero: service name, audience, value proposition, primary CTA",
-  "Who we help",
-  "Services & packages",
-  "Benefits & deliverables",
-  "How it works, including partner responsibilities",
-  "Pricing or quotation method",
-  "People & partners",
-  "FAQ",
-  "Dedicated enquiry form",
+const landing = [
+  "A headline addressing this audience",
+  "Client needs and how we help",
+  "Services or programmes",
+  "How the process works",
+  "Verified credentials, partners or testimonials",
+  "Frequently asked questions",
+  "One primary call to action and a tailored enquiry form",
 ];
 
 export const pages = {
   wellbeing: {
-    eyebrow: "Division 01",
-    title: "Longevity & Wellbeing",
-    lede: "Personalised wellbeing programmes, Ayurveda treatments and longevity-focused services, with clinical and non-clinical offers kept clearly separate.",
-    cardsTitle: "Three separate pathways",
-    cards: [
-      {
-        title: "AYUSH London",
-        tag: "Clinic · GBP",
-        body: "Specialist Ayurveda clinic with its own address, practitioners, treatment catalogue, GBP prices and appointment flow.",
-      },
-      {
-        title: "AYUSH Montenegro",
-        tag: "Clinic · EUR",
-        body: "Separate Montenegro clinic journey with local address, practitioners, EUR prices and its own enquiry workflow.",
-      },
-      {
-        title: "VIVUM Programmes",
-        tag: "Programmes · EUR",
-        body: "Wellbeing programmes offered separately from clinical treatment menus. Accommodation at partner hotels is arranged separately unless included in an approved package.",
-      },
-    ],
-    stepsTitle: "Proposed programme categories (to validate)",
+    label: "Wellbeing & Longevity",
+    title: "Treatments and programmes for lasting wellbeing.",
+    lede: "Ayurveda, wellbeing and longevity-related treatments and programmes in Montenegro, starting with a personal consultation.",
+    stepsTitle: "What this page will explain",
     steps: [
-      "Stress Management & Recovery",
-      "Longevity & Preventive Wellbeing",
-      "Respiratory Wellness",
-      "Integrative Physiotherapy & Ayurveda",
-      "Long-Stay Wellbeing Programmes",
-      "Corporate Wellbeing",
+      "Who the services are designed for",
+      "Available treatments and programmes",
+      "What you can expect from the experience",
+      "Practitioners and their verified qualifications",
+      "Where services are delivered",
+      "How to enquire or book a consultation",
     ],
-    sections: universal,
-    note: "Programme categories, durations and all health-related wording require clinical and VIVUM approval before publishing.",
-  },
-  education: {
-    eyebrow: "Division 02",
-    title: "Study in Montenegro — International Education Guidance",
-    lede: "Study opportunities in Montenegro and tailored support for international applicants, in cooperation with University Mediteran.",
-    stepsTitle: "How the application journey works",
-    steps: [
-      "Enquiry",
-      "Programme identification",
-      "Preliminary document guidance",
-      "Complete application submitted to the university",
-      "Independent university decision",
-      "Post-decision guidance, as agreed",
-    ],
-    sections: universal,
-    note: "University Mediteran retains all admission decisions. VIVUM does not guarantee admission, residence permits, visas or degree recognition.",
+    sections: landing,
+    note: "Our offer centres on treatments and programmes. Where partner hotels are involved, accommodation is arranged with the hotel and described separately. Health-related wording will be reviewed before publishing.",
   },
   workforce: {
-    eyebrow: "Division 03",
-    title: "International Workforce Solutions for Montenegrin Employers",
-    lede: "Connecting Montenegrin employers with international talent through Kinster, our specialist sourcing partner.",
-    stepsTitle: "Employer journey",
+    label: "International Workforce Solutions",
+    title: "International talent for employers in Montenegro.",
+    lede: "We help employers define the people they need and coordinate with recruitment partners on sourcing and selection, with each party’s responsibilities stated clearly.",
+    paths: [
+      {
+        id: "employers",
+        title: "For employers",
+        body: "You need reliable staff and want one partner to coordinate the process.",
+        points: [
+          "Understanding your staffing needs",
+          "Defining the required profiles",
+          "Coordination with recruitment partners on sourcing and selection",
+          "Coordination with specialist providers for administrative support",
+        ],
+      },
+      {
+        id: "candidates",
+        title: "For candidates",
+        body: "You are looking for work in Montenegro through a recruitment partner.",
+        points: [
+          "How positions are sourced through our recruitment partners",
+          "Which roles and sectors are currently open",
+          "What the selection process involves",
+          "Who to contact with questions",
+        ],
+      },
+    ],
+    stepsTitle: "Main stages for employers",
     steps: [
-      "Outline your workforce challenge and requirements",
-      "Select your industry (hospitality, construction or another confirmed sector)",
-      "VIVUM evaluates the need and introduces Kinster",
-      "Kinster carries out its agreed sourcing work",
-      "You review candidates",
+      "Tell us the roles, number of people, location and timing",
+      "We define the required profiles together",
+      "Recruitment partners source and pre-select candidates",
+      "You interview and choose",
       "Responsible parties complete the employment steps",
     ],
-    sections: [
-      "Employer requirements and workforce challenges",
-      "Industries served",
-      "VIVUM business development and market connection role",
-      "Kinster specialist sourcing role",
-      "Recruitment and employment process, with verified responsible parties",
-      "Commercial model and employer quotation",
-      "Structured employer enquiry form",
-      "FAQ",
+    sections: landing,
+    note: "Responsibilities of VIVUM, recruitment partners and employers follow the signed agreements and applicable law. No placement or permit outcome is guaranteed.",
+  },
+  education: {
+    label: "Education & International Opportunities",
+    title: "Study opportunities, with support from first question to application.",
+    lede: "We present programmes from institutions we are authorised to represent and help prospective international students understand requirements and organise their application documents.",
+    stepsTitle: "The application journey",
+    steps: [
+      "Enquiry and first conversation",
+      "Choosing a programme",
+      "Understanding requirements",
+      "Organising application documents",
+      "Application submitted to the university",
+      "The university’s independent decision",
     ],
-    note: "Responsibilities for screening, permits and employment follow the executed agreement and applicable law. No placement or permit outcome is guaranteed.",
+    sections: landing,
+    note: "Admission and academic decisions remain with the university. VIVUM does not guarantee admission, visas or residence permits.",
   },
   about: {
-    eyebrow: "About",
+    label: "About",
     title: "About VIVUM Group",
-    lede: "VIVUM Group d.o.o. is an international group connecting expertise, people and opportunities across four divisions.",
-    sections: ["Company", "Team", "Partners", "Our Roots & International Network, including India"],
-    note: "Company history, legal identity, team profiles and partner relationships require VIVUM approval.",
+    lede: "An international group rooted in Montenegro, connecting expertise, people and opportunities across four areas of activity.",
+    stepsTitle: "This page will introduce",
+    steps: ["Our company and story", "Our expertise", "International connections", "Our hands-on approach", "The people behind each area"],
+    sections: [],
+    note: "Company history, legal identity and team profiles require VIVUM approval.",
+  },
+  partners: {
+    label: "Partners",
+    title: "Partners and experience",
+    lede: "The universities, recruitment partners, technology partners and partner hotels we work with, and the projects we have delivered together.",
+    stepsTitle: "This page will show",
+    steps: ["Approved partner logos and descriptions", "The role of each partner", "Relevant projects", "Verified testimonials"],
+    sections: [],
+    note: "Only partners, projects and testimonials confirmed for publication will be shown.",
   },
 } satisfies Record<string, StubPage>;
 
 export const legalPages = {
-  privacy: { title: "Privacy notice", body: "The privacy notice will describe how VIVUM Group processes enquiry data for each division." },
+  privacy: { title: "Privacy notice", body: "The privacy notice will describe how VIVUM Group processes enquiry data for each area of activity." },
   terms: { title: "Terms", body: "General terms of use, plus service-specific terms where needed." },
   cookies: { title: "Cookies", body: "Cookie information matching the analytics and consent set-up chosen for launch." },
 };
 
 export const contactPage = {
-  eyebrow: "Contact",
+  label: "Contact",
   title: "Contact VIVUM Group",
-  lede: "Choose the service you are interested in so your message reaches the right team. Each division has its own enquiry route.",
+  lede: "Choose the area you are interested in so your message reaches the right person. You can also reach us by email or WhatsApp.",
 };

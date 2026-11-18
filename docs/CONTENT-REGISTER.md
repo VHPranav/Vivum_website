@@ -13,6 +13,14 @@ Status values: Missing · Draft · Submitted · Approved.
 | Exact legal identity ("VIVUM Group d.o.o.") and AYUSH relationship/ownership wording | Footer, Network section | Draft |
 | Final domain | `NEXT_PUBLIC_SITE_URL`, canonicals, sitemap | Missing |
 
+## Decisions to confirm
+
+| Item | Status |
+| --- | --- |
+| Navigation and area names follow Sandra's 12 Nov email, not the 7 Nov master brief (which used Home / Wellbeing / Education / Workforce / Consulting / About / Contact and "Business Transformation & Executive Advisory") | Approval required |
+| Consulting grouped into Sandra's five areas (the master brief asked for six fixed categories) | Approval required |
+| Homepage "Meet our team" section removed (not in Sandra's list); team moves to About | Approval required |
+
 ## Homepage
 
 | Item | Status |

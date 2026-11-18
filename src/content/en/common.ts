@@ -1,30 +1,25 @@
-// Shared English copy: navigation, divisions, footer and form wording.
-// Division names, card text and CTAs follow master brief v2.0 §4 exactly.
+// Shared English copy: navigation, the four business areas, footer and form wording.
+// Area names, navigation and calls to action follow Sandra Kordić's direction of 12 Nov 2026
+// ("Vivum website — answer on WhatsApp proposals"), which supersedes the 7 Nov master brief on these points.
 
-export const nav = [
-  { label: "Home", href: "/" },
-  { label: "Wellbeing", href: "/wellbeing" },
-  { label: "Education", href: "/education" },
-  { label: "Workforce", href: "/workforce" },
-  { label: "Consulting", href: "/consulting" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
-export type DivisionId = "wellbeing" | "education" | "workforce" | "consulting";
+export type DivisionId = "wellbeing" | "consulting" | "workforce" | "education";
 
 export type Division = {
   id: DivisionId;
   n: string;
   name: string;
-  /** Full division title used on its landing page. */
-  title: string;
+  /** Short label for tabs and anchors. */
+  short: string;
   description: string;
-  cta: string;
+  /** Link label on cards. */
+  cardCta: string;
+  /** The page's one primary action. */
+  pageCta: string;
   href: string;
-  /** What a visitor does at the end of this journey (brief §14 Gate C). */
-  conversion: string;
-  /** Imagery still needed for this card. */
+  audience: string;
+  highlights: string[];
+  /** Sub-paths shown in the services menu. */
+  paths: { label: string; href: string }[];
   imageNeed: string;
 };
 
@@ -32,69 +27,103 @@ export const divisions: Division[] = [
   {
     id: "wellbeing",
     n: "01",
-    name: "Longevity & Wellbeing",
-    title: "Longevity & Wellbeing",
-    description: "Personalised wellbeing programmes, Ayurveda treatments and longevity-focused services.",
-    cta: "Explore Wellbeing",
+    name: "Wellbeing & Longevity",
+    short: "Wellbeing",
+    description: "Ayurveda treatments and wellbeing programmes in Montenegro, shaped around each person.",
+    cardCta: "Explore wellbeing",
+    pageCta: "Book a consultation",
     href: "/wellbeing",
-    conversion: "Request appointment · programme enquiry",
-    imageNeed: "Calm treatment or programme setting in Montenegro (genuine VIVUM/AYUSH photography, not stock clinics).",
+    audience: "Individuals and guests looking for treatments and programmes",
+    highlights: ["Ayurveda treatments", "Wellbeing & longevity programmes", "Partner hotels in Montenegro"],
+    paths: [
+      { label: "Treatments & programmes", href: "/wellbeing" },
+      { label: "Book a consultation", href: "/wellbeing#enquiry" },
+    ],
+    imageNeed: "Calm treatment or programme setting in Montenegro (genuine photography; warm tone)",
   },
   {
-    id: "education",
+    id: "consulting",
     n: "02",
-    name: "International Education",
-    title: "Study in Montenegro — International Education Guidance",
-    description: "Study opportunities in Montenegro and tailored support for international applicants.",
-    cta: "Study in Montenegro",
-    href: "/education",
-    conversion: "Apply / enquire",
-    imageNeed: "Students on a Montenegrin campus or city setting (rights-cleared; university imagery only with permission).",
+    name: "Business Consulting & Digital Solutions",
+    short: "Consulting",
+    description: "Strategy, performance, process improvement and responsible AI, with digital solutions delivered alongside technology partners.",
+    cardCta: "Explore consulting",
+    pageCta: "Discuss your business needs",
+    href: "/consulting",
+    audience: "Owners, CEOs and management teams",
+    highlights: ["Strategy & performance", "Process improvement", "AI readiness & governance"],
+    paths: [
+      { label: "Services", href: "/consulting#services" },
+      { label: "Discuss your business needs", href: "/consulting#enquiry" },
+    ],
+    imageNeed: "Workshop or working session with a management team",
   },
   {
     id: "workforce",
     n: "03",
-    name: "International Workforce",
-    title: "International Workforce Solutions for Montenegrin Employers",
-    description: "Connecting Montenegrin employers with international talent through specialist partners.",
-    cta: "Find Talent",
+    name: "International Workforce Solutions",
+    short: "Workforce",
+    description: "Helping employers find suitable international talent, in cooperation with recruitment partners.",
+    cardCta: "Explore workforce",
+    pageCta: "Submit your staffing requirements",
     href: "/workforce",
-    conversion: "Request a quote",
-    imageNeed: "Hospitality or construction team at work in Montenegro (confirmed sectors only).",
+    audience: "Employers in Montenegro, and international candidates",
+    highlights: ["Staffing needs & profiles", "Recruitment partner coordination", "Clear responsibilities"],
+    paths: [
+      { label: "For employers", href: "/workforce#employers" },
+      { label: "For candidates", href: "/workforce#candidates" },
+    ],
+    imageNeed: "Hospitality or construction team at work (confirmed sectors only)",
   },
   {
-    id: "consulting",
+    id: "education",
     n: "04",
-    name: "Business Consulting",
-    title: "Business Transformation & Executive Advisory",
-    description: "Strategy, performance, operational excellence and responsible AI transformation.",
-    cta: "Explore Consulting",
-    href: "/consulting",
-    conversion: "Schedule a consultation",
-    imageNeed: "Workshop or board-room working session; portrait of Dr Sandra Kordić (approved).",
+    name: "Education & International Opportunities",
+    short: "Education",
+    description: "Study programmes at authorised institutions, with support through the application journey.",
+    cardCta: "Explore education",
+    pageCta: "Enquire about study programmes",
+    href: "/education",
+    audience: "Prospective international students",
+    highlights: ["Authorised institutions & programmes", "Application document support", "Clear application journey"],
+    paths: [
+      { label: "Study programmes", href: "/education" },
+      { label: "Enquire about study programmes", href: "/education#enquiry" },
+    ],
+    imageNeed: "Students in a Montenegrin campus or city setting (with permission)",
   },
 ];
+
+export const nav = {
+  home: { label: "Home", href: "/" },
+  about: { label: "About", href: "/about" },
+  services: { label: "Our Services", href: "/#services" },
+  partners: { label: "Partners", href: "/partners" },
+  contact: { label: "Contact", href: "/contact" },
+};
 
 export const ui = {
   skipToContent: "Skip to content",
   menu: "Menu",
   close: "Close",
   languageSoon: "Montenegrin version in preparation",
-  contactCta: "Contact VIVUM Group",
+  contactCta: "Get in touch",
   approvalRequired: "Client approval required",
   imagePlaceholder: "Image placeholder",
+  scroll: "Scroll",
+  localTime: "Podgorica",
 };
 
 export const footer = {
-  statement:
-    "VIVUM Group connects expertise, people and opportunities across four divisions: wellbeing, international education, international workforce and business transformation.",
+  statement: "VIVUM Group connects expertise, people and opportunities across wellbeing, business consulting, international workforce and education.",
+  cta: "Let’s start a conversation",
   groups: [
-    { title: "Divisions", links: divisions.map((d) => ({ label: d.name, href: d.href })) },
+    { title: "Our services", links: divisions.map((d) => ({ label: d.name, href: d.href })) },
     {
       title: "Company",
       links: [
         { label: "About VIVUM", href: "/about" },
-        { label: "Our Roots & International Network", href: "/about#network" },
+        { label: "Partners", href: "/partners" },
         { label: "Contact", href: "/contact" },
       ],
     },
@@ -122,7 +151,7 @@ export const formCopy = {
   privacyLink: "Privacy notice",
   sending: "Sending…",
   successTitle: "Thank you — your enquiry has been received.",
-  successBody: "The right team will reply by email. A copy of your request is shown below for reference.",
+  successBody: "The right person will reply by email. A copy of your request is shown below for reference.",
   previewNote:
     "Review build: the form validates on the server, but delivery to a mailbox is not connected until VIVUM confirms the recipient address.",
   errorSummary: "Please check the highlighted fields.",

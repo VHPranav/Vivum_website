@@ -23,6 +23,7 @@ export function Media({
   tone = "navy",
   preload = false,
   className = "",
+  labelClass = "top-3 left-3",
   children,
 }: {
   photo?: Photo;
@@ -31,6 +32,8 @@ export function Media({
   tone?: Tone;
   preload?: boolean;
   className?: string;
+  /** Where the review-build placeholder label sits, so it does not collide with overlaid text. */
+  labelClass?: string;
   children?: React.ReactNode;
 }) {
   return (
@@ -45,7 +48,7 @@ export function Media({
             <path d="M0 262C100 240 180 285 270 258S370 240 400 250V300H0Z" fill="#fff" fillOpacity=".2" />
           </svg>
           {reviewMode && (
-            <span className="absolute top-3 left-3 max-w-[85%] rounded-md bg-white/85 px-2.5 py-1.5 text-[0.6875rem] leading-snug text-navy-ink backdrop-blur">
+            <span className={`absolute ${labelClass} z-[1] max-w-[85%] rounded-md bg-white/85 px-2.5 py-1.5 text-[0.6875rem] leading-snug text-navy-ink backdrop-blur`}>
               <strong className="font-medium">Image placeholder</strong> · {need}
             </span>
           )}

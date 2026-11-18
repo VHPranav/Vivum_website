@@ -1,114 +1,82 @@
-// Homepage copy — section order follows master brief v2.0 §4:
-// Hero → four division cards → Why VIVUM → How We Work → Our Expertise & International Network
-// → Selected Partners → Meet Our Team → Select Your Service / Contact.
+// Homepage copy. Order follows Sandra's 12 Nov direction (opening → four areas → About →
+// Why work with us → Partners & experience → Contact), staged with the reference sites' patterns:
+// Tresmares (structure, statement blocks, pinned area showcase), Prime Exits (benefits, process,
+// clear next steps) and Sphere (audience routing).
 
 export const home = {
   meta: {
-    title: "VIVUM Group — Connecting Expertise, People and Opportunities",
+    title: "VIVUM Group — Connecting expertise, people and opportunities",
     description:
-      "VIVUM Group offers integrated international services in wellbeing, education, workforce development and business transformation.",
+      "VIVUM Group brings together wellbeing, business consulting, international workforce and education services under one name, with a clear next step for every visitor.",
   },
   hero: {
-    eyebrow: "VIVUM Group",
-    h1Lead: "VIVUM Group —",
-    h1: ["Connecting Expertise,", "People and Opportunities"],
-    lede: "Integrated international services in wellbeing, education, workforce development and business transformation.",
-    primary: { label: "Explore Our Services", href: "#divisions" },
-    secondary: { label: "Contact VIVUM Group", href: "#contact" },
+    label: "VIVUM Group",
+    h1: "Connecting expertise, people and opportunities.",
+    lede: "VIVUM brings four areas of expertise together under one name: wellbeing, business consulting, international workforce and education.",
+    primary: { label: "Explore our services", href: "#areas" },
+    secondary: { label: "Get in touch", href: "#contact" },
   },
-  divisions: {
-    eyebrow: "Four divisions",
-    title: "Choose where you would like to start.",
+  areas: {
+    label: "Four areas of activity",
+  },
+  about: {
+    label: "About VIVUM",
+    statement: "An international group rooted in Montenegro, bringing specialist expertise, trusted partners and people together.",
+    body: "We combine hands-on experience with an international network of partners. Every engagement starts with understanding what you need, and continues with practical support until the work is done.",
+    link: { label: "More about VIVUM", href: "/about" },
+    facts: [
+      { k: "4", v: "areas of activity under one name" },
+      { k: "1", v: "point of contact for every enquiry" },
+      { k: "EN · ME", v: "English and Montenegrin" },
+    ],
+  },
+  services: {
+    label: "Our services",
+    statement: "Four areas, each with its own specialists, partners and clear next step.",
   },
   why: {
-    eyebrow: "Why VIVUM",
-    title: "One group. Four specialist teams. Clear responsibilities.",
-    lede: "VIVUM brings separate areas of expertise together under one corporate brand, so you deal with a single, accountable partner and always know who does what.",
-    points: [
-      {
-        title: "Equal focus on every division",
-        body: "Wellbeing, education, workforce and consulting each have their own team, service details and enquiry route.",
-      },
-      {
-        title: "Roles stated up front",
-        body: "We explain what VIVUM does and what our partners do. Universities, recruitment and technology partners keep their own responsibilities.",
-      },
-      {
-        title: "Transparent scope and fees",
-        body: "Services are described with their scope, duration and pricing basis, or how a quotation is prepared, before you commit.",
-      },
-      {
-        title: "Privacy by design",
-        body: "We ask only for what is needed to answer your enquiry and never collect health histories or identity documents through general forms.",
-      },
+    label: "Why work with us",
+    title: "What we bring to every engagement.",
+    items: [
+      { title: "Experienced leadership", body: "Senior people lead each area and stay involved, from the first conversation to the result." },
+      { title: "Understanding of client needs", body: "We start by listening, then shape the work around your situation rather than a standard package." },
+      { title: "Access to relevant partners", body: "Universities, recruitment and technology partners, with their role and responsibilities stated clearly." },
+      { title: "Practical support throughout", body: "Clear next steps, regular contact and help with the details until the engagement is complete." },
+      { title: "Transparent scope and fees", body: "You know what is included, who does what and how fees are set before any work begins." },
     ],
   },
   how: {
-    eyebrow: "How we work",
-    title: "From first message to the right team.",
+    label: "How we work",
+    title: "From first message to the right specialist.",
     steps: [
-      { title: "Choose a service", body: "Select the division that fits your need and send a short enquiry." },
-      { title: "Speak with the right team", body: "Your enquiry goes to that division’s team, which replies with next steps." },
+      { title: "Tell us what you need", body: "Choose the relevant area and send a short enquiry, by form, email or WhatsApp." },
+      { title: "Talk to the right person", body: "Your message goes straight to the team for that area, which replies with next steps." },
       { title: "Receive a clear proposal", body: "Scope, responsibilities, timeline and fees or the quotation method, in writing." },
-      { title: "Work with the right partners", body: "VIVUM coordinates; specialist partners deliver their part as agreed in contract." },
+      { title: "Work together", body: "VIVUM coordinates the work; partners deliver their part as agreed, with regular updates." },
     ],
   },
-  network: {
-    eyebrow: "Our expertise & international network",
-    title: "Specialist knowledge, connected across borders.",
-    lede: "Each division works with established partners. Their names, roles and logos appear here once each relationship and its wording are approved.",
+  paths: {
+    label: "Find your path",
+    title: "Who are you?",
     items: [
-      {
-        division: "Longevity & Wellbeing",
-        body: "AYUSH is our specialist Ayurveda and healthcare brand, with separate clinic journeys in London and Montenegro. VIVUM programmes are offered separately from AYUSH clinical treatments.",
-        approval: "AYUSH relationship and ownership wording",
-      },
-      {
-        division: "International Education",
-        body: "Cooperation with University Mediteran in Montenegro. VIVUM supports guidance and application organisation; the university makes all admission decisions.",
-        approval: "University Mediteran cooperation wording",
-      },
-      {
-        division: "International Workforce",
-        body: "VIVUM connects Montenegrin employers with Kinster, a specialist international sourcing partner. Responsibilities follow the executed agreement and applicable law.",
-        approval: "Kinster responsibility matrix",
-      },
-      {
-        division: "Business Consulting",
-        body: "Led by Dr Sandra Kordić, working with legal and technology specialists where an engagement requires it, with their fees disclosed in advance.",
-        approval: "Approved biography",
-      },
+      { who: "I’m looking for wellbeing support", area: "wellbeing", body: "Treatments and programmes in Montenegro, starting with a consultation.", cta: "Book a consultation", href: "/wellbeing#enquiry" },
+      { who: "I lead a business", area: "consulting", body: "Strategy, processes, organisation and responsible AI, with clear outcomes.", cta: "Discuss your business needs", href: "/consulting#enquiry" },
+      { who: "I’m an employer", area: "workforce", body: "Tell us the roles, numbers, location and timing you need.", cta: "Submit your staffing requirements", href: "/workforce#employers" },
+      { who: "I’m looking for work", area: "workforce", body: "How international candidates are recruited through our partners.", cta: "Information for candidates", href: "/workforce#candidates" },
+      { who: "I want to study", area: "education", body: "Programmes at authorised institutions and help with your application.", cta: "Enquire about study programmes", href: "/education#enquiry" },
     ],
-    roots: {
-      title: "Our roots",
-      body: "VIVUM’s heritage and partnerships in India are presented under About, in Our Roots & International Network.",
-      link: { label: "Read about our roots", href: "/about#network" },
-    },
   },
   partners: {
-    eyebrow: "Selected partners",
-    title: "Partners we work with.",
-    note: "Partner logos are shown only with each partner’s written permission.",
+    label: "Partners & experience",
+    title: "Partners, projects and testimonials.",
+    note: "Partner logos, projects and testimonials appear here once each has been confirmed for publication.",
     slots: 6,
-  },
-  team: {
-    eyebrow: "Meet our team",
-    title: "The people behind each division.",
-    members: [
-      {
-        name: "Dr Sandra Kordić",
-        role: "Lead, Business Transformation & Executive Advisory",
-        bio: "PhD in process management. Experience in executive leadership, banking and international business, including Société Générale in Paris.",
-        approval: "Approved biography and portrait",
-      },
-      { name: null, role: "Lead, Longevity & Wellbeing", bio: null, approval: "Name, role and portrait" },
-      { name: null, role: "Lead, International Education", bio: null, approval: "Name, role and portrait" },
-      { name: null, role: "Lead, International Workforce", bio: null, approval: "Name, role and portrait" },
-    ],
+    testimonial: "Verified client testimonials will be shown here once approved.",
   },
   contact: {
-    eyebrow: "Select your service",
+    marquee: "Let’s start a conversation",
+    label: "Contact",
     title: "How can we help?",
-    lede: "Choose a division so your message reaches the right team directly.",
+    lede: "Choose the area you are interested in so your message reaches the right person.",
   },
 };

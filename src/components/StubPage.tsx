@@ -1,92 +1,112 @@
 import type { Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import type { StubPage as StubData } from "@/content/en/pages";
+import type { FormKind } from "@/lib/forms";
 import { reviewMode } from "@/lib/site";
-import { Eyebrow } from "@/components/ui/Kit";
-import { Reveal } from "@/components/ui/Reveal";
+import { Button } from "@/components/ui/Kit";
 import { Waves } from "@/components/ui/Waves";
+import { Rise } from "@/components/motion/Rise";
+import { SplitLines } from "@/components/motion/Text";
 import { ContactSection } from "@/components/forms/ContactSection";
 
-/** Structured "in preparation" page: shows the agreed template outline so navigation and review work now. */
+/**
+ * Area page "in preparation": opening section, audience paths (where relevant), the journey,
+ * the planned structure and the area's own tailored enquiry form, so the URL works on its own.
+ */
 export function StubPage({
   c,
   locale,
   page,
-  service,
-  submitLabel,
+  kind = "general",
+  cta,
 }: {
   c: Content;
   locale: Locale;
   page: StubData;
-  service?: string;
-  submitLabel?: string;
+  kind?: FormKind;
+  /** Primary action label for this area (also the form's submit label). */
+  cta?: string;
 }) {
   return (
     <>
-      <section className="relative overflow-hidden bg-paper pt-32 pb-28 md:pt-44 md:pb-36">
-        <div aria-hidden className="absolute -top-40 -right-40 h-[34rem] w-[34rem] rounded-full bg-sky blur-3xl" />
-        <div className="container-page relative">
-          <Eyebrow className="fade-rise">{page.eyebrow}</Eyebrow>
-          <h1 className="mt-6 overflow-hidden pb-[0.08em]">
-            <span className="rise-line heading-display block max-w-4xl text-navy" style={{ animationDelay: "0.15s" }}>
+      <section className="relative overflow-hidden bg-paper pt-32 pb-24 md:pt-44 md:pb-32">
+        <div aria-hidden className="absolute -top-40 -right-40 h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(closest-side,#d6e6f4,transparent)]" />
+        <div className="container-page relative grid gap-10 lg:grid-cols-12">
+          <div className="lg:col-span-8">
+            <p className="label fade-rise flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
+              {page.label}
+            </p>
+            <SplitLines as="h1" on="load" delay={0.1} className="display-l mt-6 max-w-[18ch] text-navy">
               {page.title}
-            </span>
-          </h1>
-          <p className="fade-rise mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg" style={{ animationDelay: "0.4s" }}>
-            {page.lede}
-          </p>
-          <p className="fade-rise mt-8 inline-flex items-center gap-2 rounded-full border border-navy/15 bg-white px-4 py-2 text-xs text-navy" style={{ animationDelay: "0.5s" }}>
-            <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
-            Full page in preparation
-          </p>
+            </SplitLines>
+          </div>
+          <div className="self-end lg:col-span-4">
+            <SplitLines as="p" on="load" delay={0.35} stagger={0.05} className="text-lg leading-relaxed text-ink/80">
+              {page.lede}
+            </SplitLines>
+            <div className="fade-rise mt-8 flex flex-wrap items-center gap-4" style={{ animationDelay: "0.8s" }}>
+              {cta && <Button href={kind === "general" ? "#contact" : "#enquiry"}>{cta}</Button>}
+              <span className="inline-flex items-center gap-2 rounded-full border border-navy/15 px-3.5 py-2 text-xs text-navy">
+                <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
+                Full page in preparation
+              </span>
+            </div>
+          </div>
         </div>
-        <Waves className="absolute inset-x-0 bottom-0 h-28 w-[200%] md:h-40" />
+        <Waves className="absolute inset-x-0 bottom-0 h-24 w-[200%] md:h-36" />
       </section>
 
-      {page.cards && (
+      {page.paths && (
         <section className="py-16 md:py-24">
-          <div className="container-page">
-            <h2 className="heading-section text-navy">{page.cardsTitle}</h2>
-            <ul className="mt-10 grid gap-4 md:grid-cols-3">
-              {page.cards.map((card, i) => (
-                <li key={card.title}>
-                  <Reveal delay={i * 0.06} className="h-full rounded-3xl border border-line bg-white p-6 md:p-8">
-                    {card.tag && <p className="eyebrow text-green-deep">{card.tag}</p>}
-                    <h3 className="mt-3 font-serif text-2xl text-navy">{card.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-muted">{card.body}</p>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Rise className="container-page grid gap-4 md:grid-cols-2">
+            {page.paths.map((p, i) => (
+              <article key={p.id} id={p.id} data-rise className={`scroll-mt-24 rounded-[1.75rem] p-7 md:p-10 ${i === 0 ? "bg-navy text-white" : "border border-line bg-white"}`}>
+                <p className={`label ${i === 0 ? "!text-white/60" : ""}`}>{String(i + 1).padStart(2, "0")}</p>
+                <h2 className={`display-m mt-4 ${i === 0 ? "text-white" : "text-navy"}`}>{p.title}</h2>
+                <p className={`mt-3 text-[0.9375rem] leading-relaxed ${i === 0 ? "text-white/75" : "text-muted"}`}>{p.body}</p>
+                <ul className={`mt-6 divide-y ${i === 0 ? "divide-white/15 border-white/15" : "divide-line border-line"} border-y`}>
+                  {p.points.map((pt) => (
+                    <li key={pt} className="py-3 text-[0.9375rem]">
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </Rise>
         </section>
       )}
 
-      <section id="network" className={`scroll-mt-24 ${page.cards ? "pt-0" : "pt-16 md:pt-24"} pb-16 md:pb-24`}>
-        <div className="container-page grid gap-10 lg:grid-cols-2 lg:gap-16">
+      <section className={`pb-16 md:pb-24 ${page.paths ? "" : "pt-16 md:pt-24"}`}>
+        <div className="container-page grid gap-12 lg:grid-cols-12">
           {page.steps && (
-            <div>
-              <h2 className="font-serif text-2xl text-navy md:text-3xl">{page.stepsTitle}</h2>
-              <ol className="mt-6 border-t border-line">
+            <div className="lg:col-span-6">
+              <h2 className="display-m text-navy">{page.stepsTitle}</h2>
+              <Rise as="ol" className="mt-8 border-t border-line">
                 {page.steps.map((s, i) => (
-                  <li key={s} className="flex gap-4 border-b border-line py-4 text-[0.9375rem] text-ink">
-                    <span className="font-serif text-gold">{String(i + 1).padStart(2, "0")}</span>
+                  <li key={s} data-rise className="flex gap-5 border-b border-line py-5 text-[1.0625rem] text-ink">
+                    <span className="font-serif text-gold tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                     {s}
                   </li>
                 ))}
-              </ol>
+              </Rise>
             </div>
           )}
-          <div>
-            <h2 className="font-serif text-2xl text-navy md:text-3xl">This page will include</h2>
-            <ul className="mt-6 grid gap-2">
-              {page.sections.map((s) => (
-                <li key={s} className="flex gap-3 rounded-xl bg-white px-4 py-3 text-sm text-ink ring-1 ring-line">
-                  <span aria-hidden className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy/40" />
-                  {s}
-                </li>
-              ))}
-            </ul>
+          <div className="lg:col-span-5 lg:col-start-8">
+            {page.sections.length > 0 && (
+              <>
+                <h2 className="label">This landing page will include</h2>
+                <ul className="mt-4 grid gap-2">
+                  {page.sections.map((s) => (
+                    <li key={s} className="flex gap-3 rounded-xl bg-white px-4 py-3 text-sm text-ink ring-1 ring-line">
+                      <span aria-hidden className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy/40" />
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
             {page.note && reviewMode && <p className="mt-6 rounded-2xl bg-[#f7efd6] px-5 py-4 text-sm leading-relaxed text-[#6b5413]">{page.note}</p>}
           </div>
         </div>
@@ -96,9 +116,9 @@ export function StubPage({
         <ContactSection
           c={c}
           locale={locale}
-          head={{ eyebrow: "Enquiry", title: "Get in touch now.", lede: "While this page is being prepared, you can already send an enquiry to the right team." }}
-          defaultService={service}
-          submitLabel={submitLabel}
+          kind={kind}
+          head={{ label: cta ?? "Contact", title: "Tell us what you need.", lede: "Your enquiry goes directly to the right person for this area." }}
+          submitLabel={cta}
         />
       </div>
     </>

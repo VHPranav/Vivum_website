@@ -4,6 +4,7 @@ import { Poppins, Source_Serif_4 } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Intro } from "@/components/motion/Bits";
 import { isLocale, localeLabels, locales } from "@/i18n/config";
 import { getContent } from "@/content";
 import { siteUrl } from "@/lib/site";
@@ -25,6 +26,8 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const introScript = `(function(){var d=document.documentElement;d.classList.add("js");try{if(!sessionStorage.getItem("vivum-intro")&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&location.pathname.split("/").filter(Boolean).length<=1){d.dataset.intro="1"}}catch(e){}})();`;
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -44,8 +47,14 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const c = getContent(lang);
 
   return (
-    <html lang={localeLabels[lang].htmlLang} className={`${serif.variable} ${poppins.variable}`}>
+    <html lang={localeLabels[lang].htmlLang} className={`${serif.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Must run before first paint (next/script defers inline code): marks JS as available and
+            flags the once-per-session intro. React logs a harmless dev-only notice about it. */}
+        <script dangerouslySetInnerHTML={{ __html: introScript }} />
+      </head>
       <body>
+        <Intro />
         <SmoothScroll>
           <Header locale={lang} nav={c.nav} ui={c.ui} divisions={c.divisions} />
           <main id="main">{children}</main>

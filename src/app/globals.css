@@ -80,17 +80,97 @@ body {
   line-height: 1.08;
 }
 
+/* Full-width editorial container (reference sites run edge to edge with ~40px margins). */
 @utility container-page {
   width: 100%;
-  max-width: 90rem;
+  max-width: 120rem;
   margin-inline: auto;
   padding-inline: 1.25rem;
   @media (width >= 48rem) {
     padding-inline: 2.5rem;
   }
-  @media (width >= 80rem) {
-    padding-inline: 4rem;
+}
+
+/* Type scale — one serif voice from hero to section titles, tight leading, fluid with the viewport. */
+@utility display-xl {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(3.1rem, 0.9rem + 7.6vw, 10rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+@utility display-l {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(2.1rem, 1.05rem + 3.5vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+@utility display-m {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(1.85rem, 1.2rem + 2.1vw, 3.3rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+/* Small section label, as on the references: quiet, sentence case, with a brand dot. */
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+}
+
+/* Text link whose underline runs out to the right and back in from the left on hover. */
+@keyframes underline-run {
+  0% {
+    background-size: 100% 1px;
+    background-position: right bottom;
   }
+  49% {
+    background-size: 0% 1px;
+    background-position: right bottom;
+  }
+  50% {
+    background-size: 0% 1px;
+    background-position: left bottom;
+  }
+  100% {
+    background-size: 100% 1px;
+    background-position: left bottom;
+  }
+}
+@utility link-u {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  background-position: left bottom;
+  padding-bottom: 2px;
+  &:hover {
+    animation: underline-run 0.8s var(--ease-calm);
+  }
+}
+
+/* Before hydration, text that GSAP splits stays hidden so it never flashes in unsplit. */
+html.js [data-split] {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-split] {
+    visibility: visible;
+  }
+}
+
+/* First-visit intro overlay: present in the HTML, shown only when the head script flags it. */
+.intro {
+  display: none;
+}
+html[data-intro] .intro {
+  display: flex;
+}
+html[data-intro] body {
+  overflow: hidden;
 }
 
 /* Thin gold rule used as an accent under eyebrows. */
@@ -141,4 +221,21 @@ body {
   .rise-line {
     animation: none;
   }
+}
+
+/* Items that rise in on scroll (GSAP) stay hidden until their trigger fires. */
+html.js [data-rise] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-rise] {
+    opacity: 1;
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

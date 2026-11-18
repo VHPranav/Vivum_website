@@ -38,13 +38,13 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
 
   const errors = state.status === "error" ? state.errors : {};
   const values = state.status === "error" ? state.values : {};
-  const routeId: RouteId = kind === "consulting" ? "consulting" : ((["wellbeing", "education", "workforce", "consulting"].includes(service) ? service : "general") as RouteId);
+  const routeId: RouteId = kind !== "general" ? kind : ((["wellbeing", "education", "workforce", "consulting"].includes(service) ? service : "general") as RouteId);
   const route = routes[routeId];
 
   if (state.status === "success") {
     const r = routes[state.route];
     return (
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="rounded-3xl border border-line bg-white p-6 md:p-10" role="status" aria-live="polite">
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="rounded-[1.75rem] border border-line bg-white p-6 md:p-10" role="status" aria-live="polite">
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mist text-green-deep" aria-hidden>
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6}>
             <path d="m5 12.5 4.5 4.5L19 7.5" />
@@ -81,7 +81,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
         startTransition(() => action(data));
       }}
       noValidate
-      className="relative rounded-3xl border border-line bg-white p-5 sm:p-8 md:p-10">
+      className="relative rounded-[1.75rem] border border-line bg-white p-5 sm:p-8 md:p-10">
       <input type="hidden" name="_kind" value={kind} />
       <input type="hidden" name="_lang" value={locale} />
       <input type="hidden" name="_t" ref={startedAt} defaultValue="0" />
@@ -184,7 +184,8 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                     <input
                       id={`${kind}-${f.name}`}
                       name={f.name}
-                      type={f.type}
+                      type={f.type === "number" ? "text" : f.type}
+                      inputMode={f.type === "number" ? "numeric" : undefined}
                       maxLength={f.max}
                       required={f.required}
                       autoComplete={f.autoComplete}

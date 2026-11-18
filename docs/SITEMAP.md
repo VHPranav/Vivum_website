@@ -1,24 +1,33 @@
 # VIVUM Group — sitemap & navigation (v1, for review)
 
-Follows *VIVUM Website Master Implementation Brief v2.0* (7 Nov 2026), §3–§5. English is live at clean URLs; Montenegrin is planned under `/me/…`.
+Follows Sandra Kordić's direction of 12 Nov 2026 ("Vivum website — answer on WhatsApp proposals") for navigation, area names and calls to action, and the *Master Implementation Brief v2.0* (7 Nov 2026) for content rules (no invented prices, partners or claims). English is live at clean URLs; Montenegrin is planned under `/me/…`.
 
 ## Main navigation
 
-`Home | Wellbeing | Education | Workforce | Consulting | About | Contact` with an `EN | ME` language switch. ME is shown as a disabled placeholder until translations are approved.
+`Home | About | Our Services ▾ | Partners | Contact`, with an `EN | ME` language switch and a "Get in touch" button. Our Services opens a menu with all four areas and their audience paths (e.g. Workforce → For employers / For candidates). ME is a disabled placeholder until translations are approved.
+
+## Reference sites → where they are used
+
+| Reference | Used for |
+| --- | --- |
+| Tresmares Capital (main structure) | Full-text hero layout, centred statements whose letters fill in on scroll, facts row, pinned full-screen showcase of the four areas with anchor tabs, rise-in "magnet" items, underline-run links, hide-on-scroll header |
+| Prime Exits (benefits, next steps) | Masked line reveals, first-visit intro wipe, live local clock (Podgorica), pinned horizontal benefits row, process list with a filling progress line, auto-rotating tabs with wipe-revealed images, giant contact marquee |
+| Sphere Digital Recruitment (audience routing) | "Find your path" audience selector, audience paths in the services menu, For employers / For candidates split, rounded image tiles |
 
 ## Pages
 
 | URL | Page | Status in v1 | Main conversion |
 | --- | --- | --- | --- |
-| `/` | Home: hero, 4 equal division cards, Why VIVUM, How We Work, Expertise & International Network, Selected Partners, Meet Our Team, Select Your Service / Contact | **Built** | Division card click · general enquiry |
-| `/consulting` | Business Transformation & Executive Advisory: the six categories, pricing, Dr Sandra Kordić, FAQ, consultation form | **Built (sample division page)** | Book Business Consultation |
-| `/wellbeing` | Division overview + selector for AYUSH London / AYUSH Montenegro / VIVUM Programmes | Structured stub | Request appointment · programme enquiry |
+| `/` | Home: opening, 4 area cards, About VIVUM, Our services (pinned showcase), Why work with us, How we work, Find your path, Partners & experience, Contact | **Built** | Area card click · routed enquiry |
+| `/consulting` | Business Consulting & Digital Solutions: client needs, five service areas, benefits, process, fees, Dr Sandra Kordić, FAQ, tailored form | **Built (sample landing page)** | Discuss your business needs |
+| `/wellbeing` | Wellbeing & Longevity landing page (treatments & programmes) | Structured stub + tailored form | Book a consultation |
 | `/wellbeing/ayush-london` | AYUSH London clinic: address, practitioners, treatments, **GBP** prices, booking, UK terms | Planned | Request appointment (until a calendar is integrated) |
 | `/wellbeing/ayush-montenegro` | AYUSH Montenegro clinic: address, practitioners, treatments, **EUR** prices, booking, ME terms | Planned | Request appointment |
 | `/wellbeing/programmes` | VIVUM programmes, separate from clinical menus (six proposed categories) | Planned | Programme enquiry |
-| `/education` | Study in Montenegro: University Mediteran cooperation, programmes, admission steps, fees | Structured stub | Apply / enquire |
-| `/workforce` | International Workforce for Montenegrin employers: Kinster partnership, eight content sections | Structured stub | Request employer quotation |
-| `/about` | Company, team, partners, `#network` Our Roots & International Network (India lives here) | Structured stub | — |
+| `/education` | Education & International Opportunities: institutions, requirements, application journey | Structured stub + tailored form | Enquire about study programmes |
+| `/workforce` | International Workforce Solutions, with `#employers` and `#candidates` paths | Structured stub + employer form (roles, headcount, location, timing) | Submit your staffing requirements |
+| `/about` | Company, expertise, international connections, team | Structured stub | — |
+| `/partners` | Approved partners, projects and testimonials | Structured stub | — |
 | `/contact` | Service-choice contact with separate routes per division | **Built** | Routed enquiry |
 | `/privacy`, `/terms`, `/cookies` | Legal pages (`noindex` until approved text exists) | Placeholder | — |
 

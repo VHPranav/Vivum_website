@@ -16,7 +16,7 @@ export default async function ContactPage({ params }: PageProps<"/[lang]/contact
   if (!isLocale(lang)) notFound();
   const c = getContent(lang);
   return (
-    <div className="bg-gradient-to-b from-sky/60 to-paper pt-16 md:pt-20">
+    <div className="bg-gradient-to-b from-sky/60 to-paper pt-12 md:pt-16">
       <ContactSection c={c} locale={lang} head={c.contactPage} as="h1" />
     </div>
   );

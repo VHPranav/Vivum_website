@@ -8,12 +8,12 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/about">): 
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const page = getContent(lang).pages.about;
-  return { title: page.title, description: page.lede, alternates: { canonical: localePath(lang, "/about") } };
+  return { title: page.label, description: page.lede, alternates: { canonical: localePath(lang, "/about") } };
 }
 
 export default async function Page({ params }: PageProps<"/[lang]/about">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const c = getContent(lang);
-  return <StubPage c={c} locale={lang} page={c.pages.about} service="general" submitLabel="Send enquiry" />;
+  return <StubPage c={c} locale={lang} page={c.pages.about} kind="general" cta={"Get in touch"} />;
 }

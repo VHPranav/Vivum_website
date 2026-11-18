@@ -2,12 +2,17 @@ import type { Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { contactRoutes, displayEmail, reviewMode, whatsappNumber, type RouteId } from "@/lib/site";
 import { formFields, type FormKind } from "@/lib/forms";
-import { ApprovalFlag, SectionHead } from "@/components/ui/Kit";
+import { ApprovalFlag } from "@/components/ui/Kit";
+import { Marquee } from "@/components/motion/Bits";
+import { SplitLines } from "@/components/motion/Text";
 import { EnquiryForm } from "./EnquiryForm";
 
-const directRoutes: RouteId[] = ["wellbeing", "education", "workforce", "consulting", "general"];
+const directRoutes: RouteId[] = ["wellbeing", "consulting", "workforce", "education", "general"];
 
-/** "Select your service" contact block: direct routes on the left, routed enquiry form on the right. */
+/**
+ * Contact block: optional giant marquee (Prime Exits), then the heading and direct routes on the
+ * left and the routed enquiry form on the right. `kind` picks the tailored form for an area.
+ */
 export function ContactSection({
   c,
   locale,
@@ -15,53 +20,55 @@ export function ContactSection({
   kind = "general",
   submitLabel,
   defaultService,
+  marquee,
   as = "h2",
 }: {
   c: Content;
   locale: Locale;
-  head: { eyebrow: string; title: string; lede: string };
+  head: { label: string; title: string; lede: string };
   kind?: FormKind;
   submitLabel?: string;
   defaultService?: string;
+  marquee?: string;
   as?: "h1" | "h2";
 }) {
+  const id = kind === "general" ? "contact" : "enquiry";
+  const titleId = `${id}-title`;
   return (
-    <section id={kind === "consulting" ? "consultation" : "contact"} aria-labelledby={`${kind}-contact-title`} className="scroll-mt-24 py-20 md:py-32">
-      <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
+    <section id={id} aria-labelledby={titleId} className="scroll-mt-20 pb-24 md:pb-36">
+      {marquee ? (
+        <Marquee text={marquee} className="display-xl border-y border-line py-6 whitespace-nowrap text-navy md:py-10" />
+      ) : (
+        <div className="pt-24 md:pt-36" />
+      )}
+      <div className={`container-page grid gap-12 lg:grid-cols-12 lg:gap-16 ${marquee ? "pt-16 md:pt-24" : ""}`}>
         <div className="lg:col-span-4">
-          {as === "h1" ? (
-            <div>
-              <p className="eyebrow flex items-center gap-3 text-green-deep">
-                <span className="gold-rule" aria-hidden />
-                {head.eyebrow}
-              </p>
-              <h1 id={`${kind}-contact-title`} className="heading-display mt-5 text-navy">
-                {head.title}
-              </h1>
-              <p className="mt-5 text-base leading-relaxed text-muted">{head.lede}</p>
-            </div>
-          ) : (
-            <SectionHead eyebrow={head.eyebrow} title={<span id={`${kind}-contact-title`}>{head.title}</span>} lede={head.lede} />
-          )}
+          <p className="label flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-green" aria-hidden />
+            {head.label}
+          </p>
+          <SplitLines as={as} id={titleId} className={`${as === "h1" ? "display-l" : "display-m"} mt-5 text-navy`}>
+            {head.title}
+          </SplitLines>
+          <p className="mt-5 text-base leading-relaxed text-muted">{head.lede}</p>
 
           {kind === "general" && (
-            <dl className="mt-10 divide-y divide-line border-y border-line text-sm">
-              {directRoutes.map((id) => {
-                const r = contactRoutes[id];
-                return (
-                  <div key={id} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
-                    <dt className="text-ink">{r.team}</dt>
-                    <dd className="text-muted">{displayEmail(id) ?? "Address to be confirmed"}</dd>
+            <>
+              <dl className="mt-10 divide-y divide-line border-y border-line text-sm">
+                {directRoutes.map((rid) => (
+                  <div key={rid} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+                    <dt className="text-ink">{contactRoutes[rid].team}</dt>
+                    <dd className="text-muted">{displayEmail(rid) ?? "Address to be confirmed"}</dd>
                   </div>
-                );
-              })}
-              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
-                <dt className="text-ink">WhatsApp</dt>
-                <dd className="text-muted">{whatsappNumber ?? "Number to be confirmed"}</dd>
-              </div>
-            </dl>
+                ))}
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3">
+                  <dt className="text-ink">WhatsApp</dt>
+                  <dd className="text-muted">{whatsappNumber ?? "Number to be confirmed"}</dd>
+                </div>
+              </dl>
+              <ApprovalFlag className="mt-4">all addresses are proposed aliases</ApprovalFlag>
+            </>
           )}
-          {kind === "general" && <ApprovalFlag className="mt-4">all addresses are proposed aliases</ApprovalFlag>}
         </div>
         <div className="lg:col-span-8">
           <EnquiryForm

@@ -2,7 +2,7 @@
 
 import { getContent } from "@/content";
 import { isLocale } from "@/i18n/config";
-import { formFields, routeFor, type FormKind, type FormState } from "./forms";
+import { formFields, formKinds, routeFor, type FormKind, type FormState } from "./forms";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -15,7 +15,7 @@ const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export async function submitEnquiry(_prev: FormState, formData: FormData): Promise<FormState> {
   const kind = String(formData.get("_kind")) as FormKind;
   const lang = String(formData.get("_lang"));
-  if ((kind !== "general" && kind !== "consulting") || !isLocale(lang)) {
+  if (!(formKinds as readonly string[]).includes(kind) || !isLocale(lang)) {
     return { status: "error", errors: { _form: "Something went wrong. Please reload the page and try again." }, values: {} };
   }
   const c = getContent(lang);
@@ -34,6 +34,7 @@ export async function submitEnquiry(_prev: FormState, formData: FormData): Promi
     if (!raw) continue;
     if (raw.length > field.max) errors[field.name] = `${field.label}: please keep it under ${field.max} characters.`;
     if (field.type === "email" && !EMAIL.test(raw)) errors[field.name] = "Please enter a valid email address.";
+    if (field.type === "number" && !/^\d{1,5}$/.test(raw)) errors[field.name] = `${field.label}: please enter a number.`;
     if (field.options && !field.options.some((o) => o.value === raw)) errors[field.name] = `${field.label}: please choose an option.`;
   }
 

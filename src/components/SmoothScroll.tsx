@@ -38,6 +38,11 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
       gestureOrientation: "vertical",
     });
 
+    // Hold scrolling while the first-visit intro plays.
+    const resume = () => instance.start();
+    if (document.documentElement.dataset.intro) instance.stop();
+    window.addEventListener("vivum:intro-done", resume);
+
     instance.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => instance.raf(time * 1000);
     gsap.ticker.add(tick);
@@ -46,6 +51,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
     setLenis(instance);
 
     return () => {
+      window.removeEventListener("vivum:intro-done", resume);
       gsap.ticker.remove(tick);
       instance.destroy();
       setLenis(null);
