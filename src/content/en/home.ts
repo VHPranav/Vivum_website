@@ -98,15 +98,16 @@ export const home = {
     approval: "network wording, office locations and the AYUSH London relationship",
   },
   people: {
-    label: "Our people",
-    title: "The people behind each area.",
+    statement: "A team of specialists in wellbeing, business, workforce and education, working with trusted partners across borders.",
+    // Mock portraits (AI-generated in Google Flow) of fictional people, for layout only.
+    // Replace with approved photos, names and roles before launch.
     members: [
-      { name: "Dr Sandra Kordić", role: "Business Consulting & Digital Solutions" },
-      { name: "Name to be confirmed", role: "Wellbeing & Longevity" },
-      { name: "Name to be confirmed", role: "International Workforce Solutions" },
-      { name: "Name to be confirmed", role: "Education & International Opportunities" },
+      { name: "Name to be confirmed", role: "Business Consulting & Digital Solutions", src: "/images/team-01.webp" },
+      { name: "Name to be confirmed", role: "International Workforce Solutions", src: "/images/team-02.webp" },
+      { name: "Name to be confirmed", role: "Wellbeing & Longevity", src: "/images/team-03.webp" },
+      { name: "Name to be confirmed", role: "Education & International Opportunities", src: "/images/team-04.webp" },
     ],
-    approval: "names, roles and approved portraits",
+    approval: "mock portraits of fictional people; replace with approved team photos, names and roles",
   },
   partners: {
     label: "Partners & experience",
