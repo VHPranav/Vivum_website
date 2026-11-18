@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -84,7 +85,7 @@ export function Header({ locale, nav, ui, divisions }: Props) {
   const solid = scrolled || open || mega;
 
   const linkCls = (active: boolean) =>
-    `relative rounded-full px-3.5 py-2 text-[0.875rem] transition-colors ${active ? "text-navy" : "text-ink/70 hover:text-navy"}`;
+    `relative py-1 text-[0.9rem] font-medium tracking-[-0.006em] text-ink transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-current after:transition-transform after:duration-500 after:ease-[var(--ease-calm)] hover:text-navy hover:after:scale-x-100 ${active ? "text-navy after:scale-x-100" : "after:scale-x-0"}`;
 
   return (
     <>
@@ -94,16 +95,16 @@ export function Header({ locale, nav, ui, divisions }: Props) {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow] duration-500 ease-[var(--ease-calm)] ${
           hidden && !open && !mega ? "-translate-y-full" : "translate-y-0"
-        } ${solid ? "bg-paper/90 shadow-[0_1px_0_var(--color-line)] backdrop-blur-md" : "bg-transparent"}`}
+        } ${solid ? "bg-white" : "bg-white/0"} border-b ${solid ? "border-line" : "border-transparent"}`}
         onMouseLeave={closeMegaSoon}
       >
-        <div className="container-page flex h-[4.5rem] items-center justify-between gap-6 md:h-20">
-          <Link href={L("/")} aria-label="VIVUM Group home" className="relative z-10">
+        <div className="flex h-[4.5rem] items-stretch justify-between pl-5 md:pl-10 lg:h-[4.5rem]">
+          <Link href={L("/")} aria-label="VIVUM Group home" className="relative z-10 flex items-center">
             <Wordmark />
           </Link>
 
-          <nav aria-label="Main" className="hidden lg:block">
-            <ul className="flex items-center gap-1">
+          <nav aria-label="Main" className="absolute inset-y-0 left-1/2 hidden -translate-x-1/2 items-center lg:flex">
+            <ul className="flex items-center gap-8">
               <li>
                 <Link href={L(nav.home.href)} aria-current={isActive("/") ? "page" : undefined} className={linkCls(isActive("/"))}>
                   {nav.home.label}
@@ -141,11 +142,11 @@ export function Header({ locale, nav, ui, divisions }: Props) {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-stretch">
             <LanguageSwitch locale={locale} ui={ui} />
             <Link
               href={L("/contact")}
-              className="group hidden min-h-11 items-center gap-2.5 rounded-full bg-navy px-5 text-[0.8125rem] font-medium text-white transition-colors hover:bg-navy-deep sm:inline-flex"
+              className="group hidden w-[15rem] items-center justify-center gap-2.5 bg-navy text-[0.825rem] font-medium text-white transition-colors hover:bg-navy-ink sm:inline-flex"
             >
               {ui.contactCta}
               <Arrow />
@@ -155,7 +156,7 @@ export function Header({ locale, nav, ui, divisions }: Props) {
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-navy/20 text-navy lg:hidden"
+              className="relative z-10 flex w-[4.5rem] items-center justify-center border-l border-line text-navy lg:hidden"
             >
               <span className="sr-only">{open ? ui.close : ui.menu}</span>
               <span aria-hidden className="relative block h-3 w-5">
@@ -176,26 +177,23 @@ export function Header({ locale, nav, ui, divisions }: Props) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.35, ease }}
-              className="absolute inset-x-0 top-full hidden border-t border-line bg-paper shadow-[0_30px_60px_-30px_rgba(11,29,58,0.25)] lg:block"
+              className="absolute inset-x-0 top-full hidden bg-white p-1 lg:block"
             >
-              <div className="container-page grid grid-cols-4 gap-6 py-10">
+              <div className="grid grid-cols-4 gap-1">
                 {divisions.map((d, i) => (
-                  <motion.div key={d.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.04 * i, duration: 0.5, ease }}>
-                    <Link href={L(d.href)} className="group block">
-                      <span className="font-serif text-sm text-gold">{d.n}</span>
-                      <span className="mt-2 block font-serif text-[1.375rem] leading-snug text-navy">{d.name}</span>
-                      <span className="mt-2 block text-[0.8125rem] leading-relaxed text-muted">{d.description}</span>
+                  <motion.div key={d.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * i, duration: 0.5, ease }}>
+                    <Link href={L(d.href)} className="group relative flex h-[17.25rem] flex-col items-center justify-center overflow-hidden rounded-md bg-[#e5e5e5] px-6 text-center">
+                      {d.photo && <Image
+                        src={d.photo.src}
+                        alt=""
+                        fill
+                        sizes="25vw"
+                        className="scale-105 object-cover opacity-0 transition-[opacity,transform] duration-700 ease-[var(--ease-calm)] group-hover:scale-100 group-hover:opacity-100"
+                      />}
+                      <span aria-hidden className="absolute inset-0 bg-black/35 opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+                      <span className="relative font-serif text-[2.75rem] leading-none font-medium text-navy/80 transition-colors duration-500 group-hover:text-white">{d.n}</span>
+                      <span className="relative mt-6 max-w-[16rem] text-[1.125rem] leading-snug font-medium text-ink transition-colors duration-500 group-hover:text-white">{d.name}</span>
                     </Link>
-                    <ul className="mt-5 space-y-2 border-t border-line pt-4">
-                      {d.paths.map((p) => (
-                        <li key={p.href}>
-                          <Link href={L(p.href)} className="group inline-flex items-center gap-2 text-[0.8125rem] text-ink hover:text-navy">
-                            <Arrow className="h-2 w-4 text-green-deep" />
-                            {p.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
                   </motion.div>
                 ))}
               </div>
@@ -203,6 +201,19 @@ export function Header({ locale, nav, ui, divisions }: Props) {
           )}
         </AnimatePresence>
       </header>
+      <AnimatePresence>
+        {mega && (
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-40 hidden bg-black/45 lg:block"
+            onMouseEnter={closeMegaSoon}
+          />
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {open && (
@@ -258,12 +269,12 @@ function MobileItem({ i, href, label, active }: { i: number; href: string; label
 
 function LanguageSwitch({ locale, ui }: { locale: Locale; ui: Content["ui"] }) {
   return (
-    <div className="flex items-center rounded-full border border-navy/15 p-0.5 text-[0.6875rem] font-medium tracking-wider" aria-label="Language">
-      <span aria-current="true" className="rounded-full bg-navy px-2.5 py-1.5 text-white">
+    <div className="hidden items-center gap-3 border-l border-line px-9 text-[0.6rem] tracking-[-0.01em] uppercase sm:flex" aria-label="Language">
+      <span aria-current="true" className="text-ink">
         {localeLabels[locale].short}
       </span>
       {plannedLocales.map((l) => (
-        <span key={l} title={ui.languageSoon} aria-disabled="true" className="cursor-not-allowed px-2.5 py-1.5 text-ink/40">
+        <span key={l} title={ui.languageSoon} aria-disabled="true" className="cursor-not-allowed text-ink/35">
           {localeLabels[l].short}
           <span className="sr-only"> ({ui.languageSoon})</span>
         </span>

@@ -222,7 +222,7 @@ export function Partner({ partner }: { partner: A["partner"] }) {
     <section ref={root} aria-labelledby="partner-title" className="bg-white pb-[10vw]">
       <div className="grid lg:grid-cols-2">
         <div className="px-5 pt-[16vw] md:px-10 lg:pl-[8.3vw]">
-          <h2 id="partner-title" className="max-w-[9ch] font-serif text-[clamp(3rem,1rem+5.5vw,7rem)] leading-[0.92] font-light tracking-[-0.02em] text-navy">
+          <h2 id="partner-title" className="max-w-[12ch] font-serif text-[clamp(2.25rem,0.9rem+3.4vw,4.5rem)] leading-[1] font-light tracking-[-0.02em] text-navy">
             {partner.title}
           </h2>
           <p className="mt-[3vw] max-w-sm text-lg leading-snug text-ink">{partner.lede}</p>
