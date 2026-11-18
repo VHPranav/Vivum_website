@@ -26,7 +26,7 @@ void main(){
   vec2 uv=gl_FragCoord.xy/uRes;
   float aspect=uRes.x/uRes.y;
   vec2 p=vec2(uv.x*aspect,uv.y);
-  float t=uTime*.018;
+  float t=uTime*.055;
 
   // Back layer: slow, large billows. Front layer: faster, finer wisps.
   float warp=fbm(p*1.2-vec2(t*.6,0.));
