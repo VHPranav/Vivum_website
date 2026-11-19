@@ -102,8 +102,8 @@ export const home = {
     // Studio portraits are AI-edited from the supplied team photographs.
     // Publication details require final review.
     members: [
+      { name: "Branislava Maja Vukčević", role: "Director", src: "/images/team-maya-studio-hq.webp", alt: "Studio portrait of Branislava Maja Vukčević" },
       { name: "Dr. Prabodh Raghavan", role: "Medical Director", src: "/images/team-dr-prabodh-studio-hq.webp", alt: "Studio portrait of Dr. Prabodh Raghavan" },
-      { name: "Maya", role: "Director", src: "/images/team-maya-studio-hq.webp", alt: "Studio portrait of Maya" },
       { name: "Dr Sandra Kordić", role: "Consultant", src: "/images/team-sandra-studio-hq.webp", alt: "Studio portrait of Dr Sandra Kordić" },
     ],
     approval: "final team portraits, names and roles; portraits are AI-edited from supplied photographs",
