@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import { motion } from "motion/react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { ApprovalFlag } from "@/components/ui/Kit";
@@ -149,18 +148,10 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
 
 /**
  * Team (Tresmares "teams"): pale band with a centred statement that fills in, then an
- * edge-to-edge draggable row of tall portrait cards. Hover deepens the card's gradient and
- * reveals the role and name at the top; a round "Drag" cursor follows the pointer over the row.
+ * centred row of tall portrait cards. Hover deepens the card's gradient and reveals the
+ * role and name at the top.
  */
 export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
-  const viewport = useRef<HTMLDivElement>(null);
-  const cursor = useRef<HTMLDivElement>(null);
-  const [over, setOver] = useState(false);
-
-  const move = (e: React.PointerEvent) => {
-    if (cursor.current) gsap.to(cursor.current, { x: e.clientX, y: e.clientY, duration: 0.5, ease: "power3.out" });
-  };
-
   return (
     <section aria-labelledby="people-statement" className="bg-[#f3f3f1] pt-[13.333vw] pb-[0.417vw]">
       <div className="container-page text-center">
@@ -171,16 +162,9 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
         <ApprovalFlag className="mt-4">{people.approval}</ApprovalFlag>
       </div>
 
-      <div
-        ref={viewport}
-        className="mt-[3vw] overflow-hidden lg:cursor-none"
-        data-lenis-prevent-touch
-        onPointerEnter={() => setOver(true)}
-        onPointerLeave={() => setOver(false)}
-        onPointerMove={move}
-      >
+      <div className="mt-[3vw] px-[0.417vw]">
         <Rise>
-          <motion.ul drag="x" dragConstraints={viewport} dragElastic={0.06} className="flex w-max gap-[0.417vw] px-[0.417vw]" style={{ touchAction: "pan-y" }}>
+          <ul className="flex flex-wrap justify-center gap-[0.417vw]">
             {people.members.map((m) => (
               <li key={m.src} data-rise className="group relative w-[min(77.5vw,20rem)] shrink-0 overflow-hidden bg-[#ececec] select-none lg:w-[23vw]">
                 <div aria-hidden className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(222,222,222,0.85),rgba(243,243,243,0)_45%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -190,23 +174,12 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
                   <p className="mt-2 font-serif text-[1.4rem] leading-tight text-ink transition-transform duration-[1.2s] ease-[var(--ease-calm)] lg:mt-[0.625vw] lg:translate-y-[10%] lg:group-hover:translate-y-0">{m.name}</p>
                 </div>
                 <div className="relative h-[min(90vw,24rem)] lg:static lg:h-[25vw]">
-                  <Image src={m.src} alt={`Portrait placeholder: ${m.role}`} fill sizes="(min-width: 1024px) 23vw, 78vw" quality={90} draggable={false} className="pointer-events-none object-cover object-bottom" />
+                  <Image src={m.src} alt={`Portrait placeholder: ${m.role}`} fill sizes="(min-width: 1024px) 23vw, 78vw" quality={90} className="pointer-events-none object-cover object-bottom" />
                 </div>
               </li>
             ))}
-          </motion.ul>
+          </ul>
         </Rise>
-      </div>
-
-      {/* Drag cursor (desktop only) */}
-      <div aria-hidden className="pointer-events-none fixed top-0 left-0 z-[60] hidden lg:block" ref={cursor}>
-        <div
-          className={`-mt-[2.7vw] -ml-[2.7vw] flex h-[5.375vw] w-[5.375vw] items-center justify-center rounded-full bg-green-deep text-[0.75vw] font-bold tracking-wider text-white uppercase transition-transform duration-500 ease-[var(--ease-calm)] ${
-            over ? "scale-100" : "scale-0"
-          }`}
-        >
-          Drag
-        </div>
       </div>
     </section>
   );
