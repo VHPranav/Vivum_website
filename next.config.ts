@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // All photography will be self-hosted in /public/images. Every quality used must be listed.
-    qualities: [75, 90],
+    // All photography will be self-hosted in /public/images. Only 90 is allowed, so every image (even without a quality prop) is served at 90.
+    qualities: [90],
     formats: ["image/avif", "image/webp"],
   },
   async redirects() {

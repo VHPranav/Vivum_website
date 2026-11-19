@@ -79,7 +79,7 @@ export function PartnersPage({ p, divisions, locale }: { p: Content["partnersPag
                     alt=""
                     fill
                     sizes="(min-width: 768px) 25vw, 50vw"
-                    quality={85}
+                    quality={90}
                     className="scale-105 object-cover opacity-0 grayscale transition-[opacity,transform] duration-700 ease-[var(--ease-calm)] group-hover:scale-100 group-hover:opacity-100"
                   />
                   <span className="relative transition-opacity duration-500 group-hover:opacity-0">
