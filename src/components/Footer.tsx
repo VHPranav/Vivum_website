@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
-import { contactRoutes, displayEmail, legalName, reviewMode, whatsappNumber } from "@/lib/site";
-import { ApprovalFlag } from "./ui/Kit";
+import { displayEmail, legalName, whatsappNumber } from "@/lib/site";
 import { FillText } from "./motion/Text";
 import { FooterCarousel, type CarouselItem } from "./FooterCarousel";
 import { Wordmark } from "./Wordmark";
@@ -55,11 +54,6 @@ export function Footer({ locale, footer, carousel }: { locale: Locale; footer: C
             </span>
           )}
         </div>
-        {reviewMode && !contactRoutes.general.verified && (
-          <div className="mt-4 text-center">
-            <ApprovalFlag>mailbox and WhatsApp number</ApprovalFlag>
-          </div>
-        )}
       </div>
 
       <div className="mt-24 border-t border-ink/10 md:mt-32">

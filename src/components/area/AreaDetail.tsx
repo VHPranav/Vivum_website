@@ -8,7 +8,6 @@ import { localePath, type Locale } from "@/i18n/config";
 import type { AreaPage } from "@/content/en/areas";
 import { AreaSymbol } from "@/components/AreaSymbol";
 import { Clouds } from "@/components/home/Clouds";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
 
@@ -24,7 +23,7 @@ export function AreaDetail({ page, others, locale, otherLabel, children }: { pag
     <>
       <AreaHero page={page} image={page.gallery.images[0]} />
       <Gallery gallery={page.gallery} />
-      <Table table={page.table} cta={page.cta} locale={locale} approval={page.approval} />
+      <Table table={page.table} cta={page.cta} locale={locale} />
       {children}
       <OtherAreas others={others} locale={locale} label={otherLabel} />
     </>
@@ -127,7 +126,7 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
   );
 }
 
-function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta: AreaPage["cta"]; locale: Locale; approval: string }) {
+function Table({ table, cta, locale }: { table: AreaPage["table"]; cta: AreaPage["cta"]; locale: Locale }) {
   return (
     <section aria-label={table.columns[0]} className="bg-white px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
       <div className="grid gap-10 md:grid-cols-2">
@@ -167,7 +166,7 @@ function Table({ table, cta, locale, approval }: { table: AreaPage["table"]; cta
           {cta.label}
         </Link>
       </div>
-      <ApprovalFlag tone="navy" className="mt-6">{approval}</ApprovalFlag>
+
     </section>
   );
 }

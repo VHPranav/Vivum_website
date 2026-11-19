@@ -6,7 +6,6 @@ import { localePath, type Locale } from "@/i18n/config";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { Content } from "@/content";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/components/motion/gsap";
 import { FillText } from "@/components/motion/Text";
 import { useLenis } from "@/components/SmoothScroll";
@@ -103,7 +102,7 @@ export function Journey({ journey, locale }: { journey: A["journey"]; locale: Lo
               {journey.title}
             </h2>
           </div>
-          <ApprovalFlag className="hidden lg:inline-flex">{journey.approval}</ApprovalFlag>
+
         </div>
 
         <div className="container-page mt-[4svh] grid min-h-0 flex-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">

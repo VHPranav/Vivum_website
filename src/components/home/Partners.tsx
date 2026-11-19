@@ -1,5 +1,4 @@
 import type { Content } from "@/content";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { Rise } from "@/components/motion/Rise";
 import { SplitLines } from "@/components/motion/Text";
 
@@ -20,7 +19,7 @@ export function Partners({ partners }: { partners: Content["home"]["partners"] }
           </div>
           <div className="self-end lg:col-span-4 lg:col-start-9">
             <p className="text-[0.9375rem] leading-relaxed text-muted">{partners.note}</p>
-            <ApprovalFlag className="mt-4">partner names, logos and testimonials</ApprovalFlag>
+
           </div>
         </div>
         <Rise as="ul" className="mt-14 grid grid-cols-2 border-t border-l border-line sm:grid-cols-3 lg:grid-cols-6">

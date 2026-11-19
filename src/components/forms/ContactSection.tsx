@@ -2,7 +2,6 @@ import type { Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { contactRoutes, displayEmail, reviewMode, whatsappNumber, type RouteId } from "@/lib/site";
 import { formFields, type FormKind } from "@/lib/forms";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { Marquee } from "@/components/motion/Bits";
 import { SplitLines } from "@/components/motion/Text";
 import { EnquiryForm } from "./EnquiryForm";
@@ -66,7 +65,7 @@ export function ContactSection({
                   <dd className="text-muted">{whatsappNumber ?? "Number to be confirmed"}</dd>
                 </div>
               </dl>
-              <ApprovalFlag className="mt-4">all addresses are proposed aliases</ApprovalFlag>
+
             </>
           )}
         </div>

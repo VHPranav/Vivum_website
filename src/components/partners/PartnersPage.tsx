@@ -7,7 +7,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import type { Partner } from "@/content/en/partners";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { useLenis } from "@/components/SmoothScroll";
 
@@ -91,9 +90,7 @@ export function PartnersPage({ p, divisions, locale }: { p: Content["partnersPag
             ))}
           </AnimatePresence>
         </ul>
-        <div className="px-5 py-8 md:px-6">
-          <ApprovalFlag>{p.approval}</ApprovalFlag>
-        </div>
+
       </section>
 
       <AnimatePresence>

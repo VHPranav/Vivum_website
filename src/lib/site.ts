@@ -1,7 +1,7 @@
 // Site-wide settings. Contact routes follow master brief §11: the aliases are PROPOSED and
 // must not be published as working contacts until VIVUM confirms the mailboxes exist.
 
-/** Review build: shows "Client approval required" markers. Set NEXT_PUBLIC_REVIEW_MODE=off for launch. */
+/** Review build: allows explicit form previews without delivery and prevents search indexing. */
 export const reviewMode = process.env.NEXT_PUBLIC_REVIEW_MODE !== "off";
 
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vivumgroup.com"; // domain to be confirmed

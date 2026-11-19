@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { reviewMode } from "@/lib/site";
 import { Reveal } from "./Reveal";
 
 type Variant = "navy" | "green" | "outline" | "outline-light" | "white";
@@ -77,23 +76,5 @@ export function SectionHead({
       <h2 className={`heading-section mt-5 max-w-3xl ${tone === "light" ? "text-white" : "text-navy"}`}>{title}</h2>
       {lede && <p className={`mt-5 max-w-2xl text-base leading-relaxed md:text-[1.0625rem] ${tone === "light" ? "text-white/75" : "text-muted"}`}>{lede}</p>}
     </Reveal>
-  );
-}
-
-/** "Client approval required" marker — visible only in the review build. */
-export function ApprovalFlag({ children, className = "", tone = "gold" }: { children?: React.ReactNode; className?: string; tone?: "gold" | "navy" }) {
-  if (!reviewMode) return null;
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.6875rem] leading-tight font-medium ${tone === "navy" ? "border-navy/15 bg-white text-navy/70" : "border-gold/60 bg-[#f7efd6] text-[#6b5413]"} ${className}`}
-    >
-      <svg viewBox="0 0 12 12" className="h-3 w-3 shrink-0" aria-hidden fill="none" stroke="currentColor" strokeWidth={1.3}>
-        <circle cx="6" cy="6" r="5" />
-        <path d="M6 3.2v3.3M6 8.4v.4" />
-      </svg>
-      <span>
-        Client approval required{children ? <>: {children}</> : null}
-      </span>
-    </span>
   );
 }

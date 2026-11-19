@@ -99,14 +99,14 @@ export const home = {
   },
   people: {
     statement: "A team of specialists in wellbeing, business, workforce and education, working with trusted partners across borders.",
-    // Mock portraits (AI-generated in Google Flow) of fictional people, for layout only.
-    // Replace with approved photos, names and roles before launch.
+    // Studio portraits are AI-edited from the supplied team photographs.
+    // Publication details require final review.
     members: [
-      { name: "Dr. Prabodh Raghavan", role: "Medical Director", src: "/images/team-dr-prabodh.webp" },
-      { name: "Maya", role: "Director", src: "/images/team-02.webp" },
-      { name: "Dr Sandra Kordić", role: "Consultant", src: "/images/team-03.webp" },
+      { name: "Dr. Prabodh Raghavan", role: "Medical Director", src: "/images/team-dr-prabodh-studio-hq.webp", alt: "Studio portrait of Dr. Prabodh Raghavan" },
+      { name: "Maya", role: "Director", src: "/images/team-maya-studio-hq.webp", alt: "Studio portrait of Maya" },
+      { name: "Dr Sandra Kordić", role: "Consultant", src: "/images/team-sandra-studio-hq.webp", alt: "Studio portrait of Dr Sandra Kordić" },
     ],
-    approval: "mock portraits of fictional people; replace with approved team photos, names and roles",
+    approval: "final team portraits, names and roles; portraits are AI-edited from supplied photographs",
   },
   partners: {
     label: "Partners & experience",

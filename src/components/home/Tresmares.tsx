@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
 import { Rise } from "@/components/motion/Rise";
 import { FillText } from "@/components/motion/Text";
@@ -139,9 +138,7 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
           </div>
         ))}
       </div>
-      <div className="mt-6 text-center">
-        <ApprovalFlag>{network.approval}</ApprovalFlag>
-      </div>
+
     </section>
   );
 }
@@ -159,7 +156,7 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
           {people.statement}
         </FillText>
         <span aria-hidden className="mx-auto mt-[4vw] block h-1.5 w-1.5 rounded-full bg-green" />
-        <ApprovalFlag className="mt-4">{people.approval}</ApprovalFlag>
+
       </div>
 
       <div className="mt-[3vw] px-[0.417vw]">
@@ -174,7 +171,9 @@ export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
                   <p className="mt-2 font-serif text-[1.4rem] leading-tight text-ink transition-transform duration-[1.2s] ease-[var(--ease-calm)] lg:mt-[0.625vw] lg:translate-y-[10%] lg:group-hover:translate-y-0">{m.name}</p>
                 </div>
                 <div className="relative h-[min(90vw,24rem)] lg:static lg:h-[25vw]">
-                  <Image src={m.src} alt={`Portrait placeholder: ${m.role}`} fill sizes="(min-width: 1024px) 23vw, 78vw" quality={90} className="pointer-events-none object-cover object-bottom" />
+                  {/* Serve the lossless native portrait: avoid a small responsive derivative being
+                      enlarged by object-cover in these tall cards. */}
+                  <Image src={m.src} alt={m.alt ?? `Portrait placeholder: ${m.role}`} fill unoptimized className="pointer-events-none object-cover object-bottom" />
                 </div>
               </li>
             ))}

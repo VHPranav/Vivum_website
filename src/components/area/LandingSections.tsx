@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { LandingContent } from "@/content/en/landing";
 import { localePath, type Locale } from "@/i18n/config";
-import { ApprovalFlag } from "@/components/ui/Kit";
 
 export function LandingSections({ content, workforce, locale }: { content: LandingContent; workforce: boolean; locale: Locale }) {
   return (
@@ -56,7 +55,7 @@ export function LandingSections({ content, workforce, locale }: { content: Landi
                 </div>
               ))}
             </div>
-            <ApprovalFlag tone="navy" className="mt-10 !items-start !rounded-none !border-0 !px-0 !py-0 !text-xs !font-normal [&>svg]:mt-0.5">{content.evidenceNeeded}</ApprovalFlag>
+
           </div>
         </div>
       </section>

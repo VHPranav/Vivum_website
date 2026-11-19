@@ -11,7 +11,6 @@ import {
   whatsappNumber,
   type RouteId,
 } from "@/lib/site";
-import { ApprovalFlag } from "@/components/ui/Kit";
 import { SplitLines } from "@/components/motion/Text";
 import { StepForm } from "@/components/forms/StepForm";
 import { formFields, formKinds, type FormKind, type Field } from "@/lib/forms";
@@ -113,9 +112,7 @@ export default async function ContactPage({
                   </div>
                 ))}
               </div>
-              <ApprovalFlag className="mt-6">
-                mailboxes, WhatsApp number and office address
-              </ApprovalFlag>
+
             </div>
           </div>
 
