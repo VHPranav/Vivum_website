@@ -102,7 +102,7 @@ export const home = {
     // Mock portraits (AI-generated in Google Flow) of fictional people, for layout only.
     // Replace with approved photos, names and roles before launch.
     members: [
-      { name: "Dr (full name to be confirmed)", role: "Medical Director", src: "/images/team-01.webp" },
+      { name: "Dr. Prabodh Raghavan", role: "Medical Director", src: "/images/team-dr-prabodh.webp" },
       { name: "Maya", role: "Director", src: "/images/team-02.webp" },
       { name: "Dr Sandra Kordić", role: "Consultant", src: "/images/team-03.webp" },
     ],
