@@ -80,6 +80,11 @@ export function Header({ locale, nav, ui, divisions }: Props) {
   const closeMegaSoon = () => {
     closeTimer.current = window.setTimeout(() => setMega(false), 160);
   };
+  const closeMenus = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setMega(false);
+    setOpen(false);
+  };
 
   const isActive = (href: string) => (href === "/" ? pathname === L("/") : pathname.startsWith(L(href)));
   const servicesActive = divisions.some((d) => isActive(d.href));
@@ -183,7 +188,7 @@ export function Header({ locale, nav, ui, divisions }: Props) {
               <div className="grid grid-cols-4 gap-1">
                 {divisions.map((d, i) => (
                   <motion.div key={d.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 * i, duration: 0.5, ease }}>
-                    <Link href={L(d.href)} className="group relative flex h-[17.25rem] flex-col items-center justify-center overflow-hidden rounded-md bg-[#e5e5e5] px-6 text-center">
+                    <Link href={L(d.href)} onClick={closeMenus} className="group relative flex h-[17.25rem] flex-col items-center justify-center overflow-hidden rounded-md bg-[#e5e5e5] px-6 text-center">
                       {d.photo && <Image
                         src={d.photo.src}
                         alt=""
@@ -237,7 +242,7 @@ export function Header({ locale, nav, ui, divisions }: Props) {
               <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                 {divisions.map((d, i) => (
                   <motion.li key={d.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 + 0.05 * i, duration: 0.5, ease }}>
-                    <Link href={L(d.href)} className="block rounded-2xl border border-line bg-white px-4 py-3.5">
+                    <Link href={L(d.href)} onClick={closeMenus} className="block rounded-2xl border border-line bg-white px-4 py-3.5">
                       <span className="block text-[0.6875rem] text-gold">{d.n}</span>
                       <span className="block font-serif text-lg leading-snug text-navy">{d.name}</span>
                     </Link>

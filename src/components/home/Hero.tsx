@@ -26,6 +26,7 @@ export function Hero({
   image = "/images/vivum-hero.webp",
   statementId = "about",
   wash = false,
+  compactIntro = false,
 }: {
   locale: Locale;
   hero: HeroCopy;
@@ -36,6 +37,8 @@ export function Hero({
   statementId?: string;
   /** Soft page-white fade behind the headline, for landscapes with dark rock on the left. */
   wash?: boolean;
+  /** Shorter introduction for pages that continue directly into the service sections. */
+  compactIntro?: boolean;
 }) {
   const wrap = useRef<HTMLDivElement>(null);
   const progress = useRef(0);
@@ -96,7 +99,7 @@ export function Hero({
       </section>
 
       {/* About — centred statement over the white the clouds leave behind */}
-      <section id={statementId} aria-labelledby={`${statementId}-label`} className="relative z-10 flex min-h-[130svh] items-center justify-center pt-[30svh] pb-[20svh]">
+      <section id={statementId} aria-labelledby={`${statementId}-label`} className={`relative z-10 flex items-center justify-center ${compactIntro ? "py-20 md:py-28" : "min-h-[130svh] pt-[30svh] pb-[20svh]"}`}>
         <div className="container-page text-center">
           <h2 id={`${statementId}-label`} className="label">
             {about.label}

@@ -13,14 +13,15 @@ export const about = {
   hero: {
     h1: "Rooted in Montenegro. Open to the world.",
     lede: "An international group bringing specialist expertise, trusted partners and people together.",
-    primary: { label: "Our four areas", href: "#journey" },
+    primary: { label: "Meet our team", href: "#team" },
   },
   heroImage: "/images/about-hero.webp",
   intro: {
     label: "Who we are",
     statement: "VIVUM Group is one company with four specialist teams, connecting clients with the right people, institutions and partners.",
-    link: { label: "Meet our people", href: "/#people-statement" },
+    link: { label: "Meet our people", href: "/about#team" },
   },
+  factsIntro: "One point of contact connects you with our four areas of activity. Employers and candidates have distinct enquiry paths, and business clients can explore five consulting service areas.",
   journey: {
     label: "Our four areas",
     title: "One group, four areas",
@@ -114,7 +115,7 @@ export const about = {
     ],
     // Background for the closing points step. Videos are AI-generated in Google Flow.
     pointsBg: { src: "/media/about-04-poster.webp", video: "/media/about-04.mp4" },
-    intro: "Our way of working combines hands-on experience — specialists, partners, one point of contact — with an international network, enabling us to:",
+    intro: "Our way of working combines hands-on experience - specialists, partners, one point of contact - with an international network, enabling us to:",
     points: [
       "Understand each client’s situation before proposing anything.",
       "Bring in the right specialists and partners, with roles stated up front.",

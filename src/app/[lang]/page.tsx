@@ -4,7 +4,7 @@ import { isLocale, localePath } from "@/i18n/config";
 import { getContent } from "@/content";
 import { Hero } from "@/components/home/Hero";
 import { Statement } from "@/components/home/Statement";
-import { FactsGrid, NetworkWheel, PeopleRow } from "@/components/home/Tresmares";
+import { NetworkWheel } from "@/components/home/Tresmares";
 import { AreaShowcase } from "@/components/home/AreaShowcase";
 import { BenefitsScroller } from "@/components/home/Scroll";
 import { Partners } from "@/components/home/Partners";
@@ -26,13 +26,11 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
-      <Hero locale={lang} hero={h.hero} about={h.about} ui={c.ui} />
-      <FactsGrid locale={lang} facts={h.facts} />
+      <Hero locale={lang} hero={h.hero} about={h.about} ui={c.ui} compactIntro />
       <Statement locale={lang} id="services" label={h.services.label} statement={h.services.statement} />
       <AreaShowcase locale={lang} divisions={c.divisions} />
       <BenefitsScroller label={h.why.label} title={h.why.title} items={h.why.items} />
       <NetworkWheel network={h.network} />
-      <PeopleRow people={h.people} />
       <Partners partners={h.partners} />
       <ContactSection c={c} locale={lang} head={{ label: "Contact VIVUM", title: "What’s your next step?", lede: "Choose an area and tell us what you need." }} />
     </>

@@ -19,7 +19,7 @@ export function FactsGrid({ locale, facts }: { locale: Locale; facts: Content["h
   const card = (f: { k: string; v: string }) => (
     <li key={f.v} data-rise className="-mt-px flex aspect-[4/5] flex-col justify-between border border-line bg-paper p-5 md:p-6">
       <span className="font-serif text-[clamp(2.4rem,1.2rem+3vw,4.5rem)] leading-none font-light tracking-[-0.02em] text-green-deep">{f.k}</span>
-      <span className="text-[0.8125rem] leading-snug text-ink md:text-sm">{f.v}</span>
+      <span className="text-base leading-snug text-ink md:text-lg">{f.v}</span>
     </li>
   );
   return (
@@ -150,7 +150,7 @@ export function NetworkWheel({ network }: { network: Content["home"]["network"] 
  */
 export function PeopleRow({ people }: { people: Content["home"]["people"] }) {
   return (
-    <section aria-labelledby="people-statement" className="bg-[#f3f3f1] pt-[13.333vw] pb-[0.417vw]">
+    <section id="team" aria-labelledby="people-statement" className="scroll-mt-20 bg-paper pt-[13.333vw] pb-[0.417vw]">
       <div className="container-page text-center">
         <FillText as="h2" id="people-statement" className="mx-auto max-w-[24ch] font-serif text-[clamp(2rem,1rem+2.9vw,3.6rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy">
           {people.statement}

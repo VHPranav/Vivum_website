@@ -71,7 +71,7 @@ function AreaHero({ page, image }: { page: AreaPage; image: string }) {
             {page.title[1]}
           </SplitLines>
         </h1>
-        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="relative mt-[6svh] max-w-[17rem] text-[1.125rem] leading-[1.25] font-medium text-navy">
+        <SplitLines as="p" on="load" delay={0.4} stagger={0.04} className="relative mt-[6svh] max-w-[28rem] text-[1.125rem] leading-[1.25] font-medium text-navy">
           {page.lede}
         </SplitLines>
         <Facts facts={page.facts} className="relative mt-[5svh]" />

@@ -9,6 +9,7 @@ import type { RouteId } from "@/lib/site";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { Arrow } from "@/components/ui/Kit";
+import { SelectField } from "./SelectField";
 
 type Props = {
   kind: FormKind;
@@ -164,24 +165,7 @@ export function EnquiryForm({ kind, locale, fields, copy, submitLabel, routes, r
                       className={`${inputBase} ${fieldTone} resize-y`}
                     />
                   ) : f.type === "select" ? (
-                    <select
-                      id={`${kind}-${f.name}`}
-                      name={f.name}
-                      required={f.required}
-                      defaultValue={values[f.name] ?? ""}
-                      aria-invalid={!!err}
-                      aria-describedby={describe(f)}
-                      className={`${inputBase} ${fieldTone} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 fill=%22none%22 stroke=%22%230d3b7a%22 stroke-width=%221.4%22/></svg>')] bg-[length:12px_8px] bg-[right_1rem_center] bg-no-repeat pr-10`}
-                    >
-                      <option value="" disabled>
-                        Select…
-                      </option>
-                      {f.options!.map((o) => (
-                        <option key={o.value} value={o.value}>
-                          {o.label}
-                        </option>
-                      ))}
-                    </select>
+                    <SelectField id={`${kind}-${f.name}`} name={f.name} label={f.label} required={f.required} defaultValue={values[f.name] ?? ""} options={f.options ?? []} invalid={!!err} describedBy={describe(f)} />
                   ) : (
                     <input
                       id={`${kind}-${f.name}`}

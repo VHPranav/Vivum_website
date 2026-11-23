@@ -259,7 +259,7 @@ export function Partner({ partner }: { partner: A["partner"] }) {
         <div className="relative aspect-[4/3] w-full max-w-sm lg:col-span-3 lg:col-start-2">
           <Image src={partner.smallImage} alt="" fill sizes="(min-width: 1024px) 22vw, 90vw" quality={90} className="object-cover" />
         </div>
-        <div className="space-y-5 text-[0.9375rem] leading-relaxed text-ink lg:col-span-3 lg:col-start-7">
+        <div className="space-y-5 text-base leading-relaxed text-ink md:text-lg lg:col-span-3 lg:col-start-7">
           {partner.body.map((p) => (
             <p key={p}>{p}</p>
           ))}

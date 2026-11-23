@@ -9,6 +9,7 @@ import type { RouteId } from "@/lib/site";
 import { localePath, type Locale } from "@/i18n/config";
 import type { Content } from "@/content";
 import { Arrow } from "@/components/ui/Kit";
+import { SelectField } from "./SelectField";
 
 type Area = { id: string; name: string; description: string };
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -42,6 +43,7 @@ export function StepForm({
   const [state, action, pending] = useActionState(submitEnquiry, initial);
   const form = useRef<HTMLFormElement>(null);
   const startedAt = useRef<HTMLInputElement>(null);
+  const handledError = useRef<FormState | null>(null);
   const [area, setArea] = useState(defaultArea ?? "");
   const [step, setStep] = useState(defaultArea ? 1 : 0);
   const [local, setLocal] = useState<Record<string, string>>({});
@@ -62,9 +64,9 @@ export function StepForm({
 
   // Jump back to the step holding a server-side error.
   useEffect(() => {
-    if (state.status !== "error") return;
+    if (state.status !== "error" || handledError.current === state) return;
+    handledError.current = state;
     const e = state.errors;
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reacting to the server's answer
     setStep(e.service ? 0 : fieldsByArea[kind].some((f) => f.type !== "textarea" && e[f.name]) ? 1 : 2);
   }, [state, fieldsByArea, kind]);
 
@@ -168,18 +170,16 @@ export function StepForm({
                 const on = area === a.id;
                 return (
                   <li key={a.id}>
-                    <label className={`group flex cursor-pointer items-center gap-4 py-5 transition-colors has-[:focus-visible]:bg-paper ${on ? "text-navy" : "text-ink"}`}>
-                      <input
-                        type="radio"
-                        name="_area"
-                        value={a.id}
-                        checked={on}
-                        onChange={() => {
-                          setArea(a.id);
-                          setLocal({});
-                        }}
-                        className="sr-only"
-                      />
+                    <button
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => {
+                        setArea(a.id);
+                        setLocal({});
+                        setStep(1);
+                      }}
+                      className={`group flex w-full cursor-pointer items-center gap-4 py-5 text-left transition-colors focus-visible:bg-paper ${on ? "text-navy" : "text-ink"}`}
+                    >
                       <span className="w-5 shrink-0 self-start pt-1 text-[0.65rem] text-ink/35">0{i + 1}</span>
                       <span className="flex-1">
                         <span className="block text-[clamp(1.2rem,0.85rem+1vw,1.75rem)] leading-tight font-medium tracking-[-0.02em] transition-transform duration-500 ease-[var(--ease-calm)] group-hover:translate-x-2">
@@ -188,9 +188,9 @@ export function StepForm({
                         <span className="mt-2 block max-w-[40ch] text-sm leading-relaxed text-ink/50">{a.description}</span>
                       </span>
                       <span aria-hidden className={`flex h-9 w-9 shrink-0 items-center justify-center transition-all ${on ? "text-green-deep" : "text-ink/30 group-hover:translate-x-1 group-hover:text-navy"}`}>
-                        <Arrow className="h-2 w-3.5" />
+                        {on ? <span className="text-lg">✓</span> : <Arrow className="h-2 w-3.5" />}
                       </span>
-                    </label>
+                    </button>
                   </li>
                 );
               })}
@@ -214,10 +214,7 @@ export function StepForm({
             {detailFields.map((f) => (
               <Field key={f.name} label={`${f.label}${f.required ? " *" : ` (${copy.optional})`}`} name={f.name} error={err(f.name)}>
                 {f.type === "select" ? (
-                  <select id={`f-${f.name}`} name={f.name} required={f.required} defaultValue="" className={`${line} min-w-0 text-base md:text-lg`} aria-invalid={!!errors[f.name]}>
-                    <option value="" disabled>Select…</option>
-                    {f.options?.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-                  </select>
+                  <SelectField id={`f-${f.name}`} name={f.name} label={f.label} required={f.required} options={f.options ?? []} invalid={!!errors[f.name]} describedBy={errors[f.name] ? `${f.name}-error` : undefined} />
                 ) : (
                   <input id={`f-${f.name}`} name={f.name} type={f.type === "number" ? "text" : f.type} inputMode={f.type === "number" ? "numeric" : undefined} pattern={f.type === "number" ? "[1-9][0-9]{0,4}" : undefined} required={f.required} maxLength={f.max} autoComplete={f.autoComplete} placeholder={f.name === "name" ? "Your full name" : f.name === "email" ? "you@example.com" : f.name === "phone" ? "+382 …" : f.label} className={line} aria-invalid={!!errors[f.name]} aria-describedby={f.hint ? `f-${f.name}-hint` : undefined} />
                 )}
