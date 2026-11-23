@@ -12,6 +12,10 @@ export const about = {
   // Same opening as the homepage (landscape + live clouds), with its own landscape and copy.
   hero: {
     h1: "Rooted in Montenegro. Open to the world.",
+    lines: [
+      { text: "Rooted in Montenegro." },
+      { text: "Open to the world." },
+    ],
     lede: "An international group bringing specialist expertise, trusted partners and people together.",
     primary: { label: "Meet our team", href: "#team" },
   },

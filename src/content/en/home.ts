@@ -12,6 +12,11 @@ export const home = {
   hero: {
     label: "VIVUM Group",
     h1: "Connecting expertise, people and opportunities.",
+    lines: [
+      { text: "Connecting" },
+      { text: "expertise, people" },
+      { text: "and opportunities." },
+    ],
     lede: "Wellbeing, business consulting, international workforce and education, under one name.",
     primary: { label: "Our services", href: "#services" },
     secondary: { label: "Get in touch", href: "/contact" },

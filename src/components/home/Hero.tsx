@@ -15,7 +15,7 @@ import { Clouds } from "./Clouds";
  * About statement fills in letter by letter on that white.
  * The background stays pinned (sticky) across both sections.
  */
-type HeroCopy = { h1: React.ReactNode; lede: string; primary: { label: string; href: string } };
+type HeroCopy = { h1: React.ReactNode; lines?: readonly { text: string }[]; lede: string; primary: { label: string; href: string } };
 type StatementCopy = { label: string; statement: string; link: { label: string; href: string } };
 
 export function Hero({
@@ -76,9 +76,13 @@ export function Hero({
       {/* Opening */}
       <section data-hero aria-labelledby="hero-title" className="relative z-10 -mt-[100svh] min-h-[max(100svh,40rem)] md:h-svh md:min-h-0">
         <div data-hero-copy className="container-page relative flex min-h-[inherit] flex-col justify-between gap-10 pt-[max(7rem,19svh)] pb-[8svh] md:block md:h-full md:min-h-0 md:py-0">
-          <SplitLines as="h1" id="hero-title" on="load" delay={0.15} className="max-w-[13ch] font-serif text-[clamp(2.25rem,10vw,3rem)] leading-[1.02] font-medium tracking-[-0.02em] text-navy md:absolute md:top-[19svh] md:left-10 md:text-[clamp(3rem,0.8rem+5.8vw,8rem)] md:leading-[0.96] lg:top-[22svh] lg:left-[8.3%]">
-            {hero.h1}
-          </SplitLines>
+          <h1 id="hero-title" className="font-sans text-[clamp(1.75rem,7.2vw,3rem)] leading-[1.15] font-medium tracking-[-0.025em] text-navy md:absolute md:top-[19svh] md:left-10 md:max-w-[60vw] md:text-[clamp(2.5rem,4.6vw,6rem)] lg:top-[22svh] lg:left-[8.3%]">
+            {hero.lines ? hero.lines.map((line, index) => (
+              <SplitLines key={line.text} as="span" on="load" delay={0.15 + index * 0.08} className="block whitespace-nowrap font-sans">
+                {line.text}
+              </SplitLines>
+            )) : <SplitLines as="span" on="load" delay={0.15} className="block text-balance">{hero.h1}</SplitLines>}
+          </h1>
           <div className="isolate relative md:absolute md:bottom-[12svh] md:right-auto md:left-[50%] md:max-w-sm lg:left-[66.6%] lg:max-w-[20rem]">
             {/* soft cloud bank behind the lede so it always reads over the ridge */}
             <div aria-hidden className="pointer-events-none absolute -inset-x-[45%] -inset-y-[70%] -z-10 rounded-[50%] bg-[radial-gradient(closest-side,rgba(251,250,246,0.95),rgba(251,250,246,0.75)_45%,rgba(251,250,246,0)_100%)] blur-2xl" />

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,9 +10,9 @@ import { siteUrl } from "@/lib/site";
 import "../globals.css";
 
 
-// Body and subheads — Plus Jakarta Sans (trial in place of the brand sheet's Poppins; client to confirm).
+// DM Sans throughout headings, body text and controls.
 // latin-ext covers Montenegrin (č, ć, š, ž, đ).
-const sans = Plus_Jakarta_Sans({
+const sans = DM_Sans({
   subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans-face",
