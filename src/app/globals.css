@@ -252,3 +252,26 @@ html.js [data-rise] {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* Quiet contour lines behind service overviews. */
+.service-overview {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f1f1f1;
+}
+
+.service-overview::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-radial-gradient(
+    ellipse at 100% -25%,
+    transparent 0 7px,
+    rgb(255 255 255 / 85%) 8px 9px,
+    transparent 10px 14px
+  );
+  mask-image: linear-gradient(110deg, transparent 15%, #000 65%);
+}

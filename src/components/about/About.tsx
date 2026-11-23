@@ -243,30 +243,28 @@ export function Partner({ partner }: { partner: A["partner"] }) {
   return (
     <section ref={root} aria-labelledby="partner-title" className="bg-white pb-[10vw]">
       <div className="grid lg:grid-cols-2">
-        <div className="px-5 pt-[16vw] md:px-10 lg:pl-[8.3vw]">
-          <h2 id="partner-title" className="max-w-[12ch] font-serif text-[clamp(2.25rem,0.9rem+3.4vw,4.5rem)] leading-[1] font-light tracking-[-0.02em] text-navy">
+        <div className="flex flex-col justify-center px-5 py-16 md:px-10 lg:min-h-svh lg:px-[6vw] lg:py-20">
+          <h2 id="partner-title" className="max-w-[10ch] font-sans text-[clamp(2.75rem,5vw,6rem)] leading-[0.98] font-medium tracking-[-0.05em] text-navy">
             {partner.title}
           </h2>
-          <p className="mt-[3vw] max-w-sm text-lg leading-snug text-ink">{partner.lede}</p>
+          <p className="mt-8 max-w-[29rem] text-[clamp(1.125rem,1.35vw,1.5rem)] leading-[1.3] tracking-[-0.02em] text-ink">{partner.lede}</p>
         </div>
-        <div className="relative mt-12 h-[70svh] overflow-hidden lg:mt-0 lg:h-[110svh]">
+        <div className="relative h-[65svh] overflow-hidden lg:h-svh">
           <div data-tall className="absolute -inset-y-[10%] inset-x-0">
             <Image src={partner.image} alt="" fill sizes="(min-width: 1024px) 50vw, 100vw" quality={90} className="object-cover" />
           </div>
         </div>
       </div>
-      <div className="mt-[8vw] grid gap-10 px-5 md:px-10 lg:grid-cols-12">
-        <div className="relative aspect-[4/3] w-full max-w-sm lg:col-span-3 lg:col-start-2">
-          <Image src={partner.smallImage} alt="" fill sizes="(min-width: 1024px) 22vw, 90vw" quality={90} className="object-cover" />
+      <div className="mt-16 grid items-start gap-10 px-5 md:mt-24 md:px-10 lg:grid-cols-12 lg:gap-x-10 lg:gap-y-16">
+        <div className="relative aspect-[3/2] w-full lg:col-span-4 lg:col-start-2 lg:row-span-2">
+          <Image src={partner.smallImage} alt="" fill sizes="(min-width: 1024px) 32vw, 90vw" quality={90} className="object-cover" />
         </div>
-        <div className="space-y-5 text-base leading-relaxed text-ink md:text-lg lg:col-span-3 lg:col-start-7">
+        <div className="grid gap-6 text-base leading-[1.4] text-ink md:grid-cols-2 md:gap-10 md:text-lg lg:col-span-6 lg:col-start-7 lg:text-xl">
           {partner.body.map((p) => (
             <p key={p}>{p}</p>
           ))}
         </div>
-      </div>
-      <div className="mt-[8vw] px-5 md:px-10 lg:grid lg:grid-cols-12">
-        <FillText className="font-serif text-[clamp(1.9rem,1rem+2.4vw,3.4rem)] leading-[1.05] font-light tracking-[-0.02em] text-navy lg:col-span-6 lg:col-start-7">{partner.statement}</FillText>
+        <FillText className="font-sans text-[clamp(2rem,3.6vw,4.5rem)] leading-[1.05] font-medium tracking-[-0.04em] text-navy lg:col-span-6 lg:col-start-7">{partner.statement}</FillText>
       </div>
     </section>
   );

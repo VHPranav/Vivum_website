@@ -8,7 +8,7 @@ import { localePath, type Locale } from "@/i18n/config";
 import type { AreaPage } from "@/content/en/areas";
 import { AreaSymbol } from "@/components/AreaSymbol";
 import { Clouds } from "@/components/home/Clouds";
-import { SplitLines } from "@/components/motion/Text";
+import { FillText, SplitLines } from "@/components/motion/Text";
 import { gsap, prefersReducedMotion, useGSAP } from "@/components/motion/gsap";
 
 type Other = { id: string; href: string; title: [string, string]; lede: string; facts: AreaPage["facts"] };
@@ -107,18 +107,18 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
   );
   return (
     <section ref={root} className="bg-white py-[6vw]">
-      {/* row 1: two photos */}
-      <div className="flex items-start justify-between gap-5 px-5 md:pl-6 md:pr-0">
-        {img(a, "aspect-square w-[36vw] md:w-[22vw]", 5, "(min-width: 768px) 22vw, 36vw")}
-        {img(b, "mt-[14vw] aspect-[4/5] w-[38vw] md:mt-[6vw] md:w-[26vw]", 5, "(min-width: 768px) 26vw, 38vw")}
-      </div>
-      {/* row 2: heading + text, clear of the photos */}
-      <div className="px-5 py-[12vw] md:ml-[27vw] md:w-[50vw] md:px-0 md:py-[8vw]">
-        <h2 className="text-[clamp(2.25rem,1rem+3.6vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.025em] text-navy">{gallery.heading}</h2>
-        <p className="mt-[3vw] text-[1.125rem] leading-[1.3] font-medium text-navy md:ml-[20vw] md:max-w-[22rem]">{gallery.text}</p>
+      <div className="grid grid-cols-2 items-start gap-x-5 gap-y-10 px-5 lg:grid-cols-12 lg:gap-x-6 lg:gap-y-0 lg:px-0">
+        {img(a, "aspect-square w-full lg:col-span-2 lg:col-start-1 lg:row-start-1", 5, "(min-width: 1024px) 17vw, 45vw")}
+        {img(b, "mt-10 aspect-[4/5] w-full lg:col-span-3 lg:col-start-10 lg:row-span-3 lg:row-start-1 lg:mt-[10vw]", 5, "(min-width: 1024px) 25vw, 45vw")}
+        <FillText as="h2" className="col-span-2 text-[clamp(2rem,3.6vw,4.5rem)] leading-[1.05] font-medium tracking-[-0.04em] text-navy lg:col-span-5 lg:col-start-4 lg:row-start-2 lg:mt-[5vw]">
+          {gallery.heading}
+        </FillText>
+        <p className="col-span-2 max-w-[24rem] text-lg leading-[1.35] text-navy lg:col-span-3 lg:col-start-6 lg:row-start-3 lg:mt-8 lg:text-xl">
+          {gallery.text}
+        </p>
       </div>
       {/* row 3: two photos */}
-      <div className="flex items-start justify-between gap-5 pr-5 md:pr-[6vw]">
+      <div className="mt-12 flex items-start justify-between gap-5 pr-5 md:mt-[4vw] md:pr-[6vw]">
         {img(c, "aspect-[3/2] w-[54vw] md:w-[38vw]", 5, "(min-width: 768px) 38vw, 54vw")}
         {img(d, "mt-[20vw] aspect-[4/5] w-[30vw] md:mt-[10vw] md:w-[24vw]", 5, "(min-width: 768px) 24vw, 30vw")}
       </div>
@@ -128,7 +128,7 @@ function Gallery({ gallery }: { gallery: AreaPage["gallery"] }) {
 
 function Table({ table, cta, locale }: { table: AreaPage["table"]; cta: AreaPage["cta"]; locale: Locale }) {
   return (
-    <section aria-label={table.columns[0]} className="bg-white px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
+    <section aria-label={table.columns[0]} className="service-overview px-5 py-[8vw] md:px-[2.4vw] md:py-[7vw]">
       <div className="grid gap-10 md:grid-cols-2">
         <SplitLines as="p" className="max-w-[30rem] text-[1.25rem] leading-[1.3] font-medium text-navy md:text-[1.6rem]">
           {table.intro}

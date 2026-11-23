@@ -69,7 +69,7 @@ export function ContactSection({
             </>
           )}
         </div>
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-6 lg:col-start-7">
           <EnquiryForm
             kind={kind}
             locale={locale}

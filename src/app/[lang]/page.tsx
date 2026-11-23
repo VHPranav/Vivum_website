@@ -8,6 +8,7 @@ import { NetworkWheel } from "@/components/home/Tresmares";
 import { AreaShowcase } from "@/components/home/AreaShowcase";
 import { BenefitsScroller } from "@/components/home/Scroll";
 import { Partners } from "@/components/home/Partners";
+import { UpcomingEvents } from "@/components/home/UpcomingEvents";
 import { ContactSection } from "@/components/forms/ContactSection";
 
 export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
@@ -32,6 +33,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <BenefitsScroller label={h.why.label} title={h.why.title} items={h.why.items} />
       <NetworkWheel network={h.network} />
       <Partners partners={h.partners} />
+      <UpcomingEvents locale={lang} />
       <ContactSection c={c} locale={lang} head={{ label: "Contact VIVUM", title: "What’s your next step?", lede: "Choose an area and tell us what you need." }} />
     </>
   );
